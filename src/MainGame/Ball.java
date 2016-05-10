@@ -18,10 +18,6 @@ public class Ball {
         this.radius = radius;
     }
 
-    protected void paintComponent(Graphics g){
-
-    }
-
     public double getxPos() {
         return xPos;
     }
