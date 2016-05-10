@@ -9,4 +9,31 @@ objektet ska ta sig
 Uppdelning:
 Grafik: Daniel, Henrik, Victor
 Fysikmotor, Fysikberäkningar: Adrian, David, Linnea, Erik
-MjäheheheheheheHEHEHEHEHE
+
+
+Brainstorm för spelgrunden:
+
+NIVÅ 1:
+- fast fönster
+- boll med massa och eventuell elasticitet
+- Kraft och vinkel för att få iväg boll
+- gravitation
+
+NIVÅ 2:
+- Kollision med marken
+- Perfekt Elastisk stöt
+- Fejk luftmotsånd
+- Försök få till mindre studs
+- Försök få till mer realistisk friktion
+
+NIVÅ 3:
+- Scrollande bakgrund (stor bakgrund)
+- Bollrelativt fönster
+- Generera bakgrund (mer mark)
+
+NIVÅ 4:
+- Införa startfjäder
+- Införa studsobjekt
+- Randomgenerera
+
+
