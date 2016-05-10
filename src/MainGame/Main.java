@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
- * Created by Victor on 2016-05-10.
+ * Created by Erik on 2016-05-10.
  */
 public class Main {
 
