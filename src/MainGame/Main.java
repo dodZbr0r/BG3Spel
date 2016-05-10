@@ -14,7 +14,7 @@ public class Main {
 
     public static void main(String[] args) {
         final Game sim = new Game();
-        JFrame frame = new JFrame("Pendel");
+        JFrame frame = new JFrame("FLY BABY FLY");
         final GameComponent component = new GameComponent(sim);
         frame.setLayout(new BorderLayout());
         frame.add(component, BorderLayout.CENTER);
