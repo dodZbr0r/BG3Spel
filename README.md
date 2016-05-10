@@ -7,7 +7,7 @@ objektet ska ta sig
 
 
 Uppdelning:
-Grafik: Daniel, Henrik, Victor
+Graphics: Daniel, Henrik, Victor
 Fysikmotor, Fysikberäkningar: Adrian, David, Linnea, Erik
 
 
