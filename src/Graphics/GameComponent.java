@@ -26,8 +26,12 @@ public class GameComponent extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
+
+        // Background
         g2.setColor(new Color(194, 218, 249));
         g2.fillRect(0, 0, WIDTH, HEIGHT);
+
+        // Ball
         g2.setColor(Color.WHITE);
         g2.fillOval(sim.getPosition().x, sim.getPosition().y, sim.getRadius(), sim.getRadius());
 
