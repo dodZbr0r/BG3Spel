@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 /**
- * Created by Victor, Daniel, Henrik, Linnea, David, Erik on 2016-05-10.
+ * Created by Erik on 2016-05-10.
  */
 public class Main {
 
@@ -14,7 +14,7 @@ public class Main {
 
     public static void main(String[] args) {
         final Game sim = new Game();
-        JFrame frame = new JFrame("FLY BABY FLY");
+        JFrame frame = new JFrame("Pendel");
         final GameComponent component = new GameComponent(sim);
         frame.setLayout(new BorderLayout());
         frame.add(component, BorderLayout.CENTER);
