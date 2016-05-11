@@ -66,6 +66,10 @@ public class Ball {
         this.radius = radius;
     }
 
+    public int getDiameter() {
+        return radius * 2;
+    }
+
     public GameVector getVelocity() { return velocity; }
 
     public void setVelocity(GameVector velocity) { this.velocity = velocity; }
