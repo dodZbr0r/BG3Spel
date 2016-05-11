@@ -95,6 +95,7 @@ public class GameVector {
     public void setPos(int xPos, int yPos) {
         this.x = xPos;
         this.y = yPos;
+        updateLengthAndAngle();
     }
 
     /**
