@@ -10,12 +10,12 @@ import java.awt.*;
  */
 public class GameComponent extends JComponent {
 
-    public Game sim;
+    public Game game;
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
 
-    public GameComponent(Game sim) {
-        this.sim = sim;
+    public GameComponent(Game game) {
+        this.game = game;
     }
 
     @Override
@@ -32,8 +32,13 @@ public class GameComponent extends JComponent {
         g2.fillRect(0, 0, WIDTH, HEIGHT);
 
         // Ball
-        g2.setColor(Color.WHITE);
-        g2.fillOval(sim.getPosition().x, sim.getPosition().y, sim.getRadius(), sim.getRadius());
+        g2.setColor(game.getBall().getColor());
+        g2.fillOval(unitConversion(game.getBall().getxPos()), unitConversion(game.getBall().getyPos()), 
+                unitConversion(game.getBall().getRadius()), unitConversion(game.getBall().getRadius()));
 
+    }
+    
+    public int unitConversion(int millimeters) {
+        return millimeters/10;
     }
 }
