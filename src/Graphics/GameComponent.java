@@ -2,8 +2,12 @@ package Graphics;
 
 import MainGame.Game;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by Victor, Daniel, Henrik, Linnea, David, Erik on 2016-05-10.
@@ -15,10 +19,18 @@ public class GameComponent extends JComponent {
 
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
+    private BufferedImage img;
 
 
     public GameComponent(Game game) {
         this.game = game;
+        img = null;
+        try {
+            img = ImageIO.read(new File("data/Game-Background.png"));
+        } catch (IOException e) {
+            System.out.println("Fel!");
+        }
+
     }
 
     @Override
@@ -31,8 +43,7 @@ public class GameComponent extends JComponent {
         Graphics2D g2 = (Graphics2D) g;
 
         // Background
-        g2.setColor(new Color(194, 218, 249));
-        g2.fillRect(0, 0, WIDTH, HEIGHT);
+        g2.drawImage(img, 0, 0, 1280, 720, this);
 
         //Ground
         g2.setColor(new Color(1, 186, 0));
