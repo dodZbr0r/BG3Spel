@@ -1,5 +1,7 @@
 package MainGame;
 
+import Physics.GameVector;
+
 import java.awt.*;
 
 /**
@@ -7,25 +9,19 @@ import java.awt.*;
  */
 public class Game {
 
-    private Point position;
-    private int radius;
-    private int speed;
+    private Ball ball;
 
     public Game() {
-        this.position = new Point(200, 200);
-        this.radius = 20;
-        this.speed = 100;
+        ball = new Ball(2000, 2000, 2, 500, Color.RED, new GameVector(1000/60, 1000/60));
     }
 
+    //updaterar spelet
     public void update(double updateTime) {
-        position.setLocation(position.x + (speed * updateTime * 0.001), position.y);
+        ball.setPos(ball.getxPos() + ball.getVelocity().getxPos(), ball.getyPos() + ball.getVelocity().getyPos());
     }
 
-    public int getRadius() {
-        return radius;
+    public Ball getBall() {
+        return ball;
     }
 
-    public Point getPosition() {
-        return position;
-    }
 }
