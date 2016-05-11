@@ -19,7 +19,7 @@ public class Game {
 
 
     public Game() {
-        ball = new Ball(2000, 2000, 2, 500, Color.RED, new GameVector(500/60, 6000/60));
+        ball = new Ball(2000, 2000, 2, 500, Color.RED, new GameVector(1000/60, 1000/60));
     }
 
     //updaterar spelet
