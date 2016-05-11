@@ -11,8 +11,8 @@ import java.awt.*;
 public class GameComponent extends JComponent {
 
     public Game sim;
-    public static final int HEIGHT = 640;
-    public static final int WIDTH = 960;
+    public static final int HEIGHT = 720;
+    public static final int WIDTH = 1280;
 
     public GameComponent(Game sim) {
         this.sim = sim;
