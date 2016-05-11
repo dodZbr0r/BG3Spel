@@ -21,8 +21,7 @@ public class GameVector {
     public GameVector(int x, int y){
         this.x = x;
         this.y = y;
-        this.length = getLength();
-        this.angle = getAngle();
+        updateLengthAndAngle();
     }
 
     /**
@@ -56,13 +55,22 @@ public class GameVector {
     }
 
     /**
-     * Gets the angle of the vector in degrees
+     * Updates the values of length and angle of the vector
+     * to match the x and y coordinates.
+     */
+    private void updateLengthAndAngle() {
+        length = calculateLength();
+        angle = calculateAngle();
+    }
+
+    /**
+     * Calculates the angle of the vector in degrees
      * @return The angle of the vector
      */
-    public double getAngle() {
-        double xFloat = (double) getX();
+    public double calculateAngle() {
+        double xDouble = (double) getX();
         double hypotenuse = getLength();
-        double d = xFloat/hypotenuse;
+        double d = xDouble/hypotenuse;
         double angle = Math.acos(d);
         angle = Math.toDegrees(angle);
         return angle;
@@ -76,6 +84,14 @@ public class GameVector {
         return y;
     }
 
+    public double getLength() {
+        return length;
+    }
+
+    public double getAngle() {
+        return angle;
+    }
+
     public void setPos(int xPos, int yPos) {
         this.x = xPos;
         this.y = yPos;
@@ -86,9 +102,10 @@ public class GameVector {
      * on the x and y values of the vector
      * @return the length of the vector
      */
-    public double getLength() {
+    private double calculateLength() {
         return Math.sqrt((double) x * (double) x + (double) y * (double) y);
     }
+
 
     /**
      * Adds two vectors according to standard vector addition
@@ -100,5 +117,17 @@ public class GameVector {
         return new GameVector(vec1.getX() + vec2.getX(), vec1.getY() + vec2.getY());
     }
 
+    /**
+     * Multiplys a vector with a number and creates a new vector
+     * with the new length and the same angle as the old vector
+     * @param number The number with which to multiply the vector
+     * @param vector The vector to be multiplied with
+     * @return The new vector
+     */
+    public static GameVector multiplyVector (int number, GameVector vector) {
+        double newLength = vector.getLength() * number;
+        GameVector newVector = new GameVector(newLength, vector.getAngle());
+        return newVector;
+    }
 
 }
