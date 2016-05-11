@@ -24,15 +24,15 @@ public class Game {
 
     //updaterar spelet
     public void update(double updateTime) {
-        ball.setPos(ball.getxPos() + ball.getVelocity().getxPos(), ball.getyPos() + ball.getVelocity().getyPos());
+        ball.setPos(ball.getxPos() + ball.getVelocity().getX(), ball.getyPos() + ball.getVelocity().getY());
         if(ball.getyPos() >= 6200 ){
-            ball.setVelocity(new GameVector(ball.getVelocity().getxPos(), -ball.getVelocity().getyPos()));
+            ball.setVelocity(new GameVector(ball.getVelocity().getX(), -ball.getVelocity().getY()));
         }
         if(ball.getyPos() <= 0){
-            ball.setVelocity(new GameVector(ball.getVelocity().getxPos(), -ball.getVelocity().getyPos()));
+            ball.setVelocity(new GameVector(ball.getVelocity().getX(), -ball.getVelocity().getY()));
         }
         if(ball.getxPos()+ ball.getRadius() >= 12800){
-            ball.setVelocity(new GameVector(-ball.getVelocity().getxPos(), ball.getVelocity().getyPos()));
+            ball.setVelocity(new GameVector(-ball.getVelocity().getX(), ball.getVelocity().getY()));
         }
     }
 
