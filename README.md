@@ -10,6 +10,8 @@ Uppdelning:
 Graphics: Daniel, Henrik, Victor
 Fysikmotor, Fysikberäkningar: Adrian, David, Linnea, Erik
 
+----------------------------------------------------------------------------------------------------
+Möte 1 2016-05-10
 
 Brainstorm för spelgrunden:
 
@@ -36,4 +38,11 @@ NIVÅ 4:
 - Införa studsobjekt
 - Randomgenerera
 
+----------------------------------------------------------------------------------------------------
+Möte 2 2016-05-11
+
+Fönsterstorlek bestämt till 1280x720 pixlar.
+Läng bestämt till 100 pixlar = 1 meter
+Koordinater ska skrivas i mm, d.v.s. 1000 = 1 m
+Radie på boll bestämt till 500.
 
