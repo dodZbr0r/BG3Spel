@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Created by Victor on 2016-05-10.
+ * Created by Victor, Daniel, Henrik, Linnea, David, Erik on 2016-05-10.
  */
 public class GameComponent extends JComponent {
 
@@ -26,8 +26,12 @@ public class GameComponent extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.BLUE);
+
+        // Background
+        g2.setColor(new Color(194, 218, 249));
         g2.fillRect(0, 0, WIDTH, HEIGHT);
+
+        // Ball
         g2.setColor(Color.WHITE);
         g2.fillOval(sim.getPosition().x, sim.getPosition().y, sim.getRadius(), sim.getRadius());
 
