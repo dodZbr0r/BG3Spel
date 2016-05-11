@@ -1,5 +1,7 @@
 package MainGame;
 
+import Physics.GameVector;
+
 import java.awt.*;
 
 /**
@@ -11,11 +13,13 @@ public class Ball {
     private Color color;
     private int mass;
     private int radius;
+    private GameVector velocity;
 
-    public Ball(int mass, int radius, Color color){
+    public Ball(int mass, int radius, Color color, GameVector velocity){
         this.color = color;
         this.mass = mass;
         this.radius = radius;
+        this.velocity = velocity;
     }
 
     public double getxPos() {
@@ -57,4 +61,8 @@ public class Ball {
     public void setRadius(int radius) {
         this.radius = radius;
     }
+
+    public GameVector getVector(GameVector velocity) { return velocity; }
+
+    public void setVector(GameVector velocity) { this.velocity = velocity; }
 }
