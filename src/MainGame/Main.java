@@ -28,7 +28,7 @@ public class Main {
             public void actionPerformed(ActionEvent e) {
                 double currentTime = System.currentTimeMillis();
                 sim.update(currentTime - lastUpdate);
-                System.out.println(currentTime - lastUpdate);
+                //System.out.println(currentTime - lastUpdate);
                 lastUpdate = currentTime;
                 component.repaint();
             }
