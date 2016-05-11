@@ -13,27 +13,24 @@ import java.awt.*;
 public class Game {
 
     private Ball ball;
-    private int GroundHeight = 500;
-    private int GroundWidth = 12800;
+    public static final int fps = 60;
+    private int groundHeight = 500;
+    private int groundWidth = 12800;
 
 
 
     public Game() {
-        ball = new Ball(2000, 2000, 2, 500, Color.RED, new GameVector(1000/60, 1000/60));
+        ball = new Ball(2000, 5000, 2, 500, Color.RED, new GameVector(1000/fps, -1000/fps));
     }
 
     //updaterar spelet
     public void update(double updateTime) {
         ball.setPos(ball.getxPos() + ball.getVelocity().getX(), ball.getyPos() + ball.getVelocity().getY());
-        if(ball.getyPos() >= 6200 ){
-            ball.setVelocity(new GameVector(ball.getVelocity().getX(), -ball.getVelocity().getY()));
+        if(ball.getyPos() - ball.getDiameter() <= groundHeight) {
+            ball.getVelocity().setPos(ball.getVelocity().getX(), -(ball.getVelocity().getY()));
         }
-        if(ball.getyPos() <= 0){
-            ball.setVelocity(new GameVector(ball.getVelocity().getX(), -ball.getVelocity().getY()));
-        }
-        if(ball.getxPos()+ ball.getRadius() >= 12800){
-            ball.setVelocity(new GameVector(-ball.getVelocity().getX(), ball.getVelocity().getY()));
-        }
+
+
     }
 
     public Ball getBall() {
@@ -41,10 +38,10 @@ public class Game {
     }
 
     public int getGroundHeight() {
-        return GroundHeight;
+        return groundHeight;
     }
 
     public int getGroundWidth() {
-        return GroundWidth;
+        return groundWidth;
     }
 }
