@@ -8,34 +8,38 @@ import java.awt.*;
  * Created by DanielHolmberg on 2016-05-10.
  */
 public class Ball {
-    private double xPos;
-    private double yPos;
+    private Point position;
     private Color color;
     private int mass;
     private int radius;
     private GameVector velocity;
 
-    public Ball(int mass, int radius, Color color, GameVector velocity){
+    public Ball(int x, int y, int mass, int radius, Color color, GameVector velocity){
+        position = new Point(x, y);
         this.color = color;
         this.mass = mass;
         this.radius = radius;
         this.velocity = velocity;
     }
 
-    public double getxPos() {
-        return xPos;
+    public int getxPos() {
+        return position.x;
     }
 
     public void setxPos(double xPos) {
-        this.xPos = xPos;
+        position.setLocation(xPos, position.y);
     }
 
-    public double getyPos() {
-        return yPos;
+    public int getyPos() {
+        return position.y;
     }
 
-    public void setyPos(double yPos) {
-        this.yPos = yPos;
+    public void setyPos(int yPos) {
+        position.setLocation(position.x, yPos);
+    }
+
+    public void setPos(int xPos, int yPos) {
+        position.setLocation(xPos, yPos);
     }
 
     public Color getColor() {
@@ -62,7 +66,7 @@ public class Ball {
         this.radius = radius;
     }
 
-    public GameVector getVector(GameVector velocity) { return velocity; }
+    public GameVector getVelocity() { return velocity; }
 
-    public void setVector(GameVector velocity) { this.velocity = velocity; }
+    public void setVelocity(GameVector velocity) { this.velocity = velocity; }
 }
