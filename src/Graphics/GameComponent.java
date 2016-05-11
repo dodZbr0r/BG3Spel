@@ -19,10 +19,18 @@ public class GameComponent extends JComponent {
 
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
+    private BufferedImage img;
 
 
     public GameComponent(Game game) {
         this.game = game;
+        img = null;
+        try {
+            img = ImageIO.read(new File("data/Game-Background.png"));
+        } catch (IOException e) {
+            System.out.println("Fel!");
+        }
+
     }
 
     @Override
@@ -33,13 +41,6 @@ public class GameComponent extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File("data/Game-Background.png"));
-        } catch (IOException e) {
-            System.out.println("Fel!");
-        }
 
         // Background
         g2.drawImage(img, 0, 0, 1280, 720, this);
