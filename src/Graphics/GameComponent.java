@@ -11,8 +11,11 @@ import java.awt.*;
 public class GameComponent extends JComponent {
 
     public Game game;
+
+
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
+
 
     public GameComponent(Game game) {
         this.game = game;
@@ -30,6 +33,10 @@ public class GameComponent extends JComponent {
         // Background
         g2.setColor(new Color(194, 218, 249));
         g2.fillRect(0, 0, WIDTH, HEIGHT);
+
+        //Ground
+        g2.setColor(new Color(1, 186, 0));
+        g2.fillRect(0, (HEIGHT-unitConversion(game.getGroundHeight())), unitConversion(game.getGroundWidth()), unitConversion(game.getGroundHeight()));
 
         // Ball
         g2.setColor(game.getBall().getColor());
