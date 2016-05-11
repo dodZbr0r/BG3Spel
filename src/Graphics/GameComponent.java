@@ -19,18 +19,21 @@ public class GameComponent extends JComponent {
 
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
-    private BufferedImage img;
+    private BufferedImage backGround;
+    private BufferedImage ground;
 
 
     public GameComponent(Game game) {
         this.game = game;
-        img = null;
-        try {
-            img = ImageIO.read(new File("data/Game-Background.png"));
-        } catch (IOException e) {
-            System.out.println("Fel!");
-        }
+        backGround = null;
+        ground = null;
 
+        try {
+            backGround = ImageIO.read(new File("data/Game-Background.png"));
+        } catch (IOException e) {}
+        try {
+            ground = ImageIO.read(new File("data/Ground.png"));
+        } catch (IOException e) {}
     }
 
     @Override
@@ -43,11 +46,10 @@ public class GameComponent extends JComponent {
         Graphics2D g2 = (Graphics2D) g;
 
         // Background
-        g2.drawImage(img, 0, 0, 1280, 720, this);
+        g2.drawImage(backGround, 0, 0, 1280, 720, this);
 
         //Ground
-        g2.setColor(new Color(1, 186, 0));
-        g2.fillRect(0, yConversion(game.getGroundHeight()), unitConversion(game.getGroundWidth()), unitConversion(game.getGroundHeight()));
+        g2.drawImage(ground, 0, 670, 1280, 50, this);
 
         // Ball
         g2.setColor(game.getBall().getColor());
