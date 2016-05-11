@@ -17,7 +17,7 @@ public class Game {
 
     //updaterar spelet
     public void update(double updateTime) {
-        ball.setPos(ball.getxPos() + ball.getVelocity().getxPos(), ball.getyPos() + ball.getVelocity().getyPos());
+        ball.setPos(ball.getxPos() + ball.getVelocity().getX(), ball.getyPos() + ball.getVelocity().getY());
     }
 
     public Ball getBall() {

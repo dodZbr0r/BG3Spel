@@ -45,4 +45,5 @@ Fönsterstorlek bestämt till 1280x720 pixlar.
 Läng bestämt till 100 pixlar = 1 meter
 Koordinater ska skrivas i mm, d.v.s. 1000 = 1 m
 Radie på boll bestämt till 500.
+Standard för vinklar bestäms til grader
 
