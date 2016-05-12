@@ -12,9 +12,9 @@ import java.awt.*;
  */
 public class Game {
 
-    public static final int fps = 60;
+    public static final double fps = 60;
     private Ball ball;
-    private int groundHeight;
+    private double groundHeight;
     private GameVector gravity;
 
 
@@ -23,7 +23,7 @@ public class Game {
      * creates a GameVector representing gravity
      */
     public Game() {
-        ball = new Ball(2000, 5000, 2, 500, Color.RED, new GameVector(0/fps, 3000/fps));
+        ball = new Ball(2000, 5000, 2, 500, Color.RED, new GameVector(0/fps, -3000/fps));
         groundHeight = 500;
         gravity = new GameVector(0, -4*(9800/fps)/fps);
 
@@ -44,8 +44,8 @@ public class Game {
         }
 
         //Printing some information about the ball
-        System.out.printf("HASTIGHET:%5d", ball.getVelocity().getY());
-        System.out.printf("   YPOS:%6d", ball.getyPos());
+        System.out.printf("HASTIGHET:%5f", ball.getVelocity().getY());
+        System.out.printf("   YPOS:%6f", ball.getyPos());
 
     }
 
@@ -60,7 +60,7 @@ public class Game {
         return ball;
     }
 
-    public int getGroundHeight() {
+    public double getGroundHeight() {
         return groundHeight;
     }
 }

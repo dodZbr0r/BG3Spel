@@ -7,8 +7,8 @@ import java.lang.Math;
  */
 public class GameVector {
 
-    private int x;
-    private int y;
+    private double x;
+    private double y;
     //Angle is measured in degrees
     private double angle;
     private double length;
@@ -18,7 +18,7 @@ public class GameVector {
      * @param x The x value of the vector
      * @param y The y value of the vector
      */
-    public GameVector(int x, int y){
+    public GameVector(double x, double y){
         this.x = x;
         this.y = y;
         updateLengthAndAngle();
@@ -29,7 +29,7 @@ public class GameVector {
      * @param length The length of the vector
      * @param angle The angle of the vector in degrees
      */
-    public GameVector(double length, double angle) {
+    public GameVector(double length, double angle, boolean angleVersion) {
         this.length = length;
         this.angle = angle;
         updateXAndY();
@@ -68,7 +68,7 @@ public class GameVector {
      * @return The angle of the vector
      */
     public double calculateAngle() {
-        double xDouble = (double) getX();
+        double xDouble = getX();
         double hypotenuse = getLength();
         double d = xDouble/hypotenuse;
         double angle = Math.acos(d);
@@ -76,11 +76,11 @@ public class GameVector {
         return angle;
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
@@ -92,7 +92,7 @@ public class GameVector {
         return angle;
     }
 
-    public void setPos(int xPos, int yPos) {
+    public void setPos(double xPos, double yPos) {
         this.x = xPos;
         this.y = yPos;
         updateLengthAndAngle();
@@ -104,7 +104,7 @@ public class GameVector {
      * @return the length of the vector
      */
     private double calculateLength() {
-        return Math.sqrt((double) x * (double) x + (double) y * (double) y);
+        return Math.sqrt( x * x + y * y);
     }
 
 
@@ -125,7 +125,7 @@ public class GameVector {
      * @param vector The vector to be multiplied with
      * @return The new vector
      */
-    public static GameVector multiplyVector (int number, GameVector vector) {
+    public static GameVector multiplyVector (double number, GameVector vector) {
         double newLength = vector.getLength() * number;
         GameVector newVector = new GameVector(newLength, vector.getAngle());
         return newVector;
