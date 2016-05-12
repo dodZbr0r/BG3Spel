@@ -5,6 +5,7 @@ import MainGame.Game;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -15,10 +16,15 @@ import java.io.IOException;
 public class GameComponent extends JComponent {
 
     public Game game;
+    // Window bounds
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
-    private BufferedImage backGround;
-    private BufferedImage ground;
+    // Images
+    BufferedImage background;
+    BufferedImage ground;
+    //boolean so you can only give speed to the ball once
+    public boolean SPACECLICK = true;
+
 
     /**
      * Connstructs a GameComponent with a game object and a few images
@@ -27,19 +33,17 @@ public class GameComponent extends JComponent {
      */
     public GameComponent(Game game) {
         this.game = game;
-        backGround = null;
-        ground = null;
+        setInput();
 
-        //Loading images into the game
-        try {
-            backGround = ImageIO.read(new File("data/Game-Background.png"));
-        } catch (IOException e) {
-            System.out.println("Background image could not be found!");
+        try{
+            background = ImageIO.read(new File("data/layer-1.png"));
+        } catch(IOException e){
+            System.out.println("Background Image Not Found");
         }
         try {
-            ground = ImageIO.read(new File("data/Ground.png"));
+            ground = ImageIO.read(new File("data/tile.png"));
         } catch (IOException e) {
-            System.out.println("Ground image could not be found!");
+            System.out.println("Ground Image Not Found");
         }
     }
 
@@ -53,10 +57,12 @@ public class GameComponent extends JComponent {
         Graphics2D g2 = (Graphics2D) g;
 
         // Background
-        g2.drawImage(backGround, 0, 0, WIDTH, HEIGHT, this);
+        g2.drawImage(background, 0, 0, 1280, 770, this);
 
         //Ground
-        g2.drawImage(ground, 0, 670, WIDTH, unitConversion(game.getGroundHeight()), this);
+        for(int i=0 ; i <= WIDTH; i+=50){
+            g2.drawImage(ground, i, 670, 50, 50, this);
+        }
 
         // Ball
         g2.setColor(game.getBall().getColor());
@@ -81,5 +87,25 @@ public class GameComponent extends JComponent {
      */
     public int yConversion(int millimeters) {
         return HEIGHT - unitConversion(millimeters);
+            }
+
+    /**
+     * Input method to perform action on KetStroke
+     */
+    private void setInput() {
+
+
+
+        getInputMap().put(KeyStroke.getKeyStroke("released SPACE"), "SPACE");
+        getActionMap().put("SPACE", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(SPACECLICK == true) {
+                    game.ballLaunch();
+                }
+                SPACECLICK = false;
+            }
+        }
+        );
     }
 }

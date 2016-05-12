@@ -4,6 +4,7 @@ import Physics.GameVector;
 
 
 import java.awt.*;
+import java.awt.event.*;
 
 import static Physics.Force.getAirResistance;
 
@@ -20,15 +21,17 @@ public class Game {
     private GameVector airResistance;
 
 
+
     /**
      * Constructs a Game with a ball object and ground measurements
      * creates a GameVector representing gravity
      */
     public Game() {
-        ball = new Ball(2000, 5000, 2, 500, Color.RED, new GameVector(300/fps, 300/fps));
+
+
+        ball = new Ball(100, 1000, 2, 500, Color.RED, new GameVector(0/fps, 0/fps));
         groundHeight = 500;
         gravity = new GameVector(0, -4*(9800/fps)/fps);
-
 
 
     }
@@ -38,7 +41,7 @@ public class Game {
      * @param updateTime The time it took to update in milliseconds
      */
     public void update(double updateTime) {
-        applyGravity();
+        applyAcceleration(gravity);
         airResistance = getAirResistance(ball.getVelocity());
         applyAirResistance();
         ball.setPos(ball.getxPos() + ball.getVelocity().getX(), ball.getyPos() + ball.getVelocity().getY());
@@ -54,11 +57,10 @@ public class Game {
     }
 
     /**
-     * Performs calculations fot the ball to be affected by our gravity vector
+     * Performs calculations for the ball to be affected by an acceleration vector
+     * @param acceleration The acceleration vector that will affect the object
      */
-    public void applyGravity() {
-        ball.setVelocity(GameVector.addVectors(ball.getVelocity(), gravity));
-    }
+    public void applyAcceleration(GameVector acceleration) {ball.setVelocity(GameVector.addVectors(ball.getVelocity(), acceleration));}
     public void applyAirResistance(){
         ball.setVelocity(GameVector.addVectors(ball.getVelocity(), airResistance));
     }
@@ -69,5 +71,15 @@ public class Game {
 
     public int getGroundHeight() {
         return groundHeight;
+    }
+
+
+    /**
+     * Gives the ball speed when pressing space
+     */
+    public void ballLaunch(){
+
+        ball.setVelocity( new GameVector(2000/fps, 10000/fps));
+
     }
 }
