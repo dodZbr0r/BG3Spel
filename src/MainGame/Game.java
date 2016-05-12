@@ -51,9 +51,9 @@ public class Game {
         }
 
         //Printing some information about the ball
-        System.out.printf("HASTIGHET:%10f", ball.getVelocity().getY());
-        System.out.printf("   YPOS:%10f", ball.getyPos());
-        System.out.println("   UPDATE TIME: " + updateTime);
+        //System.out.printf("HASTIGHET:%10f", ball.getVelocity().getY());
+        //System.out.printf("   YPOS:%10f", ball.getyPos());
+        //System.out.println("   UPDATE TIME: " + updateTime);
 
     }
 

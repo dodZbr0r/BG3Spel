@@ -67,8 +67,8 @@ public class GameVector {
     }
 
     public static void printVector(GameVector vector) {
-        System.out.println("X Value: " + vector.getX());
-        System.out.println("Y Value: " + vector.getY());
+        //System.out.println("X Value: " + vector.getX());
+        //System.out.println("Y Value: " + vector.getY());
     }
 
 }
