@@ -22,6 +22,8 @@ public class GameComponent extends JComponent {
     // Images
     BufferedImage background;
     BufferedImage ground;
+    BufferedImage heaven;
+    BufferedImage heavenHigher;
     //boolean so you can only give speed to the ball once
     public boolean SPACECLICK = true;
 
@@ -37,14 +39,16 @@ public class GameComponent extends JComponent {
 
         try{
             background = ImageIO.read(new File("data/layer-1.png"));
-        } catch(IOException e){
-            System.out.println("Background Image Not Found");
-        }
+        } catch(IOException e){}
         try {
             ground = ImageIO.read(new File("data/tile.png"));
-        } catch (IOException e) {
-            System.out.println("Ground Image Not Found");
-        }
+        } catch (IOException e) {}
+        try {
+            heaven = ImageIO.read(new File("data/Heaven.png"));
+        } catch (IOException e) {}
+        try {
+            heavenHigher = ImageIO.read(new File("data/HeavenHigher.png"));
+        } catch (IOException e) {}
     }
 
     @Override
@@ -57,11 +61,17 @@ public class GameComponent extends JComponent {
         Graphics2D g2 = (Graphics2D) g;
 
         // Background
-        g2.drawImage(background, 0, 0, 1280, 770, this);
+        g2.drawImage(background, 0, 0, WIDTH, HEIGHT, this);
+
+        //Heaven Higher
+        g2.drawImage(heavenHigher, 0, -(2*HEIGHT), WIDTH, HEIGHT, this);
+
+        //Heaven
+        g2.drawImage(heaven, 0, -HEIGHT, WIDTH, HEIGHT, this);
 
         //Ground
         for(int i=0 ; i <= WIDTH; i+=50){
-            g2.drawImage(ground, i, 670, 50, 50, this);
+            g2.drawImage(ground, i, HEIGHT-50, 50, 50, this);
         }
 
         // Ball
