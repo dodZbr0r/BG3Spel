@@ -73,20 +73,20 @@ public class GameComponent extends JComponent {
 
     /**
      * Converts millimeters into pixels
-     * @param millimeters Measurements used in game calculations
+     * @param meters Measurements used in game calculations
      * @return An integer representing pixels
      */
-    public int unitConversion(double millimeters) {
-        return (int) millimeters/10;
+    public int unitConversion(double meters) {
+        return (int) (meters * 100);
     }
 
     /**
      * Converts y-coordinates from game into the graphical coordinate system
-     * @param millimeters Measurements used in game calculations
+     * @param meters Measurements used in game calculations
      * @return An integer representing pixels
      */
-    public int yConversion(double millimeters) {
-        return HEIGHT - unitConversion(millimeters);
+    public int yConversion(double meters) {
+        return HEIGHT - unitConversion(meters);
             }
 
     /**
