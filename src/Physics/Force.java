@@ -31,7 +31,7 @@ public class Force {
     }
 
     public static GameVector getAirResistance(GameVector velocity){
-        double coefficient=10;
+        double coefficient=1;
         double density=0.1;
         double area=1;
         double velX=velocity.getX();
