@@ -16,14 +16,12 @@ import java.io.IOException;
 public class GameComponent extends JComponent {
 
     public Game game;
+    public ScrollingBackground scrollingBackground;
     // Window bounds
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
     // Images
-    BufferedImage background;
-    BufferedImage ground;
-    BufferedImage heaven;
-    BufferedImage heavenHigher;
+    BufferedImage background, ground, heaven, heavenHigher;
     //boolean so you can only give speed to the ball once
     public boolean SPACECLICK = true;
 
@@ -39,7 +37,9 @@ public class GameComponent extends JComponent {
 
         try{
             background = ImageIO.read(new File("data/layer-1.png"));
-        } catch(IOException e){}
+        } catch(IOException e){
+            System.out.println("Background Not Found");
+        }
         try {
             ground = ImageIO.read(new File("data/tile.png"));
         } catch (IOException e) {}
@@ -49,6 +49,9 @@ public class GameComponent extends JComponent {
         try {
             heavenHigher = ImageIO.read(new File("data/HeavenHigher.png"));
         } catch (IOException e) {}
+
+        scrollingBackground = new ScrollingBackground(background, unitConversion(game.getBall().getVelocity().getX()));
+
     }
 
     @Override
@@ -61,7 +64,8 @@ public class GameComponent extends JComponent {
         Graphics2D g2 = (Graphics2D) g;
 
         // Background
-        g2.drawImage(background, 0, 0, WIDTH, HEIGHT, this);
+        // g2.drawImage(background, 0, 0, WIDTH, HEIGHT, this);
+        scrollingBackground.draw(g2);
 
         //Heaven Higher
         g2.drawImage(heavenHigher, 0, -(2*HEIGHT), WIDTH, HEIGHT, this);

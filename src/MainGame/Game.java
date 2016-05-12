@@ -43,7 +43,7 @@ public class Game {
         applyAcceleration(gravity);
         airResistance = getAirResistance(ball.getVelocity(), ball.getRadius());
         applyAirResistance();
-        ball.setPos(ball.getxPos() + ball.getVelocity().getX(), ball.getyPos() + ball.getVelocity().getY());
+        ball.setPos(ball.getxPos(), ball.getyPos() + ball.getVelocity().getY());
 
         if(ball.getyPos() - ball.getDiameter() <= groundHeight && ball.getVelocity().getY() < 0) {
             ball.getVelocity().setPos(ball.getVelocity().getX(), -(ball.getVelocity().getY()));
