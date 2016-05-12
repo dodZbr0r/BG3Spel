@@ -16,16 +16,16 @@ public class ScrollingBackground {
     private int x1, x2;
     private int y1, y2;
 
-    public ScrollingBackground(BufferedImage image){
-        screenWidth = GameComponent.WIDTH;
-        screenHeight = GameComponent.HEIGHT;
+    public ScrollingBackground(BufferedImage image, int x, int y, int width, int height){
+        screenWidth = width;
+        screenHeight = height;
         this.background = image;
         background2 = deepCopy(image);   // Clones the incoming BufferedImage image
 
-        x1 = 0;
-        y1 = 0;
-        x2 = screenWidth;
-        y2 = 0;
+        x1 = x;
+        y1 = y;
+        x2 = width;
+        y2 = y;
 
     }
 

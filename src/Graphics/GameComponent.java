@@ -16,7 +16,8 @@ import java.io.IOException;
 public class GameComponent extends JComponent {
 
     public Game game;
-    public ScrollingBackground scrollingBackground;
+    public ScrollingBackground scrBackground;
+    public ScrollingBackground scrGround;
     // Window bounds
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
@@ -50,7 +51,8 @@ public class GameComponent extends JComponent {
             heavenHigher = ImageIO.read(new File("data/HeavenHigher.png"));
         } catch (IOException e) {}
 
-        scrollingBackground = new ScrollingBackground(background);
+        scrBackground = new ScrollingBackground(background, 0, 0, WIDTH, HEIGHT);
+        scrGround = new ScrollingBackground(ground, 0, HEIGHT - 50, WIDTH, 50);
 
     }
 
@@ -65,7 +67,8 @@ public class GameComponent extends JComponent {
 
         // Background
         // g2.drawImage(background, 0, 0, WIDTH, HEIGHT, this);
-        scrollingBackground.draw(g2, unitConversion(game.getBall().getVelocity().getX()));
+        scrBackground.draw(g2, unitConversion(game.getBall().getVelocity().getX() / 2));
+        scrGround.draw(g2, unitConversion(game.getBall().getVelocity().getX()));
 
         //Heaven Higher
         g2.drawImage(heavenHigher, 0, -(2*HEIGHT), WIDTH, HEIGHT, this);
@@ -74,9 +77,9 @@ public class GameComponent extends JComponent {
         g2.drawImage(heaven, 0, -HEIGHT, WIDTH, HEIGHT, this);
 
         //Ground
-        for(int i=0 ; i <= WIDTH; i+=50){
-            g2.drawImage(ground, i, HEIGHT-50, 50, 50, this);
-        }
+       // for(int i=0 ; i <= WIDTH; i+=50){
+         //   g2.drawImage(ground, i, HEIGHT-50, 50, 50, this);
+        //}
 
         // Ball
         g2.setColor(game.getBall().getColor());
