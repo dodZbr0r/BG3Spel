@@ -50,7 +50,7 @@ public class GameComponent extends JComponent {
             heavenHigher = ImageIO.read(new File("data/HeavenHigher.png"));
         } catch (IOException e) {}
 
-        scrollingBackground = new ScrollingBackground(background, unitConversion(game.getBall().getVelocity().getX()));
+        scrollingBackground = new ScrollingBackground(background);
 
     }
 
@@ -65,7 +65,7 @@ public class GameComponent extends JComponent {
 
         // Background
         // g2.drawImage(background, 0, 0, WIDTH, HEIGHT, this);
-        scrollingBackground.draw(g2);
+        scrollingBackground.draw(g2, unitConversion(game.getBall().getVelocity().getX()));
 
         //Heaven Higher
         g2.drawImage(heavenHigher, 0, -(2*HEIGHT), WIDTH, HEIGHT, this);
@@ -117,7 +117,7 @@ public class GameComponent extends JComponent {
                 if(SPACECLICK == true) {
                     game.ballLaunch();
                 }
-                SPACECLICK = false;
+                SPACECLICK = true;
             }
         }
         );
