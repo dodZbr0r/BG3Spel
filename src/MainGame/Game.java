@@ -15,21 +15,25 @@ public class Game {
     public static final int fps = 60;
     private Ball ball;
     private int groundHeight;
-    private int groundWidth;
     private GameVector gravity;
 
 
-
+    /**
+     * Constructs a Game with a ball object and ground measurements
+     * creates a GameVector representing gravity
+     */
     public Game() {
         ball = new Ball(2000, 5000, 2, 500, Color.RED, new GameVector(0/fps, 3000/fps));
         groundHeight = 500;
-        groundWidth = 12800;
         gravity = new GameVector(0, -4*(9800/fps)/fps);
 
 
     }
 
-    //updaterar spelet
+    /**
+     * Updates the state of the game
+     * @param updateTime The time it took to update in milliseconds
+     */
     public void update(double updateTime) {
         applyGravity();
         ball.setPos(ball.getxPos() + ball.getVelocity().getX(), ball.getyPos() + ball.getVelocity().getY());
@@ -38,11 +42,15 @@ public class Game {
             ball.setPos(ball.getxPos(), groundHeight + ball.getDiameter());
         }
 
+        //Printing some information about the ball
         System.out.printf("HASTIGHET:%5d", ball.getVelocity().getY());
         System.out.printf("   YPOS:%6d", ball.getyPos());
 
     }
 
+    /**
+     * Performs calculations fot the ball to be affected by our gravity vector
+     */
     public void applyGravity() {
         ball.setVelocity(GameVector.addVectors(ball.getVelocity(), gravity));
     }
@@ -53,9 +61,5 @@ public class Game {
 
     public int getGroundHeight() {
         return groundHeight;
-    }
-
-    public int getGroundWidth() {
-        return groundWidth;
     }
 }

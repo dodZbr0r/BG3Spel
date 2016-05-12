@@ -16,7 +16,7 @@ public class Main {
      * Main method, creating a Game, a Jframe, and a GameComponent
      * Specifying some parameters of the frame
      * Using an AbstractAction and a timer to update state of the program
-     * @param args
+     * @param args currently unused
      */
     public static void main(String[] args) {
         final Game game = new Game();
@@ -36,6 +36,7 @@ public class Main {
                 //Using currentTime and lastUpdate to calculate time for every update
                 double currentTime = System.currentTimeMillis();
                 game.update(currentTime - lastUpdate);
+                //Printing the update time
                 System.out.println("   UPDATETIME: " + (currentTime - lastUpdate));
                 lastUpdate = currentTime;
                 component.repaint();
