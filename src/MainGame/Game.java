@@ -1,5 +1,6 @@
 package MainGame;
 
+import Physics.Force;
 import Physics.GameVector;
 
 
@@ -39,9 +40,20 @@ public class Game {
      * @param updateTime The time it took to update in milliseconds
      */
     public void update(double updateTime) {
-        applyAcceleration(gravity);
         airResistance = getAirResistance(ball.getVelocity());
+
+        System.out.println("NEW UPDATE");
+        System.out.println("--------------------------------------------------");
+        System.out.printf("HASTIGHET:%10f", ball.getVelocity().getY());
+        System.out.printf("   YPOS:%10f", ball.getyPos());
+        System.out.println("   UPDATETIME: " + updateTime);
+        System.out.println("Air Resistance Vector: ");
+        GameVector.printVector(airResistance);
+        System.out.println("Ball Velocity Vector: ");
+        GameVector.printVector(ball.getVelocity());
+
         applyAirResistance();
+        applyAcceleration(gravity);
         ball.setPos(ball.getxPos() + ball.getVelocity().getX(), ball.getyPos() + ball.getVelocity().getY());
 
         if(ball.getyPos() - ball.getDiameter() <= groundHeight && ball.getVelocity().getY() < 0) {
@@ -50,8 +62,6 @@ public class Game {
         }
 
         //Printing some information about the ball
-        System.out.printf("HASTIGHET:%10f", ball.getVelocity().getY());
-        System.out.printf("   YPOS:%10f", ball.getyPos());
 
     }
 
@@ -60,8 +70,11 @@ public class Game {
      * @param acceleration The acceleration vector that will affect the object
      */
     public void applyAcceleration(GameVector acceleration) {ball.setVelocity(GameVector.addVectors(ball.getVelocity(), acceleration));}
+
     public void applyAirResistance(){
-        ball.setVelocity(GameVector.addVectors(ball.getVelocity(), airResistance));
+        double mass = ball.getMass();
+        GameVector acceleration = Force.calculateAcceleration(mass, airResistance);
+        applyAcceleration(acceleration);
     }
 
     public Ball getBall() {
