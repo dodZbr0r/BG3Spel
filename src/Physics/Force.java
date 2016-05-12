@@ -11,7 +11,7 @@ public class Force {
      * @param acceleration The objects acceleration vector
      * @return The force vector acting on the object
      */
-    public static GameVector newtonsSecondLaw (int mass, GameVector acceleration) {
+    public static GameVector newtonsSecondLaw (double mass, GameVector acceleration) {
         return GameVector.multiplyVector(mass, acceleration);
     }
 
@@ -23,7 +23,7 @@ public class Force {
      * @param distance The distancevector between the first and the second object
      * @return The gravity force vector acting on the two objects.
      */
-    public static GameVector getGravityVector(int mass1, int mass2, GameVector distance) {
+    public static GameVector getGravityVector(double mass1, double mass2, GameVector distance) {
         double massesMultiplied = mass1 * mass2;
         double distanceSquared = Math.pow(distance.getLength(), 2);
         double gravConstant = 6.67 * Math.pow(10, -11);

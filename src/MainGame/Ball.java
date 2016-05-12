@@ -8,10 +8,8 @@ import java.awt.*;
  * Created by DanielHolmberg on 2016-05-10.
  */
 public class Ball {
-    private Point position;
+    private double x, y, mass, radius;
     private Color color;
-    private int mass;
-    private int radius;
     private GameVector velocity;
 
     /**
@@ -23,32 +21,34 @@ public class Ball {
      * @param color The color of the ball
      * @param velocity The velocity of the ball(mm/s)
      */
-    public Ball(int x, int y, int mass, int radius, Color color, GameVector velocity){
-        position = new Point(x, y);
+    public Ball(double x, double y, double mass, double radius, Color color, GameVector velocity){
+        this.x = x;
+        this.y = y;
         this.color = color;
         this.mass = mass;
         this.radius = radius;
         this.velocity = velocity;
     }
 
-    public int getxPos() {
-        return position.x;
+    public double getxPos() {
+        return x;
     }
 
     public void setxPos(double xPos) {
-        position.setLocation(xPos, position.y);
+        x = xPos;
     }
 
-    public int getyPos() {
-        return position.y;
+    public double getyPos() {
+        return y;
     }
 
-    public void setyPos(int yPos) {
-        position.setLocation(position.x, yPos);
+    public void setyPos(double yPos) {
+        y = yPos;
     }
 
-    public void setPos(int xPos, int yPos) {
-        position.setLocation(xPos, yPos);
+    public void setPos(double xPos, double yPos) {
+        x = xPos;
+        y = yPos;
     }
 
     public Color getColor() {
@@ -59,23 +59,23 @@ public class Ball {
         this.color = color;
     }
 
-    public int getMass() {
+    public double getMass() {
         return mass;
     }
 
-    public void setMass(int mass) {
+    public void setMass(double mass) {
         this.mass = mass;
     }
 
-    public int getRadius() {
+    public double getRadius() {
         return radius;
     }
 
-    public void setRadius(int radius) {
+    public void setRadius(double radius) {
         this.radius = radius;
     }
 
-    public int getDiameter() {
+    public double getDiameter() {
         return radius * 2;
     }
 
