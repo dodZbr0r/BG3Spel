@@ -32,7 +32,24 @@ public class Force {
         return resVector;
     }
 
+    public static GameVector getAirResistance(GameVector velocity){
+        double coefficient=0.1;
+        double density=0.1;
+        double area=1;
+        double velX=velocity.getX();
+        double velY=velocity.getY();
+        double forceX = calculateAirRes(coefficient, density, area, velX);
+        double forceY = calculateAirRes(coefficient, density, area, velY);
+        GameVector airRes = new GameVector(forceX, forceY);
 
-
+        return airRes;
+    }
+    public static double calculateAirRes(double coefficient, double density, double area, double velocity){
+        int sign=1;
+        double res;
+        if (velocity >= 0)
+                sign=-1;
+        return res = sign*0.5*coefficient*density*area*velocity*velocity;
+    }
 
 }

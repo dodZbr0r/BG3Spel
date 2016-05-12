@@ -5,6 +5,7 @@ import Physics.GameVector;
 
 import java.awt.*;
 
+import static Physics.Force.getAirResistance;
 
 
 /**
@@ -16,6 +17,7 @@ public class Game {
     private Ball ball;
     private int groundHeight;
     private GameVector gravity;
+    private GameVector airResistance;
 
 
     /**
@@ -23,9 +25,10 @@ public class Game {
      * creates a GameVector representing gravity
      */
     public Game() {
-        ball = new Ball(2000, 5000, 2, 500, Color.RED, new GameVector(0/fps, 3000/fps));
+        ball = new Ball(2000, 5000, 2, 500, Color.RED, new GameVector(300/fps, 300/fps));
         groundHeight = 500;
         gravity = new GameVector(0, -4*(9800/fps)/fps);
+
 
 
     }
@@ -36,6 +39,8 @@ public class Game {
      */
     public void update(double updateTime) {
         applyGravity();
+        airResistance = getAirResistance(ball.getVelocity());
+        applyAirResistance();
         ball.setPos(ball.getxPos() + ball.getVelocity().getX(), ball.getyPos() + ball.getVelocity().getY());
         if(ball.getyPos() - ball.getDiameter() <= groundHeight && ball.getVelocity().getY() < 0) {
             ball.getVelocity().setPos(ball.getVelocity().getX(), -(ball.getVelocity().getY()));
@@ -53,6 +58,9 @@ public class Game {
      */
     public void applyGravity() {
         ball.setVelocity(GameVector.addVectors(ball.getVelocity(), gravity));
+    }
+    public void applyAirResistance(){
+        ball.setVelocity(GameVector.addVectors(ball.getVelocity(), airResistance));
     }
 
     public Ball getBall() {
