@@ -21,7 +21,7 @@ public class Game {
 
 
     public Game() {
-        ball = new Ball(2000, 5000, 2, 500, Color.RED, new GameVector(500/fps, 3000/fps));
+        ball = new Ball(2000, 5000, 2, 500, Color.RED, new GameVector(0/fps, 3000/fps));
         groundHeight = 500;
         groundWidth = 12800;
         gravity = new GameVector(0, -4*(9800/fps)/fps);
@@ -37,6 +37,10 @@ public class Game {
             ball.getVelocity().setPos(ball.getVelocity().getX(), -(ball.getVelocity().getY()));
             ball.setPos(ball.getxPos(), groundHeight + ball.getDiameter());
         }
+
+        System.out.printf("HASTIGHET:%5d", ball.getVelocity().getY());
+        System.out.printf("   YPOS:%6d", ball.getyPos());
+
     }
 
     public void applyGravity() {

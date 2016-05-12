@@ -16,12 +16,10 @@ public class GameComponent extends JComponent {
 
     public Game game;
 
-
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
     private BufferedImage backGround;
     private BufferedImage ground;
-
 
     public GameComponent(Game game) {
         this.game = game;
