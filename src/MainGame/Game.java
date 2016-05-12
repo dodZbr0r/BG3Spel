@@ -4,13 +4,13 @@ import Physics.GameVector;
 
 
 import java.awt.*;
-
+import java.awt.event.*;
 
 
 /**
  * Created by Victor, Daniel, Henrik, Linnea, David, Erik on 2016-05-10.
  */
-public class Game {
+public class Game        {
 
     public static final int fps = 60;
     private Ball ball;
@@ -18,12 +18,15 @@ public class Game {
     private GameVector gravity;
 
 
+
     /**
      * Constructs a Game with a ball object and ground measurements
      * creates a GameVector representing gravity
      */
     public Game() {
-        ball = new Ball(2000, 5000, 2, 500, Color.RED, new GameVector(0/fps, 3000/fps));
+
+
+        ball = new Ball(100, 1000, 2, 500, Color.RED, new GameVector(0/fps, 0/fps));
         groundHeight = 500;
         gravity = new GameVector(0, -4*(9800/fps)/fps);
 
@@ -35,6 +38,8 @@ public class Game {
      * @param updateTime The time it took to update in milliseconds
      */
     public void update(double updateTime) {
+
+
         applyGravity();
         ball.setPos(ball.getxPos() + ball.getVelocity().getX(), ball.getyPos() + ball.getVelocity().getY());
 
@@ -62,5 +67,15 @@ public class Game {
 
     public int getGroundHeight() {
         return groundHeight;
+    }
+
+
+    /**
+     * Gives the ball speed when pressing space
+     */
+    public void ballLaunch(){
+
+        ball.setVelocity( new GameVector(2000/fps, 10000/fps));
+
     }
 }
