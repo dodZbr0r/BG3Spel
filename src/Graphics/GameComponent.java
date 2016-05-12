@@ -36,7 +36,7 @@ public class GameComponent extends JComponent {
             System.out.println("Background Image Not Found");
         }
         try {
-            ground = ImageIO.read(new File("data/layer-2.png"));
+            ground = ImageIO.read(new File("data/tile.png"));
         } catch (IOException e) {
             System.out.println("Ground Image Not Found");
         }
@@ -55,7 +55,9 @@ public class GameComponent extends JComponent {
         g2.drawImage(background, 0, 0, 1280, 770, this);
 
         //Ground
-        g2.drawImage(ground, 0, 670, WIDTH, unitConversion(game.getGroundHeight()), this);
+        for(int i=0 ; i <= WIDTH; i+=50){
+            g2.drawImage(ground, i, 670, 50, 50, this);
+        }
 
         // Ball
         g2.setColor(game.getBall().getColor());
