@@ -40,7 +40,7 @@ public class Game {
      */
     public void update(double updateTime) {
         applyAcceleration(gravity);
-        airResistance = getAirResistance(ball.getVelocity());
+        airResistance = getAirResistance(ball.getVelocity(), ball.getRadius());
         applyAirResistance();
         ball.setPos(ball.getxPos() + ball.getVelocity().getX(), ball.getyPos() + ball.getVelocity().getY());
 
