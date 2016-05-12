@@ -1,4 +1,5 @@
 package Physics;
+import java.lang.Math;
 
 /**
  * Created by David on 2016-05-11.
@@ -46,18 +47,32 @@ public class Force {
         return acceleration;
     }
 
-    public static GameVector getAirResistance(GameVector velocity){
-        double coefficient=0.1;
-        double density=0.1;
-        double area=1;
-        double velX=velocity.getX();
-        double velY=velocity.getY();
-        double forceX = calculateAirRes(coefficient, density, area, velX);
-        double forceY = calculateAirRes(coefficient, density, area, velY);
+    /**
+     * Creates a vector for the total air resistance on a ball based on its density, area and velocity.
+     * @param velocity The velocity vector of the ball's movement
+     * @param radius The radius of the ball
+     * @return The air resistance vector
+     */
+    public static GameVector getAirResistance(GameVector velocity, double radius){
+        double coefficient=1;
+        double density=1.2;
+        double area=2*radius*Math.PI;
+        double forceX = calculateAirRes(coefficient, density, area, velocity.getX());
+        double forceY = calculateAirRes(coefficient, density, area, velocity.getY());
         GameVector airRes = new GameVector(forceX, forceY);
 
         return airRes;
     }
+
+    /**
+     * Calculates the air resistance on a ball
+     * @param coefficient
+     * @param density The density of the air
+     * @param area The cross section area of the ball
+     * @param velocity The velocity of the ball
+     * @return The size and direction of the air resistance force
+     */
+
     public static double calculateAirRes(double coefficient, double density, double area, double velocity){
         int sign=1;
         double res;
