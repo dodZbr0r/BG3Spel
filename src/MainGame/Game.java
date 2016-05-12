@@ -37,6 +37,7 @@ public class Game {
     public void update(double updateTime) {
         applyGravity();
         ball.setPos(ball.getxPos() + ball.getVelocity().getX(), ball.getyPos() + ball.getVelocity().getY());
+
         if(ball.getyPos() - ball.getDiameter() <= groundHeight && ball.getVelocity().getY() < 0) {
             ball.getVelocity().setPos(ball.getVelocity().getX(), -(ball.getVelocity().getY()));
             ball.setPos(ball.getxPos(), groundHeight + ball.getDiameter());

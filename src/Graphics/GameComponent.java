@@ -15,10 +15,12 @@ import java.io.IOException;
 public class GameComponent extends JComponent {
 
     public Game game;
+    // Window bounds
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
-    private BufferedImage backGround;
-    private BufferedImage ground;
+    // Images
+    BufferedImage background;
+    BufferedImage ground;
 
     /**
      * Connstructs a GameComponent with a game object and a few images
@@ -27,19 +29,16 @@ public class GameComponent extends JComponent {
      */
     public GameComponent(Game game) {
         this.game = game;
-        backGround = null;
-        ground = null;
 
-        //Loading images into the game
-        try {
-            backGround = ImageIO.read(new File("data/Game-Background.png"));
-        } catch (IOException e) {
-            System.out.println("Background image could not be found!");
+        try{
+            background = ImageIO.read(new File("data/layer-1.png"));
+        } catch(IOException e){
+            System.out.println("Background Image Not Found");
         }
         try {
-            ground = ImageIO.read(new File("data/Ground.png"));
+            ground = ImageIO.read(new File("data/layer-2.png"));
         } catch (IOException e) {
-            System.out.println("Ground image could not be found!");
+            System.out.println("Ground Image Not Found");
         }
     }
 
@@ -53,7 +52,7 @@ public class GameComponent extends JComponent {
         Graphics2D g2 = (Graphics2D) g;
 
         // Background
-        g2.drawImage(backGround, 0, 0, WIDTH, HEIGHT, this);
+        g2.drawImage(background, 0, 0, 1280, 770, this);
 
         //Ground
         g2.drawImage(ground, 0, 670, WIDTH, unitConversion(game.getGroundHeight()), this);
