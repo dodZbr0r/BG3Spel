@@ -5,6 +5,7 @@ import MainGame.Game;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +22,9 @@ public class GameComponent extends JComponent {
     // Images
     BufferedImage background;
     BufferedImage ground;
+    //boolean so you can only give speed to the ball once
+    public boolean SPACECLICK = true;
+
 
     /**
      * Connstructs a GameComponent with a game object and a few images
@@ -29,6 +33,7 @@ public class GameComponent extends JComponent {
      */
     public GameComponent(Game game) {
         this.game = game;
+        setInput();
 
         try{
             background = ImageIO.read(new File("data/layer-1.png"));
@@ -82,5 +87,25 @@ public class GameComponent extends JComponent {
      */
     public int yConversion(int millimeters) {
         return HEIGHT - unitConversion(millimeters);
+            }
+
+    /**
+     * Input method to perform action on KetStroke
+     */
+    private void setInput() {
+
+
+
+        getInputMap().put(KeyStroke.getKeyStroke("released SPACE"), "SPACE");
+        getActionMap().put("SPACE", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(SPACECLICK == true) {
+                    game.ballLaunch();
+                }
+                SPACECLICK = false;
+            }
+        }
+        );
     }
 }

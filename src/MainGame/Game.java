@@ -4,7 +4,7 @@ import Physics.GameVector;
 
 
 import java.awt.*;
-
+import java.awt.event.*;
 
 
 /**
@@ -18,12 +18,15 @@ public class Game {
     private GameVector gravity;
 
 
+
     /**
      * Constructs a Game with a ball object and ground measurements
      * creates a GameVector representing gravity
      */
     public Game() {
-        ball = new Ball(2000, 5000, 2, 500, Color.RED, new GameVector(0/fps, 3000/fps));
+
+
+        ball = new Ball(100, 1000, 2, 500, Color.RED, new GameVector(0/fps, 0/fps));
         groundHeight = 500;
         gravity = new GameVector(0, -4*(9800/fps)/fps);
 
@@ -35,7 +38,7 @@ public class Game {
      * @param updateTime The time it took to update in milliseconds
      */
     public void update(double updateTime) {
-        applyGravity();
+        applyAcceleration(gravity);
         ball.setPos(ball.getxPos() + ball.getVelocity().getX(), ball.getyPos() + ball.getVelocity().getY());
 
         if(ball.getyPos() - ball.getDiameter() <= groundHeight && ball.getVelocity().getY() < 0) {
@@ -50,11 +53,10 @@ public class Game {
     }
 
     /**
-     * Performs calculations fot the ball to be affected by our gravity vector
+     * Performs calculations for the ball to be affected by an acceleration vector
+     * @param acceleration The acceleration vector that will affect the object
      */
-    public void applyGravity() {
-        ball.setVelocity(GameVector.addVectors(ball.getVelocity(), gravity));
-    }
+    public void applyAcceleration(GameVector acceleration) {ball.setVelocity(GameVector.addVectors(ball.getVelocity(), acceleration));}
 
     public Ball getBall() {
         return ball;
@@ -62,5 +64,15 @@ public class Game {
 
     public int getGroundHeight() {
         return groundHeight;
+    }
+
+
+    /**
+     * Gives the ball speed when pressing space
+     */
+    public void ballLaunch(){
+
+        ball.setVelocity( new GameVector(2000/fps, 10000/fps));
+
     }
 }

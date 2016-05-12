@@ -27,12 +27,24 @@ public class Force {
         double massesMultiplied = mass1 * mass2;
         double distanceSquared = Math.pow(distance.getLength(), 2);
         double gravConstant = 6.67 * Math.pow(10, -11);
-        double result = (massesMultiplied/distanceSquared) * gravConstant;
+        double result = (massesMultiplied / distanceSquared) * gravConstant;
         GameVector resVector = new GameVector(result, distance.getAngle());
         return resVector;
     }
 
-
+    /**
+     * Calcualtes the acceleration of an object given the force affecting the object
+     * and the mass of the object.
+     * @param mass The mass of the object
+     * @param force The net force affecting the object
+     * @return The object's acceleration
+     */
+    public static GameVector calculateAcceleration(double mass, GameVector force) {
+        double value = force.getLength();
+        double newLength = value/mass;
+        GameVector acceleration = new GameVector(newLength, force.getAngle());
+        return acceleration;
+    }
 
 
 }
