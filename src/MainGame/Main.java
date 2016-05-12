@@ -36,8 +36,6 @@ public class Main {
                 //Using currentTime and lastUpdate to calculate time for every update
                 double currentTime = System.currentTimeMillis();
                 game.update(currentTime - lastUpdate);
-                //Printing the update time
-                System.out.println("   UPDATETIME: " + (currentTime - lastUpdate));
                 lastUpdate = currentTime;
                 component.repaint();
             }

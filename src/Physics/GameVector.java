@@ -9,9 +9,6 @@ public class GameVector {
 
     private double x;
     private double y;
-    //Angle is measured in degrees
-    private double angle;
-    private double length;
 
     /**
      * Constructs a vector from an x and a y value
@@ -21,59 +18,6 @@ public class GameVector {
     public GameVector(double x, double y){
         this.x = x;
         this.y = y;
-        updateLengthAndAngle();
-    }
-
-    /**
-     * Constructs a vector from a length and an angle
-     * @param length The length of the vector
-     * @param angle The angle of the vector in degrees
-     */
-    public GameVector(double length, double angle, boolean angleVersion) {
-        this.length = length;
-        this.angle = angle;
-        updateXAndY();
-    }
-
-    /**
-     * Updates the x value of the vector.
-     * To be used when a change has been made
-     * to the length or the angle of the vector,
-     * and an update needs to be done to the x and y values
-     */
-    private void updateXAndY() {
-        double angle = this.angle;
-        angle = Math.toRadians(angle);
-        //Updates the x value
-        double d = Math.cos(angle) * length;
-        Long L = Math.round(d);
-        this.x = L.intValue();
-        //Updates the y value
-        d = Math.sin(angle) * length;
-        L = Math.round(d);
-        this.y = L.intValue();
-    }
-
-    /**
-     * Updates the values of length and angle of the vector
-     * to match the x and y coordinates.
-     */
-    private void updateLengthAndAngle() {
-        length = calculateLength();
-        angle = calculateAngle();
-    }
-
-    /**
-     * Calculates the angle of the vector in degrees
-     * @return The angle of the vector
-     */
-    public double calculateAngle() {
-        double xDouble = getX();
-        double hypotenuse = getLength();
-        double d = xDouble/hypotenuse;
-        double angle = Math.acos(d);
-        angle = Math.toDegrees(angle);
-        return angle;
     }
 
     public double getX() {
@@ -84,18 +28,9 @@ public class GameVector {
         return y;
     }
 
-    public double getLength() {
-        return length;
-    }
-
-    public double getAngle() {
-        return angle;
-    }
-
     public void setPos(double xPos, double yPos) {
         this.x = xPos;
         this.y = yPos;
-        updateLengthAndAngle();
     }
 
     /**
@@ -103,7 +38,7 @@ public class GameVector {
      * on the x and y values of the vector
      * @return the length of the vector
      */
-    private double calculateLength() {
+    public double getLength() {
         return Math.sqrt( x * x + y * y);
     }
 
@@ -126,9 +61,14 @@ public class GameVector {
      * @return The new vector
      */
     public static GameVector multiplyVector (double number, GameVector vector) {
-        double newLength = vector.getLength() * number;
-        GameVector newVector = new GameVector(newLength, vector.getAngle());
-        return newVector;
+        double x = vector.getX() * number;
+        double y = vector.getY() * number;
+        return new GameVector(x, y);
+    }
+
+    public static void printVector(GameVector vector) {
+        System.out.println("X Value: " + vector.getX());
+        System.out.println("Y Value: " + vector.getY());
     }
 
 }

@@ -1,5 +1,6 @@
 package MainGame;
 
+import Physics.Force;
 import Physics.GameVector;
 
 
@@ -60,8 +61,11 @@ public class Game {
      * @param acceleration The acceleration vector that will affect the object
      */
     public void applyAcceleration(GameVector acceleration) {ball.setVelocity(GameVector.addVectors(ball.getVelocity(), acceleration));}
+
     public void applyAirResistance(){
-        ball.setVelocity(GameVector.addVectors(ball.getVelocity(), airResistance));
+        double mass = ball.getMass();
+        GameVector acceleration = Force.calculateAcceleration(mass, airResistance);
+        applyAcceleration(acceleration);
     }
 
     public Ball getBall() {
