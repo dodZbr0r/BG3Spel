@@ -14,6 +14,15 @@ public class Ball {
     private int radius;
     private GameVector velocity;
 
+    /**
+     * Constructs a Ball object with a position, mass, radius, color and velocity
+     * @param x Horisontal position of the ball(mm)
+     * @param y Vertical position of the ball(mm)
+     * @param mass The balls mass(kg)
+     * @param radius The balls radius(mm)
+     * @param color The color of the ball
+     * @param velocity The velocity of the ball(mm/s)
+     */
     public Ball(int x, int y, int mass, int radius, Color color, GameVector velocity){
         position = new Point(x, y);
         this.color = color;
