@@ -35,7 +35,7 @@ public class Game {
      * @param updateTime The time it took to update in milliseconds
      */
     public void update(double updateTime) {
-        applyGravity();
+        applyAcceleration(gravity);
         ball.setPos(ball.getxPos() + ball.getVelocity().getX(), ball.getyPos() + ball.getVelocity().getY());
 
         if(ball.getyPos() - ball.getDiameter() <= groundHeight && ball.getVelocity().getY() < 0) {
@@ -50,11 +50,10 @@ public class Game {
     }
 
     /**
-     * Performs calculations fot the ball to be affected by our gravity vector
+     * Performs calculations for the ball to be affected by an acceleration vector
+     * @param acceleration The acceleration vector that will affect the object
      */
-    public void applyGravity() {
-        ball.setVelocity(GameVector.addVectors(ball.getVelocity(), gravity));
-    }
+    public void applyAcceleration(GameVector acceleration) {ball.setVelocity(GameVector.addVectors(ball.getVelocity(), acceleration));}
 
     public Ball getBall() {
         return ball;

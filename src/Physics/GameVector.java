@@ -36,10 +36,10 @@ public class GameVector {
     }
 
     /**
-     * Updates the x value of the vector
+     * Updates the x value of the vector.
      * To be used when a change has been made
      * to the length or the angle of the vector,
-     * and an update needs to be done
+     * and an update needs to be done to the x and y values
      */
     private void updateXAndY() {
         double angle = this.angle;
