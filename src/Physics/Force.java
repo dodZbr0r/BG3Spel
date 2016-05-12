@@ -36,9 +36,9 @@ public class Force {
      * @return The air resistance vector
      */
     public static GameVector getAirResistance(GameVector velocity, double radius){
-        double coefficient=1;
+        double coefficient=0.47;
         double density=1.2;
-        double area=2*radius*Math.PI;
+        double area=radius*radius*Math.PI;
         double forceX = calculateAirRes(coefficient, density, area, velocity.getX());
         double forceY = calculateAirRes(coefficient, density, area, velocity.getY());
         GameVector airRes = new GameVector(forceX, forceY);

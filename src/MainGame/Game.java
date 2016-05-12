@@ -30,7 +30,7 @@ public class Game {
     public Game() {
         ball = new Ball(2.0, 5.0, 2.0, 0.5, Color.RED, new GameVector(0/fps, -3.0/fps));
         groundHeight = 0.5;
-        gravity = new GameVector(0, -4*(9.8/fps)/fps);
+        gravity = new GameVector(0, (-9.8/fps)/fps);
 
 
     }
