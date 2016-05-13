@@ -76,7 +76,7 @@ public class Game {
     public double getGroundHeight() {
         return groundHeight;
     }
-    
+
     /**
      * Gives the ball speed when pressing space
      */

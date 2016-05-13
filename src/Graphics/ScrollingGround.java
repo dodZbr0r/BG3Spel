@@ -11,12 +11,12 @@ import java.awt.image.WritableRaster;
 public class ScrollingGround {
 
 
-    private int groundWidth;
-    private int groundHeight;
+    private double groundWidth;
+    private double groundHeight;
     private BufferedImage ground;
     private BufferedImage ground2;
-    private int x1, x2;
-    private int y1, y2;
+    private double x1, x2;
+    private double y1, y2;
 
     public ScrollingGround(BufferedImage image){
         groundWidth = GameComponent.WIDTH;
@@ -40,8 +40,8 @@ public class ScrollingGround {
 
     public void draw(Graphics2D g, int velocityX){
         updatePosition(velocityX);
-        g.drawImage(ground, x1, y1, groundWidth * 2, groundHeight, null);
-        g.drawImage(ground2, x2, y2, groundWidth * 2, groundHeight, null);
+        g.drawImage(ground,(int) x1,(int) y1, (int) (groundWidth * 2), (int) groundHeight, null);
+        g.drawImage(ground2,(int) x2, (int) y2, (int) (groundWidth * 2),(int) groundHeight, null);
     }
 
     private void updatePosition(int velocityX) {
