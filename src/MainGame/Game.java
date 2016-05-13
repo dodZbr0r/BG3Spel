@@ -20,7 +20,8 @@ public class Game {
     private double groundHeight;
     private GameVector gravity;
     private GameVector airResistance;
-
+    private double gravitySize;
+    private GameVector friction;
 
 
     /**
@@ -28,10 +29,11 @@ public class Game {
      * creates a GameVector representing gravity
      */
     public Game() {
-        ball = new Ball(2.0, 5.0, 2.0, 0.5, Color.RED, new GameVector(0/fps, -3.0/fps));
+        ball = new Ball(2.0, 5.0, 2.0, 0.5, Color.RED, new GameVector(0.5/fps, -3.0/fps));
         groundHeight = 0.5;
-        gravity = new GameVector(0, (-9.8/fps)/fps);
-
+        gravitySize = -9.8;
+        gravity = new GameVector(0, (gravitySize/fps)/fps);
+        friction=Force.getFriction(ball.getMass(), gravitySize, ball.getVelocity().getX());
 
     }
 
@@ -48,6 +50,7 @@ public class Game {
         if(ball.getyPos() - ball.getDiameter() <= groundHeight && ball.getVelocity().getY() < 0) {
             ball.getVelocity().setPos(ball.getVelocity().getX(), -(ball.getVelocity().getY()));
             ball.setPos(ball.getxPos(), groundHeight + ball.getDiameter());
+            applyFriction();
         }
 
         //Printing some information about the ball
@@ -61,11 +64,16 @@ public class Game {
      * Performs calculations for the ball to be affected by an acceleration vector
      * @param acceleration The acceleration vector that will affect the object
      */
-    public void applyAcceleration(GameVector acceleration) {ball.setVelocity(GameVector.addVectors(ball.getVelocity(), acceleration));}
+    public void applyAcceleration(GameVector acceleration) {
+        ball.setVelocity(GameVector.addVectors(ball.getVelocity(), acceleration));}
 
     public void applyAirResistance(){
         double mass = ball.getMass();
         GameVector acceleration = Force.calculateAcceleration(mass, airResistance);
+        applyAcceleration(acceleration);
+    }
+    public void applyFriction(){
+        GameVector acceleration = Force.calculateAcceleration(ball.getMass(), friction);
         applyAcceleration(acceleration);
     }
 
