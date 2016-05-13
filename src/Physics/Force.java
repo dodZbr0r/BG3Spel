@@ -62,5 +62,16 @@ public class Force {
                 sign=-1;
         return res = sign*0.5*coefficient*density*area*velocity*velocity;
     }
+    public static GameVector getFriction (double mass, double gravitySize, double xVelocity){
+        int sign=1;
+        double k=0.0001;
+        double normal = -mass*gravitySize;
+        if (xVelocity > 0)
+            sign=-1;
+        else if (xVelocity == 0)
+            sign=0;
+        GameVector friction = new GameVector (sign*k*normal, 0);
 
+        return friction;
+    }
 }

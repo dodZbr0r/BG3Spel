@@ -20,7 +20,8 @@ public class Game {
     private double groundHeight;
     private GameVector gravity;
     private GameVector airResistance;
-
+    private double gravitySize;
+    private GameVector friction;
 
 
     /**
@@ -28,9 +29,10 @@ public class Game {
      * creates a GameVector representing gravity
      */
     public Game() {
-        ball = new Ball(2.0, 5.0, 2.0, 0.5, Color.RED, Color.ORANGE, new GameVector(0/fps, -3.0/fps));
+        ball = new Ball(2.0, 5.0, 2.0, 0.5, Color.RED, Color.ORANGE, new GameVector(0.5/fps, -3.0/fps));
         groundHeight = 0.8;
-        gravity = new GameVector(0, (-9.8/fps)/fps);
+        gravitySize = -9.8;
+        gravity = new GameVector(0, (gravitySize/fps)/fps);
 
 
     }
@@ -48,6 +50,8 @@ public class Game {
         if(ball.getyPos() - ball.getDiameter() <= groundHeight && ball.getVelocity().getY() < 0) {
             ball.getVelocity().setPos(ball.getVelocity().getX(), -(ball.getVelocity().getY()));
             ball.setPos(ball.getxPos(), groundHeight + ball.getDiameter());
+            friction=Force.getFriction(ball.getMass(), gravitySize, ball.getVelocity().getX());
+            applyFriction();
         }
 
         //Printing some information about the ball
@@ -70,6 +74,10 @@ public class Game {
         GameVector acceleration = Force.calculateAcceleration(mass, airResistance);
         applyAcceleration(acceleration);
     }
+    public void applyFriction(){
+        GameVector acceleration = Force.calculateAcceleration(ball.getMass(), friction);
+        applyAcceleration(acceleration);
+    }
 
     public Ball getBall() {
         return ball;
@@ -78,13 +86,13 @@ public class Game {
     public double getGroundHeight() {
         return groundHeight;
     }
-
+    
     /**
      * Gives the ball speed when pressing space
      */
-    public void ballLaunch(){
+    public void ballLaunch(double launchForce){
 
-        ball.setVelocity( new GameVector(ball.getVelocity().getX() + 3.0/fps, 7.0/fps));
+        ball.setVelocity( new GameVector(2.0/fps * launchForce * 2, 0.5/fps * launchForce));
 
     }
 }
