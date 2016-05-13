@@ -25,7 +25,7 @@ public class GameComponent extends JComponent {
     // Images
     BufferedImage background, ground, heaven, heavenHigher;
     //boolean so you can only give speed to the ball once
-    public boolean SPACECLICK = true;
+    public boolean SPACECLICK = false;
     public long keyPressedMillis;
     public long keyPressed;
     double angularVelocity;
@@ -115,7 +115,7 @@ public class GameComponent extends JComponent {
             }
 
     /**
-     * Input method to perform action on KetStroke
+     * Input method to perform action on KeyStroke
      */
     private void setInput() {
         getInputMap().put(KeyStroke.getKeyStroke("pressed SPACE"), "SPACEclicked");
@@ -123,19 +123,23 @@ public class GameComponent extends JComponent {
         getActionMap().put("SPACEclicked", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                keyPressed = System.currentTimeMillis();
+                if (!SPACECLICK) {
+                    keyPressed = System.currentTimeMillis();
+                    SPACECLICK = true;
+                }
             }
         });
 
         getActionMap().put("SPACEreleased", new AbstractAction() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 keyPressedMillis = System.currentTimeMillis() - keyPressed;
-                System.out.println(System.currentTimeMillis() + " " + keyPressed);
+
                 System.out.println(keyPressedMillis);
+
+                SPACECLICK = false;
                 keyPressed = 0;
 
-                game.ballLaunch();
+                game.ballLaunch(keyPressedMillis/100);
             }
         });
     }
