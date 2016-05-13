@@ -9,22 +9,26 @@ import java.awt.*;
  */
 public class Ball {
     private double x, y, mass, radius;
-    private Color color;
+    private Color color1;
+    private Color color2;
     private GameVector velocity;
 
     /**
      * Constructs a Ball object with a position, mass, radius, color and velocity
-     * @param x Horisontal position of the ball(mm)
-     * @param y Vertical position of the ball(mm)
-     * @param mass The balls mass(kg)
-     * @param radius The balls radius(mm)
-     * @param color The color of the ball
+     *
+     * @param x        Horisontal position of the ball(mm)
+     * @param y        Vertical position of the ball(mm)
+     * @param mass     The balls mass(kg)
+     * @param radius   The balls radius(mm)
+     * @param color1    The first color of the ball
+     * @param color2    The second color of the ball
      * @param velocity The velocity of the ball(mm/s)
      */
-    public Ball(double x, double y, double mass, double radius, Color color, GameVector velocity){
+    public Ball(double x, double y, double mass, double radius, Color color1, Color color2, GameVector velocity) {
         this.x = x;
         this.y = y;
-        this.color = color;
+        this.color1 = color1;
+        this.color2 = color2;
         this.mass = mass;
         this.radius = radius;
         this.velocity = velocity;
@@ -52,12 +56,20 @@ public class Ball {
     }
 
     public Color getColor() {
-        return color;
+        return color1;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
+    public void setColor1(Color color) {
+        this.color1 = color;
     }
+
+    public Color getColor2() {
+        return color2;
+    }
+    public void setColor2(Color color) {
+        this.color2 = color;
+    }
+
 
     public double getMass() {
         return mass;
@@ -79,7 +91,13 @@ public class Ball {
         return radius * 2;
     }
 
-    public GameVector getVelocity() { return velocity; }
+    public GameVector getVelocity() {
+        return velocity;
+    }
 
-    public void setVelocity(GameVector velocity) { this.velocity = velocity; }
+    public void setVelocity(GameVector velocity) {
+        this.velocity = velocity;
+    }
+
+
 }

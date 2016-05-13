@@ -91,7 +91,7 @@ public class Game {
      */
     public void ballLaunch(){
 
-        ball.setVelocity( new GameVector(2.0/fps, 10.0/fps));
+        ball.setVelocity( new GameVector(ball.getVelocity().getX() + 3.0/fps, 7.0/fps));
 
     }
 }
