@@ -20,7 +20,8 @@ public class Game {
     private double groundHeight;
     private GameVector gravity;
     private GameVector airResistance;
-
+    private double gravitySize;
+    private GameVector friction;
 
 
     /**
@@ -28,9 +29,10 @@ public class Game {
      * creates a GameVector representing gravity
      */
     public Game() {
-        ball = new Ball(3.0, 0.5, 10.0, 0.5, Color.RED, new GameVector(0/fps, 0/fps));
-        groundHeight = 0.5;
-        gravity = new GameVector(0, (-9.8/fps)/fps);
+        ball = new Ball(2.0, 5.0, 2.0, 0.5, Color.RED, Color.ORANGE, new GameVector(0.5/fps, -3.0/fps));
+        groundHeight = 0.8;
+        gravitySize = -9.8;
+        gravity = new GameVector(0, (gravitySize/fps)/fps);
 
 
     }
@@ -48,10 +50,14 @@ public class Game {
         if(ball.getyPos() - ball.getDiameter() <= groundHeight && ball.getVelocity().getY() < 0) {
             ball.getVelocity().setPos(ball.getVelocity().getX(), -(ball.getVelocity().getY()));
             ball.setPos(ball.getxPos(), groundHeight + ball.getDiameter());
+            friction=Force.getFriction(ball.getMass(), gravitySize, ball.getVelocity().getX());
+            applyFriction();
         }
 
         //Printing some information about the ball
-        System.out.printf("HASTIGHET:%10f", ball.getVelocity().getY());
+        System.out.printf("X-HASTIGHET:%10f", ball.getVelocity().getX());
+        System.out.printf("   Y-HASTIGHET:%10f", ball.getVelocity().getY());
+        System.out.printf("   XPOS:%10f", ball.getxPos());
         System.out.printf("   YPOS:%10f", ball.getyPos());
         System.out.println("   UPDATE TIME: " + updateTime);
 
@@ -68,6 +74,10 @@ public class Game {
         GameVector acceleration = Force.calculateAcceleration(mass, airResistance);
         applyAcceleration(acceleration);
     }
+    public void applyFriction(){
+        GameVector acceleration = Force.calculateAcceleration(ball.getMass(), friction);
+        applyAcceleration(acceleration);
+    }
 
     public Ball getBall() {
         return ball;
@@ -77,13 +87,12 @@ public class Game {
         return groundHeight;
     }
 
-
     /**
      * Gives the ball speed when pressing space
      */
-    public void ballLaunch(){
+    public void ballLaunch(double launchForce){
 
-        ball.setVelocity( new GameVector(40.0/fps, 10.0/fps));
+        ball.setVelocity( new GameVector(2.0/fps * launchForce * 2, 0.5/fps * launchForce));
 
     }
 }

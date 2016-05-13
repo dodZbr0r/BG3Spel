@@ -1,6 +1,7 @@
 package Graphics;
 
 import MainGame.Game;
+import Physics.GameVector;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -16,16 +17,18 @@ import java.io.IOException;
 public class GameComponent extends JComponent {
 
     public Game game;
-    public ScrollingBackground scrBackground;
-    public ScrollingBackground scrGround;
+    public ScrollingBackground scrollingBackground;
+    public ScrollingGround scrollingGround;
     // Window bounds
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
     // Images
     BufferedImage background, ground, heaven, heavenHigher;
     //boolean so you can only give speed to the ball once
-    public boolean SPACECLICK = true;
-
+    public boolean SPACECLICK = false;
+    public long keyPressedMillis;
+    public long keyPressed;
+    double angularVelocity;
 
     /**
      * Connstructs a GameComponent with a game object and a few images
@@ -37,12 +40,10 @@ public class GameComponent extends JComponent {
         setInput();
 
         try{
-            background = ImageIO.read(new File("data/layer-1.png"));
-        } catch(IOException e){
-            System.out.println("Background Not Found");
-        }
+            background = ImageIO.read(new File("data/layer-1-double.png"));
+        } catch(IOException e){}
         try {
-            ground = ImageIO.read(new File("data/tile.png"));
+            ground = ImageIO.read(new File("data/layer-2-double.png"));
         } catch (IOException e) {}
         try {
             heaven = ImageIO.read(new File("data/Heaven.png"));
@@ -51,8 +52,8 @@ public class GameComponent extends JComponent {
             heavenHigher = ImageIO.read(new File("data/HeavenHigher.png"));
         } catch (IOException e) {}
 
-        scrBackground = new ScrollingBackground(background, 0, 0, WIDTH, HEIGHT);
-        scrGround = new ScrollingBackground(ground, 0, HEIGHT - 50, WIDTH, 50);
+        scrollingBackground = new ScrollingBackground(background);
+        scrollingGround = new ScrollingGround(ground);
 
     }
 
@@ -66,9 +67,7 @@ public class GameComponent extends JComponent {
         Graphics2D g2 = (Graphics2D) g;
 
         // Background
-        // g2.drawImage(background, 0, 0, WIDTH, HEIGHT, this);
-        scrBackground.draw(g2, unitConversion(game.getBall().getVelocity().getX() / 2));
-        scrGround.draw(g2, unitConversion(game.getBall().getVelocity().getX()));
+        scrollingBackground.draw(g2, unitConversion(game.getBall().getVelocity().getX()));
 
         //Heaven Higher
         g2.drawImage(heavenHigher, 0, -(2*HEIGHT), WIDTH, HEIGHT, this);
@@ -77,16 +76,25 @@ public class GameComponent extends JComponent {
         g2.drawImage(heaven, 0, -HEIGHT, WIDTH, HEIGHT, this);
 
         //Ground
-       // for(int i=0 ; i <= WIDTH; i+=50){
-         //   g2.drawImage(ground, i, HEIGHT-50, 50, 50, this);
-        //}
+        scrollingGround.draw(g2, unitConversion(game.getBall().getVelocity().getX()));
 
-        // Ball
+        // Ball pt 1
         g2.setColor(game.getBall().getColor());
-        g2.fillOval(unitConversion(game.getBall().getxPos()), yConversion(game.getBall().getyPos()),
-                unitConversion(game.getBall().getDiameter()), unitConversion(game.getBall().getDiameter()));
+        g2.fillArc(unitConversion(game.getBall().getxPos()), yConversion(game.getBall().getyPos()),
+                    unitConversion(game.getBall().getDiameter()), unitConversion(game.getBall().getDiameter()), (int)angularVelocity, 90);
+        g2.fillArc(unitConversion(game.getBall().getxPos()), yConversion(game.getBall().getyPos()),
+                unitConversion(game.getBall().getDiameter()), unitConversion(game.getBall().getDiameter()), (int)angularVelocity + 180, 90);
 
-    }
+        //Ball pt 2
+        g2.setColor(game.getBall().getColor2());
+        g2.fillArc(unitConversion(game.getBall().getxPos()), yConversion(game.getBall().getyPos()),
+                unitConversion(game.getBall().getDiameter()), unitConversion(game.getBall().getDiameter()), (int)angularVelocity + 90, 90);
+        g2.fillArc(unitConversion(game.getBall().getxPos()), yConversion(game.getBall().getyPos()),
+                unitConversion(game.getBall().getDiameter()), unitConversion(game.getBall().getDiameter()), (int)angularVelocity + 270, 90);
+
+        angularVelocity -= 50*(game.getBall().getVelocity().getX());
+        }
+
 
     /**
      * Converts millimeters into pixels
@@ -107,22 +115,32 @@ public class GameComponent extends JComponent {
             }
 
     /**
-     * Input method to perform action on KetStroke
+     * Input method to perform action on KeyStroke
      */
     private void setInput() {
-
-
-
-        getInputMap().put(KeyStroke.getKeyStroke("released SPACE"), "SPACE");
-        getActionMap().put("SPACE", new AbstractAction() {
+        getInputMap().put(KeyStroke.getKeyStroke("pressed SPACE"), "SPACEclicked");
+        getInputMap().put(KeyStroke.getKeyStroke("released SPACE"), "SPACEreleased");
+        getActionMap().put("SPACEclicked", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(SPACECLICK == true) {
-                    game.ballLaunch();
+                if (!SPACECLICK) {
+                    keyPressed = System.currentTimeMillis();
+                    SPACECLICK = true;
                 }
-                SPACECLICK = true;
             }
-        }
-        );
+        });
+
+        getActionMap().put("SPACEreleased", new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                keyPressedMillis = System.currentTimeMillis() - keyPressed;
+
+                System.out.println(keyPressedMillis);
+
+                SPACECLICK = false;
+                keyPressed = 0;
+
+                game.ballLaunch(keyPressedMillis/100);
+            }
+        });
     }
 }

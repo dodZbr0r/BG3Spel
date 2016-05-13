@@ -1,0 +1,11 @@
+Bug: Bollen oscillerar runt marknivå när den egentligen borde vara stilla
+    i y-led, d.v.s. inte ha någon hastighet i y-led.
+    Orsakas av att gravitation skapar en negativ hastighet i y-led,
+    vilket flyttar bollen under marken. Sedan flyttar "kollisionskontrollen"
+    upp bollen till marknivå och gör hastigheten positiv. Denna hastighet motverkas sedan
+    av gravitationen i nästa uppdatering.
+
+Bug: Bakgrunden och marken stannar när bollen fortfarande har en hastighet i x-led.
+    Orsakas av att bollens hastighet blir väldigt liten (0.000 någonting), men
+    avrundas ör bakgrunden om marken till 0 då ScrollingBackground och ScrollingGround arbetar i int, eftersom
+    drawImage bara hanterar int.

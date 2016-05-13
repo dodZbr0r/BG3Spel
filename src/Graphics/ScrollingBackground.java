@@ -9,12 +9,12 @@ import java.awt.image.WritableRaster;
  * Created by DanielHolmberg on 2016-05-12.
  */
 public class ScrollingBackground {
-    private int screenWidth;
-    private int screenHeight;
+    private double screenWidth;
+    private double screenHeight;
     private BufferedImage background;
     private BufferedImage background2;
-    private int x1, x2;
-    private int y1, y2;
+    private double x1, x2;
+    private double y1, y2;
 
     public ScrollingBackground(BufferedImage image, int x, int y, int width, int height){
         screenWidth = width;
@@ -37,9 +37,9 @@ public class ScrollingBackground {
     }
 
     public void draw(Graphics2D g, int velocityX){
-        updatePosition(velocityX);
-        g.drawImage(background, x1, y1, screenWidth, screenHeight, null);
-        g.drawImage(background2, x2, y2, screenWidth, screenHeight, null);
+        updatePosition(velocityX/4);
+        g.drawImage(background, (int) x1, (int) y1, (int) (screenWidth * 2), (int) screenHeight, null);
+        g.drawImage(background2, (int) x2, (int) y2, (int) (screenWidth * 2), (int) screenHeight, null);
     }
 
     private void updatePosition(int velocityX) {
