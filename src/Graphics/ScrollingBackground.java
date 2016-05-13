@@ -37,9 +37,9 @@ public class ScrollingBackground {
     }
 
     public void draw(Graphics2D g, int velocityX){
-        updatePosition(velocityX);
-        g.drawImage(background, x1, y1, screenWidth, screenHeight, null);
-        g.drawImage(background2, x2, y2, screenWidth, screenHeight, null);
+        updatePosition(velocityX/4);
+        g.drawImage(background, x1, y1, screenWidth * 2, screenHeight, null);
+        g.drawImage(background2, x2, y2, screenWidth * 2, screenHeight, null);
     }
 
     private void updatePosition(int velocityX) {
