@@ -29,8 +29,8 @@ public class Game {
      * creates a GameVector representing gravity
      */
     public Game() {
-        ball = new Ball(2.0, 5.0, 2.0, 0.5, Color.RED, Color.BLUE, new GameVector(0.5/fps, -3.0/fps));
-        groundHeight = 0.5;
+        ball = new Ball(2.0, 5.0, 2.0, 0.5, Color.RED, Color.ORANGE, new GameVector(0.5/fps, -3.0/fps));
+        groundHeight = 0.8;
         gravitySize = -9.8;
         gravity = new GameVector(0, (gravitySize/fps)/fps);
 
@@ -65,8 +65,7 @@ public class Game {
      * Performs calculations for the ball to be affected by an acceleration vector
      * @param acceleration The acceleration vector that will affect the object
      */
-    public void applyAcceleration(GameVector acceleration) {
-        ball.setVelocity(GameVector.addVectors(ball.getVelocity(), acceleration));}
+    public void applyAcceleration(GameVector acceleration) {ball.setVelocity(GameVector.addVectors(ball.getVelocity(), acceleration));}
 
     public void applyAirResistance(){
         double mass = ball.getMass();
@@ -85,14 +84,13 @@ public class Game {
     public double getGroundHeight() {
         return groundHeight;
     }
-
-
+    
     /**
      * Gives the ball speed when pressing space
      */
-    public void ballLaunch(){
+    public void ballLaunch(double launchForce){
 
-        ball.setVelocity( new GameVector(ball.getVelocity().getX() + 3.0/fps, 7.0/fps));
+        ball.setVelocity( new GameVector(2.0/fps * launchForce * 2, 0.5/fps * launchForce));
 
     }
 }
