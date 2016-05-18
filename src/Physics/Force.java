@@ -17,7 +17,7 @@ public class Force {
     }
 
     /**
-     * Calcualtes the acceleration of an object given the force affecting the object
+     * Calculates the acceleration of an object given the force affecting the object
      * and the mass of the object.
      * @param mass The mass of the object
      * @param force The net force affecting the object
@@ -62,9 +62,17 @@ public class Force {
                 sign=-1;
         return res = sign*0.5*coefficient*density*area*velocity*velocity;
     }
+
+    /**
+     * Creates a vector for the rolling friction of an object.
+     * @param mass The mass of the object
+     * @param gravitySize The value of gravitational acceleration
+     * @param xVelocity The horizontal velocity of the object
+     * @return The friction vector
+     */
     public static GameVector getFriction (double mass, double gravitySize, double xVelocity){
         int sign=1;
-        double k=0.0001;
+        double k=0.001;
         double normal = -mass*gravitySize;
         if (xVelocity > 0)
             sign=-1;
