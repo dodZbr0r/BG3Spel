@@ -28,7 +28,9 @@ public class GameComponent extends JComponent {
     //boolean so you can only give speed to the ball once
     public boolean SPACECLICK = false;
     public double keyPressedMillis;
+    public double tempKeyPressed;
     public double keyPressed;
+    public double convertedValue;
     double angularVelocity;
 
     /**
@@ -93,6 +95,11 @@ public class GameComponent extends JComponent {
         g2.fillArc(unitConversion(game.getBall().getxPos()), yConversion(game.getBall().getyPos()),
                 unitConversion(game.getBall().getDiameter()), unitConversion(game.getBall().getDiameter()), (int)angularVelocity + 270, 90);
 
+        //Crude temporary spring
+        g2.setColor(Color.black);
+        g2.drawLine(400, 500, 400+(int)(convertedValue*50), 500-(int)(convertedValue*50));
+        g2.drawLine(401, 500, 401+(int)(convertedValue*50), 500-(int)(convertedValue*50));
+
         angularVelocity -= 50*(game.getBall().getVelocity().getX());
         }
 
@@ -122,11 +129,24 @@ public class GameComponent extends JComponent {
         getInputMap().put(KeyStroke.getKeyStroke("pressed SPACE"), "SPACEclicked");
         getInputMap().put(KeyStroke.getKeyStroke("released SPACE"), "SPACEreleased");
         getActionMap().put("SPACEclicked", new AbstractAction() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 if (!SPACECLICK) {
                     keyPressed = System.currentTimeMillis();
                     SPACECLICK = true;
+                }
+
+                keyPressedMillis = System.currentTimeMillis() - keyPressed;
+                convertedValue = keyPressedMillis/1000;
+
+                if (convertedValue >= 5) {
+                    if (convertedValue >= 10) {
+                        convertedValue = convertedValue%10;
+                        if (convertedValue >= 5) {
+                            convertedValue = 5 - (convertedValue % 5);
+                        }
+                    } else {
+                        convertedValue = 5 - (convertedValue % 5);
+                    }
                 }
             }
         });
@@ -136,14 +156,17 @@ public class GameComponent extends JComponent {
                 keyPressedMillis = System.currentTimeMillis() - keyPressed;
 
                 System.out.println(keyPressedMillis);
-                double convertedValue = keyPressedMillis/1000;
+                convertedValue = keyPressedMillis/1000;
 
                 SPACECLICK = false;
                 keyPressed = 0;
 
                 if (convertedValue >= 5) {
-                    if (convertedValue%10 == 0) {
-                        convertedValue = 5;
+                    if (convertedValue >= 10) {
+                        convertedValue = convertedValue%10;
+                        if (convertedValue >= 5) {
+                            convertedValue = 5 - (convertedValue % 5);
+                        }
                     } else {
                         convertedValue = 5 - (convertedValue % 5);
                     }
