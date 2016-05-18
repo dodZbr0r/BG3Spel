@@ -54,6 +54,11 @@ public class Game {
             applyFriction();
         }
 
+        if(Math.abs(ball.getVelocity().getX()) < 0.01) {
+            double velY = ball.getVelocity().getY();
+            ball.setVelocity(new GameVector(0.0, velY));
+        }
+
         //Printing some information about the ball
         System.out.printf("X-HASTIGHET:%10f", ball.getVelocity().getX());
         System.out.printf("   Y-HASTIGHET:%10f", ball.getVelocity().getY());
