@@ -90,9 +90,10 @@ public class Game {
     /**
      * Gives the ball speed when pressing space
      */
-    public void ballLaunch(double launchForce){
+    public void ballLaunch(double launchForce) {
 
-        ball.setVelocity( new GameVector(2.0/fps * launchForce * 2, 0.5/fps * launchForce));
+
+        ball.setVelocity( new GameVector(1 * launchForce, 0.1 * launchForce));
 
     }
 }

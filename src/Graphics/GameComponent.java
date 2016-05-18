@@ -2,6 +2,7 @@ package Graphics;
 
 import MainGame.Game;
 import Physics.GameVector;
+import javafx.application.Application;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -26,8 +27,8 @@ public class GameComponent extends JComponent {
     BufferedImage background, ground, heaven, heavenHigher;
     //boolean so you can only give speed to the ball once
     public boolean SPACECLICK = false;
-    public long keyPressedMillis;
-    public long keyPressed;
+    public double keyPressedMillis;
+    public double keyPressed;
     double angularVelocity;
 
     /**
@@ -135,11 +136,29 @@ public class GameComponent extends JComponent {
                 keyPressedMillis = System.currentTimeMillis() - keyPressed;
 
                 System.out.println(keyPressedMillis);
+                double convertedValue = keyPressedMillis/1000;
 
                 SPACECLICK = false;
                 keyPressed = 0;
 
-                game.ballLaunch(keyPressedMillis/100);
+                if (convertedValue >= 5) {
+                    if (convertedValue%10 == 0) {
+                        convertedValue = 5;
+                    } else {
+                        convertedValue = 5 - (convertedValue % 5);
+                    }
+                }
+
+                game.ballLaunch(convertedValue);
+            }
+        });
+
+        getInputMap().put(KeyStroke.getKeyStroke("released R"), "R");
+        getActionMap().put("R", new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                game.getBall().setxPos(2);
+                game.getBall().setyPos(0);
+                game.getBall().setVelocity(new GameVector(0, 0));
             }
         });
     }
