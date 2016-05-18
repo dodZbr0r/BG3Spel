@@ -27,6 +27,7 @@ public class Main{
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+        frame.setResizable(false);
         lastUpdate = System.currentTimeMillis();
 
         AbstractAction updateAction = new AbstractAction() {

@@ -24,7 +24,7 @@ public class GameComponent extends JComponent {
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
     // Images
-    BufferedImage background, ground, heaven, heavenHigher;
+    BufferedImage background, ground, heaven, heavenHigher, bed;
     //boolean so you can only give speed to the ball once
     public boolean SPACECLICK = false;
     public double keyPressedMillis;
@@ -32,6 +32,8 @@ public class GameComponent extends JComponent {
     public double keyPressed;
     public double convertedValue;
     double angularVelocity;
+    // Fonts
+    private Font font;
 
     /**
      * Connstructs a GameComponent with a game object and a few images
@@ -58,6 +60,9 @@ public class GameComponent extends JComponent {
         scrollingBackground = new ScrollingBackground(background);
         scrollingGround = new ScrollingGround(ground);
 
+        // Set the font of the Score string.
+        font = new Font("Arial", Font.BOLD, 22);
+
     }
 
     @Override
@@ -71,6 +76,9 @@ public class GameComponent extends JComponent {
 
         // Background
         scrollingBackground.draw(g2, unitConversion(game.getBall().getVelocity().getX()));
+
+        // Spring
+        g2.drawImage(bed, 400, HEIGHT-180, 100, 100, null);
 
         //Heaven Higher
         g2.drawImage(heavenHigher, 0, -(2*HEIGHT), WIDTH, HEIGHT, this);
@@ -101,7 +109,12 @@ public class GameComponent extends JComponent {
         g2.drawLine(401, 500, 401+(int)(convertedValue*50), 500-(int)(convertedValue*50));
 
         angularVelocity -= 50*(game.getBall().getVelocity().getX());
-        }
+
+        // Score: Distance Bounced
+        g2.setColor(new Color(255, 255, 255));
+        g2.setFont(font);
+        g2.drawString("Score: ", 20, 40);
+    }
 
 
     /**
