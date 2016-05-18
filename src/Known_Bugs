@@ -7,5 +7,5 @@ Bug: Bollen oscillerar runt marknivå när den egentligen borde vara stilla
 
 Bug: Bakgrunden och marken stannar när bollen fortfarande har en hastighet i x-led.
     Orsakas av att bollens hastighet blir väldigt liten (0.000 någonting), men
-    avrundas ör bakgrunden om marken till 0 då ScrollingBackground och ScrollingGround arbetar i int, eftersom
+    avrundas för bakgrunden och marken till 0 då ScrollingBackground och ScrollingGround arbetar i int, eftersom
     drawImage bara hanterar int.
