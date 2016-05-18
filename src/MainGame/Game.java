@@ -74,11 +74,18 @@ public class Game {
      */
     public void applyAcceleration(GameVector acceleration) {ball.setVelocity(GameVector.addVectors(ball.getVelocity(), acceleration));}
 
+    /**
+     * Adds acceleration caused by air resistance to the total acceleration
+     */
     public void applyAirResistance(){
         double mass = ball.getMass();
         GameVector acceleration = Force.calculateAcceleration(mass, airResistance);
         applyAcceleration(acceleration);
     }
+
+    /**
+     * Adds acceleration caused vy friction to the total acceleration
+     */
     public void applyFriction(){
         GameVector acceleration = Force.calculateAcceleration(ball.getMass(), friction);
         applyAcceleration(acceleration);
