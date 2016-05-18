@@ -16,16 +16,16 @@ public class ScrollingBackground {
     private double x1, x2;
     private double y1, y2;
 
-    public ScrollingBackground(BufferedImage image, int x, int y, int width, int height){
-        screenWidth = width;
-        screenHeight = height;
+    public ScrollingBackground(BufferedImage image){
+        screenWidth = GameComponent.WIDTH;
+        screenHeight = GameComponent.HEIGHT;
         this.background = image;
         background2 = deepCopy(image);   // Clones the incoming BufferedImage image
 
-        x1 = x;
-        y1 = y;
-        x2 = width;
-        y2 = y;
+        x1 = 0;
+        y1 = 0;
+        x2 = screenWidth;
+        y2 = 0;
 
     }
 
@@ -36,13 +36,13 @@ public class ScrollingBackground {
         return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
     }
 
-    public void draw(Graphics2D g, int velocityX){
+    public void draw(Graphics2D g, double velocityX){
         updatePosition(velocityX/4);
         g.drawImage(background, (int) x1, (int) y1, (int) (screenWidth * 2), (int) screenHeight, null);
         g.drawImage(background2, (int) x2, (int) y2, (int) (screenWidth * 2), (int) screenHeight, null);
     }
 
-    private void updatePosition(int velocityX) {
+    private void updatePosition(double velocityX) {
 
         if(x1 <= -screenWidth){
             x1 = screenWidth;
