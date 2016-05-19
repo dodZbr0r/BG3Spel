@@ -22,6 +22,7 @@ public class Game {
     private GameVector airResistance;
     private double gravitySize;
     private GameVector friction;
+    private double score;
 
 
     /**
@@ -58,6 +59,8 @@ public class Game {
             double velY = ball.getVelocity().getY();
             ball.setVelocity(new GameVector(0.0, velY));
         }
+
+        setScore(score + ball.getVelocity().getX());
 
         //Printing some information about the ball
         System.out.printf("X-HASTIGHET:%10f", ball.getVelocity().getX());
@@ -107,5 +110,13 @@ public class Game {
 
         ball.setVelocity( new GameVector(1 * launchForce, 0.1 * launchForce));
 
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    private void setScore(double score) {
+        this.score = score;
     }
 }
