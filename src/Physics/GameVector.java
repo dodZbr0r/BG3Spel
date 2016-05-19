@@ -27,12 +27,31 @@ public class GameVector {
         this.y = y;
     }
 
+    public GameVector(double length, double angle, boolean polarCoordinates){
+        this.x = length * Math.cos(angle);
+        this.y = length * Math.sin(angle);
+    }
+
     public double getX() {
         return x;
     }
 
     public double getY() {
         return y;
+    }
+
+    public double getAngle(){
+        if (y>=0){
+          return Math.acos(x/getLength());
+        }
+        else {
+            if (x>=0){
+                return Math.asin(y/getLength());
+            }
+            else {
+                return Math.acos(-x/getLength()) + Math.PI;
+            }
+        }
     }
 
     public void setPos(double xPos, double yPos) {
