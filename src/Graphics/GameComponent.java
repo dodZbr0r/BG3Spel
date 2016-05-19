@@ -121,7 +121,12 @@ public class GameComponent extends JComponent {
         // Score: Distance Bounced
         g2.setColor(new Color(255, 255, 255));
         g2.setFont(font);
-        g2.drawString("Score: " + Math.round(game.getScore()), 20, 40);
+        g2.drawString("Score: " + Math.round(game.getScore()), 20, 30);
+
+        // Highscore
+        g2.setColor(new Color(255, 255, 255));
+        g2.setFont(font);
+        g2.drawString("Highscore: " + 1337, 20, 50);
     }
 
 
