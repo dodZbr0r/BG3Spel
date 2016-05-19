@@ -24,6 +24,7 @@ public class Game {
     private GameVector friction;
     private double score;
     private double highscore;
+    private double timeStationary=0;
 
 
     /**
@@ -73,7 +74,7 @@ public class Game {
         System.out.printf("   YPOS:%10f", ball.getY());
         System.out.println("   UPDATE TIME: " + updateTime);
 
-
+        updateTimeStationary(updateTime);
     }
 
     /**
@@ -92,7 +93,7 @@ public class Game {
     }
 
     /**
-     * Adds acceleration caused vy friction to the total acceleration
+     * Adds acceleration caused by friction to the total acceleration
      */
     private void applyFriction(){
         GameVector acceleration = Force.calculateAcceleration(ball.getMass(), friction);
@@ -116,7 +117,6 @@ public class Game {
         ball.setVelocity( new GameVector(2 * launchForce, 0.15 * launchForce));
 
     }
-
     /**
      * Resets the game
      */
@@ -124,6 +124,15 @@ public class Game {
         ball.setPos(2,0);
         ball.setVelocity(new GameVector(0, 0));
         setScore(0);
+    }
+    public void updateTimeStationary(double updateTime){
+        if (Math.abs(ball.getVelocity().getX())<0.01 && Math.abs(ball.getVelocity().getY())<0.01 && getScore()!=0) {
+            timeStationary += updateTime;
+            if (timeStationary >= 5000)
+                reset();
+        }else
+            timeStationary=0;
+
     }
 
     public boolean detectFinish() {
