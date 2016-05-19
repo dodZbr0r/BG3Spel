@@ -29,6 +29,7 @@ public class GameComponent extends JComponent {
     //boolean so you can only give speed to the ball once
     private boolean decideAngle = true;
     private boolean decideForce = false;
+    private boolean finalClick = true;
     private double keyPressedMillis;
     private double keyPressed;
     private double convertedValue;
@@ -181,8 +182,9 @@ public class GameComponent extends JComponent {
                     forceTimer.start();
 
                     decideForce = false;
-                } else if (!decideAngle & !decideForce) {
+                } else if (!decideAngle & !decideForce & finalClick) {
                     forceTimer.stop();
+                    finalClick = false;
 
                     game.ballLaunch(convertedValue);
                 }
@@ -198,18 +200,19 @@ public class GameComponent extends JComponent {
                 convertedValue = 0;
                 decideAngle = true;
                 decideForce = false;
+                finalClick = true;
                 game.reset();
             }
         });
     }
 
-    Timer angleTimer = new Timer(17, new ActionListener() {
+    Timer angleTimer = new Timer(8, new ActionListener() {
         public void actionPerformed(ActionEvent e) {
 
         }
     });
 
-    Timer forceTimer = new Timer(17, new ActionListener() {
+    Timer forceTimer = new Timer(8, new ActionListener() {
         public void actionPerformed(ActionEvent e) {
 
             keyPressedMillis = System.currentTimeMillis() - keyPressed;
