@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -26,9 +27,9 @@ public class GameComponent extends JComponent {
     // Images
     private BufferedImage background, ground, heaven, heavenHigher, bed;
     //boolean so you can only give speed to the ball once
-    private boolean SPACECLICK = false;
+    private boolean decideAngle = true;
+    private boolean decideForce = false;
     private double keyPressedMillis;
-    public double tempKeyPressed;
     private double keyPressed;
     private double convertedValue;
     private double angularVelocity;
@@ -73,12 +74,10 @@ public class GameComponent extends JComponent {
 
     }
 
-    @Override
     public Dimension getPreferredSize() {
         return new Dimension(WIDTH, HEIGHT);
     }
 
-    @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
 
@@ -112,9 +111,12 @@ public class GameComponent extends JComponent {
                 unitConversion(game.getBall().getWidth()), unitConversion(game.getBall().getWidth()), (int)angularVelocity + 270, 90);
 
         //Crude temporary spring
+        g2.setColor(Color.yellow);
+        g2.drawLine(400, 500, 650, 250);
+        g2.drawLine(401, 500, 651, 250);
         g2.setColor(Color.black);
-        g2.drawLine(400, 500, 400+(int)(convertedValue*50), 500-(int)(convertedValue*50));
-        g2.drawLine(401, 500, 401+(int)(convertedValue*50), 500-(int)(convertedValue*50));
+        g2.drawLine(400, 500, 400+(int)(convertedValue*250), 500-(int)(convertedValue*250));
+        g2.drawLine(401, 500, 401+(int)(convertedValue*250), 500-(int)(convertedValue*250));
 
         angularVelocity -= 50*(game.getBall().getVelocity().getX());
 
@@ -152,63 +154,79 @@ public class GameComponent extends JComponent {
      * Input method to perform action on KeyStroke
      */
     private void setInput() {
-        getInputMap().put(KeyStroke.getKeyStroke("pressed SPACE"), "SPACEclicked");
+        getInputMap().put(KeyStroke.getKeyStroke("pressed SPACE"), "SPACEpressed");
         getInputMap().put(KeyStroke.getKeyStroke("released SPACE"), "SPACEreleased");
-        getActionMap().put("SPACEclicked", new AbstractAction() {
+        getActionMap().put("SPACEpressed", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                if (!SPACECLICK) {
-                    keyPressed = System.currentTimeMillis();
-                    SPACECLICK = true;
-                }
-
-                keyPressedMillis = System.currentTimeMillis() - keyPressed;
-                convertedValue = keyPressedMillis/1000;
-
-                if (convertedValue >= 5) {
-                    if (convertedValue >= 10) {
-                        convertedValue = convertedValue%10;
-                        if (convertedValue >= 5) {
-                            convertedValue = 5 - (convertedValue % 5);
-                        }
-                    } else {
-                        convertedValue = 5 - (convertedValue % 5);
-                    }
-                }
             }
         });
 
         getActionMap().put("SPACEreleased", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                keyPressedMillis = System.currentTimeMillis() - keyPressed;
 
-                System.out.println(keyPressedMillis);
-                convertedValue = keyPressedMillis/1000;
 
-                SPACECLICK = false;
-                keyPressed = 0;
 
-                if (convertedValue >= 5) {
-                    if (convertedValue >= 10) {
-                        convertedValue = convertedValue%10;
-                        if (convertedValue >= 5) {
-                            convertedValue = 5 - (convertedValue % 5);
-                        }
-                    } else {
-                        convertedValue = 5 - (convertedValue % 5);
-                    }
+                if (decideAngle) {
+                    keyPressed = System.currentTimeMillis();
+
+                    angleTimer.start();
+
+                    decideAngle = false;
+                    decideForce = true;
+                } else if (decideForce) {
+                    angleTimer.stop();
+
+                    keyPressed = System.currentTimeMillis();
+
+                    forceTimer.start();
+
+                    decideForce = false;
+                } else if (!decideAngle & !decideForce) {
+                    forceTimer.stop();
+
+                    game.ballLaunch(convertedValue);
                 }
-
-                game.ballLaunch(convertedValue);
             }
         });
 
         getInputMap().put(KeyStroke.getKeyStroke("released R"), "R");
         getActionMap().put("R", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
+                game.getBall().setVelocity(new GameVector(0, 0));
+                keyPressedMillis = 0;
+                keyPressed = 0;
+                convertedValue = 0;
+                decideAngle = true;
+                decideForce = false;
                 game.reset();
             }
         });
     }
+
+    Timer angleTimer = new Timer(17, new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    });
+
+    Timer forceTimer = new Timer(17, new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+
+            keyPressedMillis = System.currentTimeMillis() - keyPressed;
+            convertedValue = keyPressedMillis / 1000;
+
+            if (convertedValue >= 1) {
+                if (convertedValue >= 2) {
+                    convertedValue = convertedValue % 2;
+                    if (convertedValue >= 1) {
+                        convertedValue = 1 - (convertedValue % 1);
+                    }
+                } else {
+                    convertedValue = 1 - (convertedValue % 1);
+                }
+            }
+        }
+    });
 
     static int getWIDTH() {
         return WIDTH;

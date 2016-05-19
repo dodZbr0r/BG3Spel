@@ -31,7 +31,7 @@ public class Game {
      * creates a GameVector representing gravity
      */
     Game() {
-        ball = new Ball(2.0, 5.0, 2.0, 0.5, Color.RED, Color.ORANGE, new GameVector(0.5/fps, -3.0/fps));
+        ball = new Ball(2.0, 5.0, 5.0, 0.2, Color.red, Color.orange, new GameVector(0.5/fps, -3.0/fps));
         groundHeight = 0.8;
         gravitySize = -9.8;
         gravity = new GameVector(0, (gravitySize/fps)/fps);
@@ -113,7 +113,7 @@ public class Game {
     public void ballLaunch(double launchForce) {
 
 
-        ball.setVelocity( new GameVector(1 * launchForce, 0.1 * launchForce));
+        ball.setVelocity( new GameVector(2 * launchForce, 0.15 * launchForce));
 
     }
 
