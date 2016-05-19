@@ -5,8 +5,15 @@ import java.lang.Math;
 /**
  * Created by Erik-S on 2016-05-11.
  */
+
+/**
+ * A class representing a vector, expressed as the x- and y-coordinates of
+ * the point the vector is pointing to. This means the vector is applied relatively
+ * to its origin point, and not  relative to a global origo.
+ */
 public class GameVector {
 
+    //The x- and y-coordinates of the point the vector is pointing to
     private double x;
     private double y;
 
@@ -54,7 +61,7 @@ public class GameVector {
     }
 
     /**
-     * Multiplys a vector with a number and creates a new vector
+     * Multiplies a vector with a number and creates a new vector
      * with the new length and the same angle as the old vector
      * @param number The number with which to multiply the vector
      * @param vector The vector to be multiplied with
