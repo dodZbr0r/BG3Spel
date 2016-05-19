@@ -16,10 +16,9 @@ import static Physics.Force.getAirResistance;
 public class Game {
 
     private static final double fps = 60;
-    private Ball ball;
+    private Ball ball1, ball2;
     private double groundHeight;
     private GameVector gravity;
-    private GameVector airResistance;
     private double gravitySize;
     private GameVector friction;
     private double score;
@@ -31,8 +30,9 @@ public class Game {
      * creates a GameVector representing gravity
      */
     Game() {
-        ball = new Ball(2.0, 5.0, 2.0, 0.5, Color.RED, Color.ORANGE, new GameVector(0.5/fps, -3.0/fps));
-        groundHeight = 0.8;
+        ball1 = new Ball(2.0, 1.5, 3.0, 0.5, Color.RED, Color.ORANGE, new GameVector(3.0/fps, 5.0/fps));
+        ball2 = new Ball(6.0, 1.5, 13.0, 0.5, Color.BLUE, Color.GREEN, new GameVector(-1.2/fps, 7.0/fps));
+        groundHeight = 0.5;
         gravitySize = -9.8;
         gravity = new GameVector(0, (gravitySize/fps)/fps);
     }
@@ -42,35 +42,56 @@ public class Game {
      * @param updateTime The time it took to update in milliseconds
      */
     void update(double updateTime) {
-        applyAcceleration(gravity);
-        airResistance = getAirResistance(ball.getVelocity(), ball.getRadius());
-        applyAirResistance();
-        ball.setPos(ball.getX(), ball.getY() + ball.getVelocity().getY());
+        applyAcceleration(ball1, gravity);
+        applyAcceleration(ball2, gravity);
 
-        if(ball.getY() - ball.getWidth() <= groundHeight && ball.getVelocity().getY() < 0) {
-            ball.getVelocity().setPos(ball.getVelocity().getX(), -(ball.getVelocity().getY()));
-            ball.setPos(ball.getX(), groundHeight + ball.getWidth());
-            friction=Force.getFriction(ball.getMass(), gravitySize, ball.getVelocity().getX());
-            applyFriction();
+        applyAirResistance(ball1);
+        applyAirResistance(ball2);
+        ball1.setPos(ball1.getX() + ball1.getVelocity().getX(), ball1.getY() + ball1.getVelocity().getY());
+        ball2.setPos(ball2.getX() + ball2.getVelocity().getX(), ball2.getY() + ball2.getVelocity().getY());
+
+        if(ball1.getY() - ball1.getWidth() <= groundHeight && ball1.getVelocity().getY() < 0) {
+            ball1.getVelocity().setPos(ball1.getVelocity().getX(), -(ball1.getVelocity().getY()));
+            ball1.setPos(ball1.getX(), groundHeight + ball1.getWidth());
+            friction=Force.getFriction(ball1.getMass(), gravitySize, ball1.getVelocity().getX());
+            applyFriction(ball1);
         }
 
+        if(ball2.getY() - ball2.getWidth() <= groundHeight && ball2.getVelocity().getY() < 0) {
+            ball2.getVelocity().setPos(ball2.getVelocity().getX(), -(ball2.getVelocity().getY()));
+            ball2.setPos(ball2.getX(), groundHeight + ball2.getWidth());
+            friction=Force.getFriction(ball2.getMass(), gravitySize, ball2.getVelocity().getX());
+            applyFriction(ball2);
+        }
+
+        //Check collision
+        if(ball1.closeTo(ball2)){
+            if(ball1.hasCollision(ball2)){
+                ball1.setPos(ball1.getPreX(), ball1.getPreY());
+                ball2.setPos(ball2.getPreX(), ball2.getPreY());
+                setVelocityPostCollision(ball1, ball2);
+
+            }
+
+        }
         //Stops the ball if the x-velocity of the ball is less than 0.01
-        if(Math.abs(ball.getVelocity().getX()) < 0.01) {
-            double velY = ball.getVelocity().getY();
-            ball.setVelocity(new GameVector(0.0, velY));
+        if(Math.abs(ball1.getVelocity().getX()) < 0.01) {
+            double velY = ball1.getVelocity().getY();
+            ball1.setVelocity(new GameVector(0.0, velY));
+
         }
 
         //Updates the score and highscore
-        setScore(score + ball.getVelocity().getX());
+        setScore(score + ball1.getVelocity().getX());
         if(score > highscore) {
             setHighscore(score);
         }
 
         //Printing some information about the ball
-        System.out.printf("X-HASTIGHET:%10f", ball.getVelocity().getX());
-        System.out.printf("   Y-HASTIGHET:%10f", ball.getVelocity().getY());
-        System.out.printf("   XPOS:%10f", ball.getX());
-        System.out.printf("   YPOS:%10f", ball.getY());
+        System.out.printf("X-HASTIGHET:%10f", ball1.getVelocity().getX());
+        System.out.printf("   Y-HASTIGHET:%10f", ball1.getVelocity().getY());
+        System.out.printf("   XPOS:%10f", ball1.getX());
+        System.out.printf("   YPOS:%10f", ball1.getY());
         System.out.println("   UPDATE TIME: " + updateTime);
 
 
@@ -80,27 +101,49 @@ public class Game {
      * Performs calculations for the ball to be affected by an acceleration vector
      * @param acceleration The acceleration vector that will affect the object
      */
-    private void applyAcceleration(GameVector acceleration) {ball.setVelocity(GameVector.addVectors(ball.getVelocity(), acceleration));}
+    private void applyAcceleration(PhysicsObject object, GameVector acceleration) {
+        object.setVelocity(GameVector.addVectors(object.getVelocity(), acceleration));}
 
     /**
      * Adds acceleration caused by air resistance to the total acceleration
      */
-    private void applyAirResistance(){
-        double mass = ball.getMass();
+    private void applyAirResistance(PhysicsObject object){
+        GameVector airResistance = getAirResistance(object.getVelocity(), object.getArea());
+        double mass = object.getMass();
         GameVector acceleration = Force.calculateAcceleration(mass, airResistance);
-        applyAcceleration(acceleration);
+        applyAcceleration(object, acceleration);
     }
 
     /**
      * Adds acceleration caused vy friction to the total acceleration
      */
-    private void applyFriction(){
-        GameVector acceleration = Force.calculateAcceleration(ball.getMass(), friction);
-        applyAcceleration(acceleration);
+    private void applyFriction(PhysicsObject object){
+        GameVector acceleration = Force.calculateAcceleration(object.getMass(), friction);
+        applyAcceleration(object, acceleration);
+    }
+
+    private void setVelocityPostCollision(PhysicsObject referenceObject, PhysicsObject relativeObject) {
+        //relative velocity calculated
+        GameVector relativeVelocity = new GameVector(relativeObject.getVelocity().getX() - referenceObject.getVelocity().getX(),
+                relativeObject.getVelocity().getY() - referenceObject.getVelocity().getY());
+
+        //sets new velocity for reference object
+        referenceObject.setVelocity(GameVector.addVectors((Force.getVelocityReferenceCollision(referenceObject.getMass(),
+                relativeObject.getMass(), relativeVelocity)), referenceObject.getVelocity()));
+
+        //sets new velocity for relative object
+        relativeObject.setVelocity(GameVector.addVectors(Force.getVelocityRelativeCollision(referenceObject.getMass(),
+                relativeObject.getMass(), relativeVelocity), referenceObject.getVelocity()));
+
+
     }
 
     public Ball getBall() {
-        return ball;
+        return ball1;
+    }
+
+    public Ball getBall2() {
+        return ball2;
     }
 
     public double getGroundHeight() {
@@ -113,7 +156,7 @@ public class Game {
     public void ballLaunch(double launchForce) {
 
 
-        ball.setVelocity( new GameVector(1 * launchForce, 0.1 * launchForce));
+        ball1.setVelocity( new GameVector(1 * launchForce, 0.1 * launchForce));
 
     }
 
@@ -121,8 +164,8 @@ public class Game {
      * Resets the game
      */
     public void reset() {
-        ball.setPos(2,0);
-        ball.setVelocity(new GameVector(0, 0));
+        ball1.setPos(2,0);
+        ball1.setVelocity(new GameVector(0, 0));
         setScore(0);
     }
 

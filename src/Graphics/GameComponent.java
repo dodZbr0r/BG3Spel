@@ -111,6 +111,11 @@ public class GameComponent extends JComponent {
         g2.fillArc(unitConversion(game.getBall().getX()), yConversion(game.getBall().getY()),
                 unitConversion(game.getBall().getWidth()), unitConversion(game.getBall().getWidth()), (int)angularVelocity + 270, 90);
 
+        //Ball 2
+        g2.setColor(game.getBall2().getPrimaryColor());
+        g2.fillOval(unitConversion(game.getBall2().getX()), yConversion(game.getBall2().getY()),
+                unitConversion(game.getBall2().getWidth()), unitConversion(game.getBall2().getWidth()));
+
         //Crude temporary spring
         g2.setColor(Color.black);
         g2.drawLine(400, 500, 400+(int)(convertedValue*50), 500-(int)(convertedValue*50));

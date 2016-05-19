@@ -35,6 +35,16 @@ public class Ball extends PhysicsObject {
 
     @Override
     public boolean hasCollision(PhysicsObject object) {
+        if(object instanceof Ball) {
+            double vecX = object.getCenter().getX() - this.getCenter().getX();
+            double vecY = object.getCenter().getY() - this.getCenter().getY();
+            GameVector distance = new GameVector(vecX, vecY);
+
+            return distance.getLength() <= ((Ball) object).getRadius() + radius;
+
+        } else if(object instanceof Cube) {
+            return false;
+        }
         return false;
     }
 
@@ -45,6 +55,10 @@ public class Ball extends PhysicsObject {
     }
 
     //GETTERS
+
+    public double getArea() {
+        return radius * radius * Math.PI;
+    }
 
     public Color getAlternateColor() {
         return alternateColor;
