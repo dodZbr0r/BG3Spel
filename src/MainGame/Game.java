@@ -2,6 +2,7 @@ package MainGame;
 
 import Physics.Force;
 import Physics.GameVector;
+import Graphics.GameComponent;
 
 
 import java.awt.*;
@@ -126,6 +127,7 @@ public class Game {
         ball.setVelocity(new GameVector(0, 0));
         setScore(0);
         setGameOver(false);
+
     }
     public void updateTimeStationary(double updateTime){
         if (Math.abs(ball.getVelocity().getX())<0.01 && Math.abs(ball.getVelocity().getY())<0.01 && getScore()!=0) {

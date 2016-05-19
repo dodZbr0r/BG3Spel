@@ -34,6 +34,7 @@ public class GameComponent extends JComponent {
     private double keyPressed;
     private double convertedValue;
     private boolean drawForceSpring = true;
+    private Physics.GameVector startAngle = new Physics.GameVector(1, 0);
 
     private double angularVelocity;
     // Fonts
@@ -115,8 +116,8 @@ public class GameComponent extends JComponent {
 
         if (drawForceSpring) {
             g2.setColor(Color.yellow);
-            g2.drawLine(400, 500, 650, 250);
-            g2.drawLine(401, 500, 651, 250);
+            g2.drawLine(400, 500, 400+(int)(250*startAngle.getX()), 500+(int)(250*startAngle.getY()));
+            g2.drawLine(401, 500, 401+(int)(250*startAngle.getX()), 500+(int)(250*startAngle.getY()));
             g2.setColor(Color.black);
             g2.drawLine(400, 500, 400+(int)(convertedValue*250), 500-(int)(convertedValue*250));
             g2.drawLine(401, 500, 401+(int)(convertedValue*250), 500-(int)(convertedValue*250));
@@ -196,22 +197,28 @@ public class GameComponent extends JComponent {
         getInputMap().put(KeyStroke.getKeyStroke("released R"), "R");
         getActionMap().put("R", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                game.getBall().setVelocity(new GameVector(0, 0));
-                keyPressedMillis = 0;
-                keyPressed = 0;
-                convertedValue = 0;
-                decideAngle = true;
-                decideForce = false;
-                finalClick = true;
-                drawForceSpring = true;
                 game.reset();
             }
         });
     }
 
+    public void resetGame() {
+        keyPressedMillis = 0;
+        keyPressed = 0;
+        convertedValue = 0;
+        decideAngle = true;
+        decideForce = false;
+        finalClick = true;
+        drawForceSpring = true;
+        game.reset();
+    }
+
     Timer angleTimer = new Timer(17, new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-
+            if (startAngle.getX() >= 0 && startAngle.getY() >= -1) {
+                startAngle.setPos(startAngle.getX() - 0.01, startAngle.getY() - 0.01);
+            }
+            System.out.println(startAngle.getX() + " " + startAngle.getY());
         }
     });
 
