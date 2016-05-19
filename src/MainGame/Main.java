@@ -20,7 +20,7 @@ public class Main{
      */
     public static void main(String[] args) {
         final Game game = new Game();
-        JFrame frame = new JFrame("Pendel");
+        JFrame frame = new JFrame("CALICUTTA");
         final GameComponent component = new GameComponent(game);
         frame.setLayout(new BorderLayout());
         frame.add(component, BorderLayout.CENTER);
@@ -28,6 +28,7 @@ public class Main{
         frame.pack();
         frame.setVisible(true);
         frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
         lastUpdate = System.currentTimeMillis();
 
         AbstractAction updateAction = new AbstractAction() {
