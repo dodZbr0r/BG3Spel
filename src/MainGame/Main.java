@@ -56,8 +56,19 @@ public class Main{
         timer.setCoalesce(true);
         timer.start();
 
-
+        play();
     }
 
+    public static void play() {
+        try {
+            File file = new File("data/Soundtrack/" + "Calcutta" + ".wav");
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(file));
+            clip.start();
+            Thread.sleep(clip.getMicrosecondLength());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
 
 }
