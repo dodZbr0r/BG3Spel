@@ -4,3 +4,8 @@ Bug: Bollen oscillerar runt marknivå när den egentligen borde vara stilla
     vilket flyttar bollen under marken. Sedan flyttar "kollisionskontrollen"
     upp bollen till marknivå och gör hastigheten positiv. Denna hastighet motverkas sedan
     av gravitationen i nästa uppdatering.
+
+Bug: Bakgrunden stannar, dvs. bollen ser ut att stanna, fast bollen fortfarande har en höjd i y-led från marken.
+    Bollen stannar alltså i luften i x-led men fortsätter att studsa i y-led. Detta bör kunna fixas med en if-
+    sats som kollar om bollens y-position är lika med marken(±1 pixel) och då ska x-hastigheten sättas till 0.
+    Else: låt x-positionen uppdateras för bakgrunden.
