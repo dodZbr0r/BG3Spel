@@ -92,6 +92,19 @@ public class GameVector {
         return new GameVector(x, y);
     }
 
+    static double vectorDotProduct(GameVector vector1, GameVector vector2) {
+        return (vector1.getX() * vector2.getX()) + (vector1.getY() * vector2.getY());
+    }
+
+    static double angleBetweenVectors(GameVector vector1, GameVector vector2) {
+        GameVector vectorNormalized1 = new GameVector((vector1.getX()/vector1.getLength()),
+                (vector1.getY()/vector1.getLength()));
+        GameVector vectorNormalized2 = new GameVector((vector2.getX()/vector2.getLength()),
+                (vector2.getY()/vector2.getLength()));
+
+        return 0;
+    }
+
     public static void printVector(GameVector vector) {
         //System.out.println("X Value: " + vector.getX());
         //System.out.println("Y Value: " + vector.getY());
