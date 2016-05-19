@@ -23,6 +23,7 @@ public class Game {
     private double gravitySize;
     private GameVector friction;
     private double score;
+    private double highscore;
 
 
     /**
@@ -34,8 +35,6 @@ public class Game {
         groundHeight = 0.8;
         gravitySize = -9.8;
         gravity = new GameVector(0, (gravitySize/fps)/fps);
-
-
     }
 
     /**
@@ -55,12 +54,17 @@ public class Game {
             applyFriction();
         }
 
+        //Stops the ball if the x-velocity of the ball is less than 0.01
         if(Math.abs(ball.getVelocity().getX()) < 0.01) {
             double velY = ball.getVelocity().getY();
             ball.setVelocity(new GameVector(0.0, velY));
         }
 
+        //Updates the score and highscore
         setScore(score + ball.getVelocity().getX());
+        if(score > highscore) {
+            setHighscore(score);
+        }
 
         //Printing some information about the ball
         System.out.printf("X-HASTIGHET:%10f", ball.getVelocity().getX());
@@ -113,11 +117,28 @@ public class Game {
 
     }
 
+    /**
+     * Resets the game
+     */
+    public void reset() {
+        ball.setPos(2,0);
+        ball.setVelocity(new GameVector(0, 0));
+        setScore(0);
+    }
+
     public double getScore() {
         return score;
     }
 
-    private void setScore(double score) {
+    public void setScore(double score) {
         this.score = score;
+    }
+
+    public double getHighscore() {
+        return highscore;
+    }
+
+    public void setHighscore(double highscore) {
+        this.highscore = highscore;
     }
 }

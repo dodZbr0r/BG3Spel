@@ -126,7 +126,7 @@ public class GameComponent extends JComponent {
         // Highscore
         g2.setColor(new Color(255, 255, 255));
         g2.setFont(font);
-        g2.drawString("Highscore: " + 1337, 20, 50);
+        g2.drawString("Highscore: " + Math.round(game.getHighscore()), 20, 50);
     }
 
 
@@ -205,8 +205,7 @@ public class GameComponent extends JComponent {
         getInputMap().put(KeyStroke.getKeyStroke("released R"), "R");
         getActionMap().put("R", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                game.getBall().setPos(2, 0);
-                game.getBall().setVelocity(new GameVector(0, 0));
+                game.reset();
             }
         });
     }
