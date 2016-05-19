@@ -25,6 +25,7 @@ public class Game {
     private double score;
     private double highscore;
     private double timeStationary=0;
+    private boolean gameOver = false;
 
 
     /**
@@ -124,24 +125,30 @@ public class Game {
         ball.setPos(2,0);
         ball.setVelocity(new GameVector(0, 0));
         setScore(0);
+        setGameOver(false);
     }
     public void updateTimeStationary(double updateTime){
         if (Math.abs(ball.getVelocity().getX())<0.01 && Math.abs(ball.getVelocity().getY())<0.01 && getScore()!=0) {
             timeStationary += updateTime;
-            if (timeStationary >= 5000)
+            if (timeStationary >= 1000)
+                setGameOver(true);
+            if(timeStationary >= 5000)
                 reset();
         }else
             timeStationary=0;
 
     }
 
-    public boolean detectFinish() {
-        if((ball.getVelocity().getX() == 0) && (ball.getY() == groundHeight + 2*ball.getRadius())
-                && (Math.abs(ball.getVelocity().getY()) < 0.01) && (score > 0)) {
-            //ball.setVelocity(ball.getVelocity().getX(), 0);
-            return true;
-        }
-        return false;
+    /**
+     * Detects if the game is over
+     * @return true if the game is over, else false
+     */
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
     }
 
     public double getScore() {
