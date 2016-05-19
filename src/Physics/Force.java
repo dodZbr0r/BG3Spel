@@ -78,8 +78,6 @@ public class Force {
             sign=-1;
         else if (xVelocity == 0)
             sign=0;
-        GameVector friction = new GameVector (sign*k*normal, 0);
-
-        return friction;
+        return new GameVector (sign*k*normal, 0);
     }
 }
