@@ -1,9 +1,17 @@
 package MainGame;
 
 import Graphics.GameComponent;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
+
+import sun.audio.*;
+
+import java.io.*;
 
 /**
  * Created by Erik on 2016-05-10.
@@ -47,7 +55,20 @@ public class Main{
         Timer timer = new Timer(17, updateAction);
         timer.setCoalesce(true);
         timer.start();
+
+        play();
     }
 
+    public static void play() {
+        try {
+            File file = new File("data/Soundtrack/" + "Calcutta" + ".wav");
+            Clip clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(file));
+            clip.start();
+            Thread.sleep(clip.getMicrosecondLength());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
 
 }

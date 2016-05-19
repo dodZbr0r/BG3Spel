@@ -16,18 +16,17 @@ import java.io.IOException;
 /**
  * Created by Victor, Daniel, Henrik, Linnea, David, Erik on 2016-05-10.
  */
-public class GameComponent extends JComponent {
+public class GameComponent extends JComponent{
 
     private Game game;
     private ScrollingBackground scrollingBackground;
     private ScrollingGround scrollingGround;
     // Window bounds
-    private static final int HEIGHT = 720;
-    private static final int WIDTH = 1280;
+    public static final int HEIGHT = 720;
+    public static final int WIDTH = 1280;
     // Images
-    private BufferedImage background, ground, heaven, heavenHigher, bed;
-    //boolean so you can only give speed to the ball once
-    private boolean decideAngle = true;
+    private BufferedImage background, ground, heaven, heavenHigher;
+    private boolean decideAngle = true; //boolean so you can only give speed to the ball once
     private boolean decideForce = false;
     private boolean finalClick = true;
     private double keyPressedMillis;
@@ -50,14 +49,14 @@ public class GameComponent extends JComponent {
         setInput();
 
         try{
-            background = ImageIO.read(new File("data/layer-1-double.png"));
+            background = ImageIO.read(new File("data/Background.png"));
         } catch(IOException e){
-            System.out.println("Could not find layer-1-double.png");
+            System.out.println("Could not find Background.png");
         }
         try {
-            ground = ImageIO.read(new File("data/layer-2-double.png"));
+            ground = ImageIO.read(new File("data/Ground.png"));
         } catch (IOException e) {
-            System.out.println("Could not find layer-2-double.png");
+            System.out.println("Could not find Ground.png");
         }
         try {
             heaven = ImageIO.read(new File("data/Heaven.png"));
@@ -87,9 +86,6 @@ public class GameComponent extends JComponent {
 
         // Background
         scrollingBackground.draw(g2, unitConversion(game.getBall().getVelocity().getX()));
-
-        // Spring
-        g2.drawImage(bed, 400, HEIGHT-180, 100, 100, null);
 
         //Heaven Higher
         g2.drawImage(heavenHigher, 0, -(2*HEIGHT), WIDTH, HEIGHT, this);
@@ -241,11 +237,11 @@ public class GameComponent extends JComponent {
         }
     });
 
-    static int getWIDTH() {
+    public static int getWIDTH() {
         return WIDTH;
     }
 
-    static int getHEIGHT() {
+    public static int getHEIGHT() {
         return HEIGHT;
     }
 }
