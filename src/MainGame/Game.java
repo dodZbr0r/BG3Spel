@@ -121,8 +121,7 @@ public class Game {
      * Resets the game
      */
     public void reset() {
-        ball.setxPos(2);
-        ball.setyPos(0);
+        ball.setPos(2,0);
         ball.setVelocity(new GameVector(0, 0));
         setScore(0);
     }
