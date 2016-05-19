@@ -70,10 +70,9 @@ public class Game {
                 ball1.setPos(ball1.getPreX(), ball1.getPreY());
                 ball2.setPos(ball2.getPreX(), ball2.getPreY());
                 setVelocityPostCollision(ball1, ball2);
-
             }
-
         }
+
         //Stops the ball if the x-velocity of the ball is less than 0.01
         if(Math.abs(ball1.getVelocity().getX()) < 0.01) {
             double velY = ball1.getVelocity().getY();

@@ -102,7 +102,7 @@ public class GameVector {
         GameVector vectorNormalized2 = new GameVector((vector2.getX()/vector2.getLength()),
                 (vector2.getY()/vector2.getLength()));
 
-        return 0;
+        return Math.acos(vectorDotProduct(vectorNormalized1, vectorNormalized2));
     }
 
     public static void printVector(GameVector vector) {
