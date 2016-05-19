@@ -126,6 +126,15 @@ public class Game {
         setScore(0);
     }
 
+    public boolean detectFinish() {
+        if((ball.getVelocity().getX() == 0) && (ball.getY() == groundHeight + 2*ball.getRadius())
+                && (Math.abs(ball.getVelocity().getY()) < 0.01) && (score > 0)) {
+            //ball.setVelocity(ball.getVelocity().getX(), 0);
+            return true;
+        }
+        return false;
+    }
+
     public double getScore() {
         return score;
     }

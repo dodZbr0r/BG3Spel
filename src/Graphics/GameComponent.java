@@ -134,6 +134,12 @@ public class GameComponent extends JComponent {
         g2.setColor(new Color(255, 255, 255));
         g2.setFont(font);
         g2.drawString("Highscore: " + Math.round(game.getHighscore()), 20, 50);
+
+        if(game.detectFinish()) {
+            g2.setColor(Color.BLACK);
+            g2.setFont(new Font("Arial", Font.BOLD, 100));
+            g2.drawString("GAME OVER!", 320, 360);
+        }
     }
 
 

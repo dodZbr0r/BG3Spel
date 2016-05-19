@@ -58,6 +58,10 @@ public abstract class PhysicsObject {
         this.velocity = velocity;
     }
 
+    public void setVelocity(double x, double y) {
+        setVelocity(new GameVector(x, y));
+    }
+
     //GETTERS
 
     public Point2D.Double getCenter() {
