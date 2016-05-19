@@ -33,7 +33,6 @@ public class Ball extends PhysicsObject {
 
     }
 
-    @Override
     public boolean hasCollision(PhysicsObject object) {
         if(object instanceof Ball) {
             double vecX = object.getCenter().getX() - this.getCenter().getX();
