@@ -33,7 +33,6 @@ public class Ball extends PhysicsObject {
 
     }
 
-    @Override
     public boolean hasCollision(PhysicsObject object) {
         return false;
     }

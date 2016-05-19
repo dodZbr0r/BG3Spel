@@ -33,6 +33,8 @@ public class GameComponent extends JComponent {
     private double keyPressedMillis;
     private double keyPressed;
     private double convertedValue;
+    private boolean drawForceSpring = true;
+
     private double angularVelocity;
     // Fonts
     private Font font;
@@ -111,13 +113,15 @@ public class GameComponent extends JComponent {
         g2.fillArc(unitConversion(game.getBall().getX()), yConversion(game.getBall().getY()),
                 unitConversion(game.getBall().getWidth()), unitConversion(game.getBall().getWidth()), (int)angularVelocity + 270, 90);
 
+        if (drawForceSpring) {
+            g2.setColor(Color.yellow);
+            g2.drawLine(400, 500, 650, 250);
+            g2.drawLine(401, 500, 651, 250);
+            g2.setColor(Color.black);
+            g2.drawLine(400, 500, 400+(int)(convertedValue*250), 500-(int)(convertedValue*250));
+            g2.drawLine(401, 500, 401+(int)(convertedValue*250), 500-(int)(convertedValue*250));
+        }
         //Crude temporary spring
-        g2.setColor(Color.yellow);
-        g2.drawLine(400, 500, 650, 250);
-        g2.drawLine(401, 500, 651, 250);
-        g2.setColor(Color.black);
-        g2.drawLine(400, 500, 400+(int)(convertedValue*250), 500-(int)(convertedValue*250));
-        g2.drawLine(401, 500, 401+(int)(convertedValue*250), 500-(int)(convertedValue*250));
 
         angularVelocity -= 50*(game.getBall().getVelocity().getX());
 
@@ -155,18 +159,9 @@ public class GameComponent extends JComponent {
      * Input method to perform action on KeyStroke
      */
     private void setInput() {
-        getInputMap().put(KeyStroke.getKeyStroke("pressed SPACE"), "SPACEpressed");
         getInputMap().put(KeyStroke.getKeyStroke("released SPACE"), "SPACEreleased");
-        getActionMap().put("SPACEpressed", new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
-
         getActionMap().put("SPACEreleased", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-
-
-
                 if (decideAngle) {
                     keyPressed = System.currentTimeMillis();
 
@@ -187,6 +182,7 @@ public class GameComponent extends JComponent {
                     finalClick = false;
 
                     game.ballLaunch(convertedValue);
+                    drawForceSpring = false;
                 }
             }
         });
@@ -201,18 +197,19 @@ public class GameComponent extends JComponent {
                 decideAngle = true;
                 decideForce = false;
                 finalClick = true;
+                drawForceSpring = true;
                 game.reset();
             }
         });
     }
 
-    Timer angleTimer = new Timer(8, new ActionListener() {
+    Timer angleTimer = new Timer(17, new ActionListener() {
         public void actionPerformed(ActionEvent e) {
 
         }
     });
 
-    Timer forceTimer = new Timer(8, new ActionListener() {
+    Timer forceTimer = new Timer(17, new ActionListener() {
         public void actionPerformed(ActionEvent e) {
 
             keyPressedMillis = System.currentTimeMillis() - keyPressed;
