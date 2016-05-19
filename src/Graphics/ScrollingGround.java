@@ -18,8 +18,8 @@ public class ScrollingGround {
     private double x1, x2;
     private double y1, y2;
 
-    public ScrollingGround(BufferedImage image){
-        groundWidth = GameComponent.WIDTH;
+    ScrollingGround(BufferedImage image){
+        groundWidth = GameComponent.getWIDTH();
         groundHeight = 80;
         this.ground = image;
         ground2 = deepCopy(image);   // Clones the incoming BufferedImage image
@@ -38,7 +38,7 @@ public class ScrollingGround {
         return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
     }
 
-    public void draw(Graphics2D g, int velocityX){
+    void draw(Graphics2D g, int velocityX){
         updatePosition(velocityX);
         g.drawImage(ground,(int) x1,(int) y1, (int) (groundWidth * 2), (int) groundHeight, null);
         g.drawImage(ground2,(int) x2, (int) y2, (int) (groundWidth * 2),(int) groundHeight, null);

@@ -8,7 +8,7 @@ import java.awt.image.WritableRaster;
 /**
  * Created by DanielHolmberg on 2016-05-12.
  */
-public class ScrollingBackground {
+class ScrollingBackground {
     private double screenWidth;
     private double screenHeight;
     private BufferedImage background;
@@ -16,9 +16,9 @@ public class ScrollingBackground {
     private double x1, x2;
     private double y1, y2;
 
-    public ScrollingBackground(BufferedImage image){
-        screenWidth = GameComponent.WIDTH;
-        screenHeight = GameComponent.HEIGHT;
+    ScrollingBackground(BufferedImage image){
+        screenWidth = GameComponent.getWIDTH();
+        screenHeight = GameComponent.getHEIGHT();
         this.background = image;
         background2 = deepCopy(image);   // Clones the incoming BufferedImage image
 
@@ -36,7 +36,7 @@ public class ScrollingBackground {
         return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
     }
 
-    public void draw(Graphics2D g, double velocityX){
+    void draw(Graphics2D g, double velocityX){
         updatePosition(velocityX/4);
         g.drawImage(background, (int) x1, (int) y1, (int) (screenWidth * 2), (int) screenHeight, null);
         g.drawImage(background2, (int) x2, (int) y2, (int) (screenWidth * 2), (int) screenHeight, null);

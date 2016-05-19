@@ -17,21 +17,21 @@ import java.io.IOException;
  */
 public class GameComponent extends JComponent {
 
-    public Game game;
-    public ScrollingBackground scrollingBackground;
-    public ScrollingGround scrollingGround;
+    private Game game;
+    private ScrollingBackground scrollingBackground;
+    private ScrollingGround scrollingGround;
     // Window bounds
-    public static final int HEIGHT = 720;
-    public static final int WIDTH = 1280;
+    private static final int HEIGHT = 720;
+    private static final int WIDTH = 1280;
     // Images
-    BufferedImage background, ground, heaven, heavenHigher, bed;
+    private BufferedImage background, ground, heaven, heavenHigher, bed;
     //boolean so you can only give speed to the ball once
-    public boolean SPACECLICK = false;
-    public double keyPressedMillis;
+    private boolean SPACECLICK = false;
+    private double keyPressedMillis;
     public double tempKeyPressed;
-    public double keyPressed;
-    public double convertedValue;
-    double angularVelocity;
+    private double keyPressed;
+    private double convertedValue;
+    private double angularVelocity;
     // Fonts
     private Font font;
 
@@ -46,16 +46,24 @@ public class GameComponent extends JComponent {
 
         try{
             background = ImageIO.read(new File("data/layer-1-double.png"));
-        } catch(IOException e){}
+        } catch(IOException e){
+            System.out.println("Could not find layer-1-double.png");
+        }
         try {
             ground = ImageIO.read(new File("data/layer-2-double.png"));
-        } catch (IOException e) {}
+        } catch (IOException e) {
+            System.out.println("Could not find layer-2-double.png");
+        }
         try {
             heaven = ImageIO.read(new File("data/Heaven.png"));
-        } catch (IOException e) {}
+        } catch (IOException e) {
+            System.out.println("Could not find Heaven.png");
+        }
         try {
             heavenHigher = ImageIO.read(new File("data/HeavenHigher.png"));
-        } catch (IOException e) {}
+        } catch (IOException e) {
+            System.out.println("Could not find HeavenHigher.png");
+        }
 
         scrollingBackground = new ScrollingBackground(background);
         scrollingGround = new ScrollingGround(ground);
@@ -122,7 +130,7 @@ public class GameComponent extends JComponent {
      * @param meters Measurements used in game calculations
      * @return An integer representing pixels
      */
-    public int unitConversion(double meters) {
+    private int unitConversion(double meters) {
         return (int) (meters * 100);
     }
 
@@ -131,7 +139,7 @@ public class GameComponent extends JComponent {
      * @param meters Measurements used in game calculations
      * @return An integer representing pixels
      */
-    public int yConversion(double meters) {
+    private int yConversion(double meters) {
         return HEIGHT - unitConversion(meters);
             }
 
@@ -197,5 +205,13 @@ public class GameComponent extends JComponent {
                 game.getBall().setVelocity(new GameVector(0, 0));
             }
         });
+    }
+
+    static int getWIDTH() {
+        return WIDTH;
+    }
+
+    static int getHEIGHT() {
+        return HEIGHT;
     }
 }

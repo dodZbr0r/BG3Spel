@@ -60,7 +60,7 @@ public class GameVector {
      * @param vector The vector to be multiplied with
      * @return The new vector
      */
-    public static GameVector multiplyVector (double number, GameVector vector) {
+    static GameVector multiplyVector (double number, GameVector vector) {
         double x = vector.getX() * number;
         double y = vector.getY() * number;
         return new GameVector(x, y);

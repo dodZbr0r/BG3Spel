@@ -24,7 +24,7 @@ public class Ball {
      * @param color2    The second color of the ball
      * @param velocity The velocity of the ball(mm/s)
      */
-    public Ball(double x, double y, double mass, double radius, Color color1, Color color2, GameVector velocity) {
+    Ball(double x, double y, double mass, double radius, Color color1, Color color2, GameVector velocity) {
         this.x = x;
         this.y = y;
         this.color1 = color1;
@@ -50,7 +50,7 @@ public class Ball {
         y = yPos;
     }
 
-    public void setPos(double xPos, double yPos) {
+    void setPos(double xPos, double yPos) {
         x = xPos;
         y = yPos;
     }
@@ -71,7 +71,7 @@ public class Ball {
     }
 
 
-    public double getMass() {
+    double getMass() {
         return mass;
     }
 
@@ -79,7 +79,7 @@ public class Ball {
         this.mass = mass;
     }
 
-    public double getRadius() {
+    double getRadius() {
         return radius;
     }
 

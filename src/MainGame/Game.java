@@ -15,7 +15,7 @@ import static Physics.Force.getAirResistance;
  */
 public class Game {
 
-    public static final double fps = 60;
+    private static final double fps = 60;
     private Ball ball;
     private double groundHeight;
     private GameVector gravity;
@@ -28,7 +28,7 @@ public class Game {
      * Constructs a Game with a ball object and ground measurements
      * creates a GameVector representing gravity
      */
-    public Game() {
+    Game() {
         ball = new Ball(2.0, 5.0, 2.0, 0.5, Color.RED, Color.ORANGE, new GameVector(0.5/fps, -3.0/fps));
         groundHeight = 0.8;
         gravitySize = -9.8;
@@ -41,7 +41,7 @@ public class Game {
      * Updates the state of the game
      * @param updateTime The time it took to update in milliseconds
      */
-    public void update(double updateTime) {
+    void update(double updateTime) {
         applyAcceleration(gravity);
         airResistance = getAirResistance(ball.getVelocity(), ball.getRadius());
         applyAirResistance();
@@ -72,12 +72,12 @@ public class Game {
      * Performs calculations for the ball to be affected by an acceleration vector
      * @param acceleration The acceleration vector that will affect the object
      */
-    public void applyAcceleration(GameVector acceleration) {ball.setVelocity(GameVector.addVectors(ball.getVelocity(), acceleration));}
+    private void applyAcceleration(GameVector acceleration) {ball.setVelocity(GameVector.addVectors(ball.getVelocity(), acceleration));}
 
     /**
      * Adds acceleration caused by air resistance to the total acceleration
      */
-    public void applyAirResistance(){
+    private void applyAirResistance(){
         double mass = ball.getMass();
         GameVector acceleration = Force.calculateAcceleration(mass, airResistance);
         applyAcceleration(acceleration);
@@ -86,7 +86,7 @@ public class Game {
     /**
      * Adds acceleration caused vy friction to the total acceleration
      */
-    public void applyFriction(){
+    private void applyFriction(){
         GameVector acceleration = Force.calculateAcceleration(ball.getMass(), friction);
         applyAcceleration(acceleration);
     }
