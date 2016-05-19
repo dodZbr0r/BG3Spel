@@ -45,11 +45,11 @@ public class Game {
         applyAcceleration(gravity);
         airResistance = getAirResistance(ball.getVelocity(), ball.getRadius());
         applyAirResistance();
-        ball.setPos(ball.getxPos(), ball.getyPos() + ball.getVelocity().getY());
+        ball.setPos(ball.getX(), ball.getY() + ball.getVelocity().getY());
 
-        if(ball.getyPos() - ball.getDiameter() <= groundHeight && ball.getVelocity().getY() < 0) {
+        if(ball.getY() - ball.getWidth() <= groundHeight && ball.getVelocity().getY() < 0) {
             ball.getVelocity().setPos(ball.getVelocity().getX(), -(ball.getVelocity().getY()));
-            ball.setPos(ball.getxPos(), groundHeight + ball.getDiameter());
+            ball.setPos(ball.getX(), groundHeight + ball.getWidth());
             friction=Force.getFriction(ball.getMass(), gravitySize, ball.getVelocity().getX());
             applyFriction();
         }
@@ -69,9 +69,10 @@ public class Game {
         //Printing some information about the ball
         System.out.printf("X-HASTIGHET:%10f", ball.getVelocity().getX());
         System.out.printf("   Y-HASTIGHET:%10f", ball.getVelocity().getY());
-        System.out.printf("   XPOS:%10f", ball.getxPos());
-        System.out.printf("   YPOS:%10f", ball.getyPos());
+        System.out.printf("   XPOS:%10f", ball.getX());
+        System.out.printf("   YPOS:%10f", ball.getY());
         System.out.println("   UPDATE TIME: " + updateTime);
+
 
     }
 

@@ -98,18 +98,18 @@ public class GameComponent extends JComponent {
         scrollingGround.draw(g2, unitConversion(game.getBall().getVelocity().getX()));
 
         // Ball pt 1
-        g2.setColor(game.getBall().getColor());
-        g2.fillArc(unitConversion(game.getBall().getxPos()), yConversion(game.getBall().getyPos()),
-                    unitConversion(game.getBall().getDiameter()), unitConversion(game.getBall().getDiameter()), (int)angularVelocity, 90);
-        g2.fillArc(unitConversion(game.getBall().getxPos()), yConversion(game.getBall().getyPos()),
-                unitConversion(game.getBall().getDiameter()), unitConversion(game.getBall().getDiameter()), (int)angularVelocity + 180, 90);
+        g2.setColor(game.getBall().getPrimaryColor());
+        g2.fillArc(unitConversion(game.getBall().getX()), yConversion(game.getBall().getY()),
+                    unitConversion(game.getBall().getWidth()), unitConversion(game.getBall().getWidth()), (int)angularVelocity, 90);
+        g2.fillArc(unitConversion(game.getBall().getX()), yConversion(game.getBall().getY()),
+                unitConversion(game.getBall().getWidth()), unitConversion(game.getBall().getWidth()), (int)angularVelocity + 180, 90);
 
         //Ball pt 2
-        g2.setColor(game.getBall().getColor2());
-        g2.fillArc(unitConversion(game.getBall().getxPos()), yConversion(game.getBall().getyPos()),
-                unitConversion(game.getBall().getDiameter()), unitConversion(game.getBall().getDiameter()), (int)angularVelocity + 90, 90);
-        g2.fillArc(unitConversion(game.getBall().getxPos()), yConversion(game.getBall().getyPos()),
-                unitConversion(game.getBall().getDiameter()), unitConversion(game.getBall().getDiameter()), (int)angularVelocity + 270, 90);
+        g2.setColor(game.getBall().getAlternateColor());
+        g2.fillArc(unitConversion(game.getBall().getX()), yConversion(game.getBall().getY()),
+                unitConversion(game.getBall().getWidth()), unitConversion(game.getBall().getWidth()), (int)angularVelocity + 90, 90);
+        g2.fillArc(unitConversion(game.getBall().getX()), yConversion(game.getBall().getY()),
+                unitConversion(game.getBall().getWidth()), unitConversion(game.getBall().getWidth()), (int)angularVelocity + 270, 90);
 
         //Crude temporary spring
         g2.setColor(Color.black);

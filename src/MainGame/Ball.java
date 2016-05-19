@@ -3,101 +3,55 @@ package MainGame;
 import Physics.GameVector;
 
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 
 /**
  * Created by DanielHolmberg on 2016-05-10.
  */
-public class Ball {
-    private double x, y, mass, radius;
-    private Color color1;
-    private Color color2;
-    private GameVector velocity;
+public class Ball extends PhysicsObject {
+    private double radius;
+    private Color alternateColor;
 
     /**
      * Constructs a Ball object with a position, mass, radius, color and velocity
      *
-     * @param x        Horisontal position of the ball(mm)
-     * @param y        Vertical position of the ball(mm)
-     * @param mass     The balls mass(kg)
-     * @param radius   The balls radius(mm)
-     * @param color1    The first color of the ball
-     * @param color2    The second color of the ball
-     * @param velocity The velocity of the ball(mm/s)
+     * @param x               Horisontal position of the ball(mm)
+     * @param y               Vertical position of the ball(mm)
+     * @param mass            The balls mass(kg)
+     * @param radius          The balls radius(mm)
+     * @param primaryColor    The first color of the ball
+     * @param alternateColor  The second color of the ball
+     * @param velocity        The velocity of the ball(mm/s)
      */
-    Ball(double x, double y, double mass, double radius, Color color1, Color color2, GameVector velocity) {
-        this.x = x;
-        this.y = y;
-        this.color1 = color1;
-        this.color2 = color2;
-        this.mass = mass;
+
+    public Ball(double x, double y, double mass, double radius, Color primaryColor, Color alternateColor, GameVector velocity) {
+        super(x, y, mass, primaryColor, velocity);
         this.radius = radius;
-        this.velocity = velocity;
+        this.alternateColor = alternateColor;
+        setWidth(radius * 2);
+        setHeight(radius * 2);
+
     }
 
-    public double getxPos() {
-        return x;
+    @Override
+    public boolean hasCollision(PhysicsObject object) {
+        return false;
     }
 
-    public void setxPos(double xPos) {
-        x = xPos;
+    //SETTTERS
+
+    public void setAlternateColor(Color alternateColor) {
+        this.alternateColor = alternateColor;
     }
 
-    public double getyPos() {
-        return y;
+    //GETTERS
+
+    public Color getAlternateColor() {
+        return alternateColor;
     }
 
-    public void setyPos(double yPos) {
-        y = yPos;
-    }
-
-    void setPos(double xPos, double yPos) {
-        x = xPos;
-        y = yPos;
-    }
-
-    public Color getColor() {
-        return color1;
-    }
-
-    public void setColor1(Color color) {
-        this.color1 = color;
-    }
-
-    public Color getColor2() {
-        return color2;
-    }
-    public void setColor2(Color color) {
-        this.color2 = color;
-    }
-
-
-    double getMass() {
-        return mass;
-    }
-
-    public void setMass(double mass) {
-        this.mass = mass;
-    }
-
-    double getRadius() {
+    public double getRadius() {
         return radius;
     }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
-    }
-
-    public double getDiameter() {
-        return radius * 2;
-    }
-
-    public GameVector getVelocity() {
-        return velocity;
-    }
-
-    public void setVelocity(GameVector velocity) {
-        this.velocity = velocity;
-    }
-
 
 }
