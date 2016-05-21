@@ -1,6 +1,8 @@
 package MainGame;
 
 import Graphics.GameComponent;
+import Physics.GameVector;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -30,6 +32,19 @@ public class Main{
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         lastUpdate = System.currentTimeMillis();
+
+        GameVector norm = new GameVector(1, 0);
+        GameVector vec1 = new GameVector(5.7, -0.64, true);
+        GameVector vec2 = new GameVector(-2, 1);
+        GameVector vec3 = new GameVector(-2, -2);
+        GameVector vec4 = new GameVector(2, -1);
+
+        System.out.println("X: " + vec1.getX() + "  Y: " + vec1.getY() + "  L: " + vec1.getLength() );
+        /*System.out.println(GameVector.angleBetweenVectors(norm, vec1));
+        System.out.println(GameVector.angleBetweenVectors(norm, vec2));
+        System.out.println(GameVector.angleBetweenVectors(norm, vec3));
+        System.out.println(GameVector.angleBetweenVectors(norm, vec4));*/
+
 
         AbstractAction updateAction = new AbstractAction() {
             @Override

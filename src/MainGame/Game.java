@@ -1,5 +1,6 @@
 package MainGame;
 
+import Physics.Collision;
 import Physics.Force;
 import Physics.GameVector;
 
@@ -30,8 +31,8 @@ public class Game {
      * creates a GameVector representing gravity
      */
     Game() {
-        ball1 = new Ball(2.0, 1.5, 3.0, 0.5, Color.RED, Color.ORANGE, new GameVector(3.0/fps, 5.0/fps));
-        ball2 = new Ball(6.0, 1.5, 13.0, 0.5, Color.BLUE, Color.GREEN, new GameVector(-1.2/fps, 7.0/fps));
+        ball1 = new Ball(2.0, 1.5, 1.0, 0.5, Color.RED, Color.ORANGE, new GameVector(2.0/fps, 6.0/fps));
+        ball2 = new Ball(6.0, 1.5, 3.0, 0.5, Color.BLUE, Color.GREEN, new GameVector(-1.0/fps, 8.0/fps));
         groundHeight = 0.5;
         gravitySize = -9.8;
         gravity = new GameVector(0, (gravitySize/fps)/fps);
@@ -69,7 +70,7 @@ public class Game {
             if(ball1.hasCollision(ball2)){
                 ball1.setPos(ball1.getPreX(), ball1.getPreY());
                 ball2.setPos(ball2.getPreX(), ball2.getPreY());
-                setVelocityPostCollision(ball1, ball2);
+                Collision.setVelocityPostCollision(ball1, ball2);
             }
         }
 
@@ -87,11 +88,11 @@ public class Game {
         }
 
         //Printing some information about the ball
-        System.out.printf("X-HASTIGHET:%10f", ball1.getVelocity().getX());
+        /*System.out.printf("X-HASTIGHET:%10f", ball1.getVelocity().getX());
         System.out.printf("   Y-HASTIGHET:%10f", ball1.getVelocity().getY());
         System.out.printf("   XPOS:%10f", ball1.getX());
         System.out.printf("   YPOS:%10f", ball1.getY());
-        System.out.println("   UPDATE TIME: " + updateTime);
+        System.out.println("   UPDATE TIME: " + updateTime);*/
 
 
     }
@@ -119,22 +120,6 @@ public class Game {
     private void applyFriction(PhysicsObject object){
         GameVector acceleration = Force.calculateAcceleration(object.getMass(), friction);
         applyAcceleration(object, acceleration);
-    }
-
-    private void setVelocityPostCollision(PhysicsObject referenceObject, PhysicsObject relativeObject) {
-        //relative velocity calculated
-        GameVector relativeVelocity = new GameVector(relativeObject.getVelocity().getX() - referenceObject.getVelocity().getX(),
-                relativeObject.getVelocity().getY() - referenceObject.getVelocity().getY());
-
-        //sets new velocity for reference object
-        referenceObject.setVelocity(GameVector.addVectors((Force.getVelocityReferenceCollision(referenceObject.getMass(),
-                relativeObject.getMass(), relativeVelocity)), referenceObject.getVelocity()));
-
-        //sets new velocity for relative object
-        relativeObject.setVelocity(GameVector.addVectors(Force.getVelocityRelativeCollision(referenceObject.getMass(),
-                relativeObject.getMass(), relativeVelocity), referenceObject.getVelocity()));
-
-
     }
 
     public Ball getBall() {

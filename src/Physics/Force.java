@@ -82,19 +82,4 @@ public class Force {
         return new GameVector (sign*k*normal, 0);
     }
 
-    public static GameVector getVelocityRelativeCollision(double referenceMass, double relativeMass,
-                                                          GameVector relativeVelocity) {
-        double velocityX = ((referenceMass - relativeMass) / (referenceMass + relativeMass)) * relativeVelocity.getX();
-        double velocityY = ((referenceMass - relativeMass) / (referenceMass + relativeMass)) * relativeVelocity.getY();
-
-        return new GameVector(velocityX, velocityY);
-    }
-
-    public static GameVector getVelocityReferenceCollision(double referenceMass, double relativeMass,
-                                                          GameVector relativeVelocity ) {
-        double velocityX = ((2 * referenceMass) / (referenceMass + relativeMass)) * relativeVelocity.getX();
-        double velocityY = ((2 * referenceMass) / (referenceMass + relativeMass)) * relativeVelocity.getY();
-
-        return new GameVector(velocityX, velocityY);
-    }
 }

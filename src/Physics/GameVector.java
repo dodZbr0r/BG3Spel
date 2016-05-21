@@ -46,7 +46,7 @@ public class GameVector {
         }
         else {
             if (x>=0){
-                return Math.asin(y/getLength());
+                return Math.asin(y/getLength()) + 2 * Math.PI;
             }
             else {
                 return Math.acos(-x/getLength()) + Math.PI;
@@ -58,6 +58,7 @@ public class GameVector {
         this.x = xPos;
         this.y = yPos;
     }
+
 
     /**
      * Method to get the length of the vector using pythagoras theorem
@@ -86,23 +87,23 @@ public class GameVector {
      * @param vector The vector to be multiplied with
      * @return The new vector
      */
-    static GameVector multiplyVector (double number, GameVector vector) {
+    public static GameVector multiplyVector (double number, GameVector vector) {
         double x = vector.getX() * number;
         double y = vector.getY() * number;
         return new GameVector(x, y);
     }
 
-    static double vectorDotProduct(GameVector vector1, GameVector vector2) {
+    public static double vectorDotProduct(GameVector vector1, GameVector vector2) {
         return (vector1.getX() * vector2.getX()) + (vector1.getY() * vector2.getY());
     }
 
-    static double angleBetweenVectors(GameVector vector1, GameVector vector2) {
-        GameVector vectorNormalized1 = new GameVector((vector1.getX()/vector1.getLength()),
-                (vector1.getY()/vector1.getLength()));
-        GameVector vectorNormalized2 = new GameVector((vector2.getX()/vector2.getLength()),
-                (vector2.getY()/vector2.getLength()));
+    public static double angleBetweenVectors(GameVector vector1, GameVector vector2) {
+        return Math.acos(vectorDotProduct(normalizeVector(vector1), normalizeVector(vector2)));
+    }
 
-        return Math.acos(vectorDotProduct(vectorNormalized1, vectorNormalized2));
+    public static GameVector normalizeVector(GameVector vector) {
+        return new GameVector((vector.getX()/vector.getLength()),
+                (vector.getY()/vector.getLength()));
     }
 
     public static void printVector(GameVector vector) {
