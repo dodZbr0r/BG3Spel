@@ -99,6 +99,7 @@ public class GameComponent extends JComponent {
         //scrollingGround.draw(g2, unitConversion(game.getBall().getVelocity().getX()));
         scrollingGround.draw(g2, 0);
 
+        /*
         // Ball pt 1
         g2.setColor(game.getBall().getPrimaryColor());
         g2.fillArc(unitConversion(game.getBall().getX()), yConversion(game.getBall().getY()),
@@ -112,6 +113,12 @@ public class GameComponent extends JComponent {
                 unitConversion(game.getBall().getWidth()), unitConversion(game.getBall().getWidth()), (int)angularVelocity + 90, 90);
         g2.fillArc(unitConversion(game.getBall().getX()), yConversion(game.getBall().getY()),
                 unitConversion(game.getBall().getWidth()), unitConversion(game.getBall().getWidth()), (int)angularVelocity + 270, 90);
+        */
+
+        //Ball 1
+        g2.setColor(game.getBall().getPrimaryColor());
+        g2.fillOval(unitConversion(game.getBall().getX()), yConversion(game.getBall().getY()),
+                unitConversion(game.getBall().getWidth()), unitConversion(game.getBall().getWidth()));
 
         //Ball 2
         g2.setColor(game.getBall2().getPrimaryColor());

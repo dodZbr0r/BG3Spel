@@ -7,6 +7,8 @@ import Physics.GameVector;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
+import java.util.List;
 
 import static Physics.Force.getAirResistance;
 
@@ -16,7 +18,6 @@ import static Physics.Force.getAirResistance;
  */
 public class Game {
 
-    private static final double fps = 60;
     private Ball ball1, ball2;
     private double groundHeight;
     private GameVector gravity;
@@ -24,46 +25,45 @@ public class Game {
     private GameVector friction;
     private double score;
     private double highscore;
+    private List<PhysicsObject> objectsOnScreen;
 
+    //Converts from milliseconds to Seconds
+    private final double milliToSeconds = 0.001;
 
     /**
      * Constructs a Game with a ball object and ground measurements
      * creates a GameVector representing gravity
      */
     Game() {
-        ball1 = new Ball(2.0, 1.5, 3.0, 0.5, Color.RED, Color.ORANGE, new GameVector(3.0/fps, 5.0/fps));
-        ball2 = new Ball(8.0, 1.5, 3.0, 0.5, Color.BLUE, Color.GREEN, new GameVector(-3.0/fps, 8/fps));
+        ball1 = new Ball(0.0, 5.0, 3.0, 0.5, Color.RED, Color.ORANGE, new GameVector(7.0, 5.0));
+        ball2 = new Ball(10, 5.0, 3.0, 0.5, Color.BLUE, Color.GREEN, new GameVector(-3.0, 3.0));
+        objectsOnScreen = new ArrayList<PhysicsObject>();
+        objectsOnScreen.add(ball1);
+        objectsOnScreen.add(ball2);
         groundHeight = 0.5;
         gravitySize = -9.8;
-        gravity = new GameVector(0, (gravitySize/fps)/fps);
+        gravity = new GameVector(0, gravitySize);
+
+
     }
 
     /**
      * Updates the state of the game
-     * @param updateTime The time it took to update in milliseconds
+     * @param deltaTime The time it took to update in milliseconds
      */
-    void update(double updateTime) {
-        applyAcceleration(ball1, gravity);
-        applyAcceleration(ball2, gravity);
+    void update(double deltaTime) {
 
-        applyAirResistance(ball1);
-        applyAirResistance(ball2);
-        ball1.setPos(ball1.getX() + ball1.getVelocity().getX(), ball1.getY() + ball1.getVelocity().getY());
-        ball2.setPos(ball2.getX() + ball2.getVelocity().getX(), ball2.getY() + ball2.getVelocity().getY());
+        //Applies gravity acceleration to all objects
+        applyGravity(deltaTime);
 
-        if(ball1.getY() - ball1.getWidth() <= groundHeight && ball1.getVelocity().getY() < 0) {
-            ball1.getVelocity().setPos(ball1.getVelocity().getX(), -(ball1.getVelocity().getY()));
-            ball1.setPos(ball1.getX(), groundHeight + ball1.getWidth());
-            friction=Force.getFriction(ball1.getMass(), gravitySize, ball1.getVelocity().getX());
-            applyFriction(ball1);
-        }
+        //Applies Air resistance to all objects
+        applyAirResistance(deltaTime);
 
-        if(ball2.getY() - ball2.getWidth() <= groundHeight && ball2.getVelocity().getY() < 0) {
-            ball2.getVelocity().setPos(ball2.getVelocity().getX(), -(ball2.getVelocity().getY()));
-            ball2.setPos(ball2.getX(), groundHeight + ball2.getWidth());
-            friction=Force.getFriction(ball2.getMass(), gravitySize, ball2.getVelocity().getX());
-            applyFriction(ball2);
-        }
+        //Sets new positions of objects
+        setNewObjectPosition(deltaTime);
+
+        //Checks collision with the ground
+        checkGroundCollision(deltaTime);
 
         //Check collision
         if(ball1.closeTo(ball2)){
@@ -75,7 +75,7 @@ public class Game {
         }
 
         //Stops the ball if the x-velocity of the ball is less than 0.01
-        if(Math.abs(ball1.getVelocity().getX()) < 0.01) {
+        /*if(Math.abs(ball1.getVelocity().getX()) < 0.01) {
             double velY = ball1.getVelocity().getY();
             ball1.setVelocity(new GameVector(0.0, velY));
 
@@ -85,7 +85,7 @@ public class Game {
             double velY = ball2.getVelocity().getY();
             ball2.setVelocity(new GameVector(0.0, velY));
 
-        }
+        }*/
 
         //Updates the score and highscore
         setScore(score + ball1.getVelocity().getX());
@@ -103,29 +103,57 @@ public class Game {
 
     }
 
+
+    private void applyGravity(double deltaTime) {
+        for (PhysicsObject object: objectsOnScreen) {
+            applyAcceleration(gravity, object, deltaTime);
+        }
+    }
+
     /**
      * Performs calculations for the ball to be affected by an acceleration vector
      * @param acceleration The acceleration vector that will affect the object
      */
-    private void applyAcceleration(PhysicsObject object, GameVector acceleration) {
-        object.setVelocity(GameVector.addVectors(object.getVelocity(), acceleration));}
+    private void applyAcceleration(GameVector acceleration, PhysicsObject object, double deltaTime) {
+        object.setVelocity(GameVector.addVectors(object.getVelocity(),
+                GameVector.multiplyVector((deltaTime * milliToSeconds), acceleration)));
+    }
 
     /**
      * Adds acceleration caused by air resistance to the total acceleration
      */
-    private void applyAirResistance(PhysicsObject object){
-        GameVector airResistance = getAirResistance(object.getVelocity(), object.getArea());
-        double mass = object.getMass();
-        GameVector acceleration = Force.calculateAcceleration(mass, airResistance);
-        applyAcceleration(object, acceleration);
+    private void applyAirResistance(double deltaTime){
+        for (PhysicsObject object: objectsOnScreen) {
+            GameVector airResistance = getAirResistance(object.getVelocity(), object.getArea());
+            GameVector acceleration = Force.calculateAcceleration(object.getMass(), airResistance);
+            applyAcceleration(acceleration, object, deltaTime);
+        }
+    }
+
+    private void setNewObjectPosition(double deltaTime) {
+        for (PhysicsObject object: objectsOnScreen) {
+            object.setPos(object.getX() + (object.getVelocity().getX() * deltaTime * milliToSeconds),
+                    object.getY() + (object.getVelocity().getY() * deltaTime * milliToSeconds));
+        }
+    }
+
+    private void checkGroundCollision(double deltaTime) {
+        for (PhysicsObject object: objectsOnScreen) {
+            if(object.getY() - object.getHeight() <= groundHeight && object.getVelocity().getY() < 0) {
+                object.getVelocity().setPos(object.getVelocity().getX(), -(object.getVelocity().getY()));
+                object.setPos(object.getX(), groundHeight + object.getHeight());
+                friction = Force.getFriction(object.getMass(), gravitySize, object.getVelocity().getX());
+                applyFriction(object, deltaTime);
+            }
+        }
     }
 
     /**
      * Adds acceleration caused vy friction to the total acceleration
      */
-    private void applyFriction(PhysicsObject object){
+    private void applyFriction(PhysicsObject object, double deltaTime){
         GameVector acceleration = Force.calculateAcceleration(object.getMass(), friction);
-        applyAcceleration(object, acceleration);
+        applyAcceleration(acceleration, object, deltaTime);
     }
 
     public Ball getBall() {

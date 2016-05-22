@@ -12,7 +12,8 @@ import java.awt.event.ActionEvent;
  */
 public class Main{
 
-    private static double lastUpdate;
+    private static double lastGraphicUpdate;
+    private static double lastGameUpdate;
 
     /**
      * Main method, creating a Game, a Jframe, and a GameComponent
@@ -31,15 +32,32 @@ public class Main{
         frame.setVisible(true);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
-        lastUpdate = System.currentTimeMillis();
+        lastGraphicUpdate = System.currentTimeMillis();
+        lastGameUpdate = System.currentTimeMillis();
 
-        GameVector norm = new GameVector(1, 0);
-        GameVector vec1 = new GameVector(5.7, -0.64, true);
+        Runnable gameCalc = new Runnable() {
+            @Override
+            public void run() {
+                while(true) {
+                    double currentTime = System.currentTimeMillis();
+                    if((currentTime - lastGameUpdate) >= 1) {
+                        game.update(currentTime - lastGameUpdate);
+                        System.out.println("Game Updatetime: " + (currentTime - lastGameUpdate));
+                        lastGameUpdate = currentTime;
+                    }
+                }
+            }
+        };
+
+        Thread gameThread = new Thread(gameCalc);
+
+        /*GameVector norm = new GameVector(1, 0);
+        GameVector vec1 = new GameVector(0.11, -0.64, true);
         GameVector vec2 = new GameVector(-2, 1);
         GameVector vec3 = new GameVector(-2, -2);
-        GameVector vec4 = new GameVector(2, -1);
+        GameVector vec4 = new GameVector(2, -1);*/
 
-        System.out.println("X: " + vec1.getX() + "  Y: " + vec1.getY() + "  L: " + vec1.getLength() );
+        //System.out.println("X: " + vec1.getX() + "  Y: " + vec1.getY() + "  L: " + vec1.getLength() );
         /*System.out.println(GameVector.angleBetweenVectors(norm, vec1));
         System.out.println(GameVector.angleBetweenVectors(norm, vec2));
         System.out.println(GameVector.angleBetweenVectors(norm, vec3));
@@ -52,8 +70,9 @@ public class Main{
 
                 //Using currentTime and lastUpdate to calculate time for every update
                 double currentTime = System.currentTimeMillis();
-                game.update(currentTime - lastUpdate);
-                lastUpdate = currentTime;
+                //game.update(currentTime - lastUpdate);
+                System.out.println("\nGFX UPDATETIME: " + (currentTime - lastGraphicUpdate + "\n"));
+                lastGraphicUpdate = currentTime;
                 component.repaint();
             }
         };
@@ -61,6 +80,7 @@ public class Main{
         //Using 17 milliseconds since 17ms is close to 1/60s
         Timer timer = new Timer(17, updateAction);
         timer.setCoalesce(true);
+        gameThread.start();
         timer.start();
     }
 
