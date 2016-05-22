@@ -31,8 +31,8 @@ public class Game {
      * creates a GameVector representing gravity
      */
     Game() {
-        ball1 = new Ball(2.0, 1.5, 1.0, 0.5, Color.RED, Color.ORANGE, new GameVector(2.0/fps, 6.0/fps));
-        ball2 = new Ball(6.0, 1.5, 3.0, 0.5, Color.BLUE, Color.GREEN, new GameVector(-1.0/fps, 8.0/fps));
+        ball1 = new Ball(2.0, 1.5, 3.0, 0.5, Color.RED, Color.ORANGE, new GameVector(3.0/fps, 5.0/fps));
+        ball2 = new Ball(8.0, 1.5, 3.0, 0.5, Color.BLUE, Color.GREEN, new GameVector(-3.0/fps, 8/fps));
         groundHeight = 0.5;
         gravitySize = -9.8;
         gravity = new GameVector(0, (gravitySize/fps)/fps);
@@ -78,6 +78,12 @@ public class Game {
         if(Math.abs(ball1.getVelocity().getX()) < 0.01) {
             double velY = ball1.getVelocity().getY();
             ball1.setVelocity(new GameVector(0.0, velY));
+
+        }
+
+        if(Math.abs(ball2.getVelocity().getX()) < 0.01) {
+            double velY = ball2.getVelocity().getY();
+            ball2.setVelocity(new GameVector(0.0, velY));
 
         }
 

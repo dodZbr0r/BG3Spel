@@ -83,7 +83,8 @@ public class GameComponent extends JComponent {
         Graphics2D g2 = (Graphics2D) g;
 
         // Background
-        scrollingBackground.draw(g2, unitConversion(game.getBall().getVelocity().getX()));
+        //scrollingBackground.draw(g2, unitConversion(game.getBall().getVelocity().getX()));
+        scrollingBackground.draw(g2, 0);
 
         // Spring
         g2.drawImage(bed, 400, HEIGHT-180, 100, 100, null);
@@ -95,7 +96,8 @@ public class GameComponent extends JComponent {
         g2.drawImage(heaven, 0, -HEIGHT, WIDTH, HEIGHT, this);
 
         //Ground
-        scrollingGround.draw(g2, unitConversion(game.getBall().getVelocity().getX()));
+        //scrollingGround.draw(g2, unitConversion(game.getBall().getVelocity().getX()));
+        scrollingGround.draw(g2, 0);
 
         // Ball pt 1
         g2.setColor(game.getBall().getPrimaryColor());
