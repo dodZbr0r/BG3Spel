@@ -6,6 +6,8 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+
+import Physics.GameVector;
 import sun.audio.*;
 import java.io.*;
 
@@ -36,6 +38,16 @@ public class Main{
         frame.setLocationRelativeTo(null);
         lastGraphicUpdate = System.currentTimeMillis();
         lastGameUpdate = System.currentTimeMillis();
+
+        /*GameVector vec1 = new GameVector(2, 0);
+        GameVector vec2 = new GameVector(0, 4);
+        GameVector vec3 = new GameVector(-2, -0.0001);
+        GameVector vec4 = new GameVector(0, -1);
+
+        System.out.println("vec1: " + vec1.getAngle());
+        System.out.println("vec2: " + vec2.getAngle());
+        System.out.println("vec3: " + vec3.getAngle());
+        System.out.println("vec4: " + vec4.getAngle());*/
 
         AbstractAction updateAction = new AbstractAction() {
             @Override

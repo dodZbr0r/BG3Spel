@@ -41,17 +41,18 @@ public class GameVector {
     }
 
     public double getAngle(){
-        if (y>=0){
-          return Math.acos(x/getLength());
-        }
-        else {
-            if (x>=0){
-                return Math.asin(y/getLength()) + 2 * Math.PI;
-            }
-            else {
-                return Math.acos(-x/getLength()) + Math.PI;
-            }
-        }
+        return Math.atan2(y, x);
+//        if (y>=0){
+//          return Math.acos(x/getLength());
+//        }
+//        else {
+//            if (x>=0){
+//                return Math.asin(y/getLength()) + 2 * Math.PI;
+//            }
+//            else {
+//                return Math.acos(-x/getLength()) + Math.PI;
+//            }
+//        }
     }
 
     public void setPos(double xPos, double yPos) {
