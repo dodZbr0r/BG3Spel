@@ -35,21 +35,21 @@ public class Main{
         lastGraphicUpdate = System.currentTimeMillis();
         lastGameUpdate = System.currentTimeMillis();
 
-        Runnable gameCalc = new Runnable() {
-            @Override
-            public void run() {
-                while(true) {
-                    double currentTime = System.currentTimeMillis();
-                    if((currentTime - lastGameUpdate) >= 1) {
-                        game.update(currentTime - lastGameUpdate);
-                        System.out.println("Game Updatetime: " + (currentTime - lastGameUpdate));
-                        lastGameUpdate = currentTime;
-                    }
-                }
-            }
-        };
+//        Runnable gameCalc = new Runnable() {
+//            @Override
+//            public void run() {
+//                while(true) {
+//                    double currentTime = System.currentTimeMillis();
+//                    if((currentTime - lastGameUpdate) >= 1 && (currentTime - lastGameUpdate) % 5 == 0) {
+//                        game.update(currentTime - lastGameUpdate);
+//                        //System.out.println("Game Updatetime: " + (currentTime - lastGameUpdate));
+//                        lastGameUpdate = currentTime;
+//                    }
+//                }
+//            }
+//        };
 
-        Thread gameThread = new Thread(gameCalc);
+        //Thread gameThread = new Thread(gameCalc);
 
         /*GameVector norm = new GameVector(1, 0);
         GameVector vec1 = new GameVector(0.11, -0.64, true);
@@ -80,8 +80,17 @@ public class Main{
         //Using 17 milliseconds since 17ms is close to 1/60s
         Timer timer = new Timer(17, updateAction);
         timer.setCoalesce(true);
-        gameThread.start();
+        //gameThread.start();
         timer.start();
+
+        while(true) {
+            double currentTime = System.currentTimeMillis();
+            if((currentTime - lastGameUpdate) >= 1 && (currentTime - lastGameUpdate) % 5 == 0) {
+                game.update(currentTime - lastGameUpdate);
+                //System.out.println("Game Updatetime: " + (currentTime - lastGameUpdate));
+                lastGameUpdate = currentTime;
+            }
+        }
     }
 
 
