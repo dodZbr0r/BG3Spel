@@ -80,7 +80,6 @@ public class Main{
         //Using 17 milliseconds since 17ms is close to 1/60s
         Timer timer = new Timer(17, updateAction);
         timer.setCoalesce(true);
-        //gameThread.start();
         timer.start();
 
         while(true) {

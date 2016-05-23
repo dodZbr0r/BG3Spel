@@ -99,7 +99,7 @@ public class GameComponent extends JComponent {
         //scrollingGround.draw(g2, unitConversion(game.getBall().getVelocity().getX()));
         scrollingGround.draw(g2, 0);
 
-        /*
+
         // Ball pt 1
         g2.setColor(game.getBall().getPrimaryColor());
         g2.fillArc(unitConversion(game.getBall().getX()), yConversion(game.getBall().getY()),
@@ -113,24 +113,13 @@ public class GameComponent extends JComponent {
                 unitConversion(game.getBall().getWidth()), unitConversion(game.getBall().getWidth()), (int)angularVelocity + 90, 90);
         g2.fillArc(unitConversion(game.getBall().getX()), yConversion(game.getBall().getY()),
                 unitConversion(game.getBall().getWidth()), unitConversion(game.getBall().getWidth()), (int)angularVelocity + 270, 90);
-        */
-
-        //Ball 1
-        g2.setColor(game.getBall().getPrimaryColor());
-        g2.fillOval(unitConversion(game.getBall().getX()), yConversion(game.getBall().getY()),
-                unitConversion(game.getBall().getWidth()), unitConversion(game.getBall().getWidth()));
 
         //Ball 2
         g2.setColor(game.getBall2().getPrimaryColor());
         g2.fillOval(unitConversion(game.getBall2().getX()), yConversion(game.getBall2().getY()),
                 unitConversion(game.getBall2().getWidth()), unitConversion(game.getBall2().getWidth()));
 
-        //Crude temporary spring
-        g2.setColor(Color.black);
-        g2.drawLine(400, 500, 400+(int)(convertedValue*50), 500-(int)(convertedValue*50));
-        g2.drawLine(401, 500, 401+(int)(convertedValue*50), 500-(int)(convertedValue*50));
-
-        angularVelocity -= 50*(game.getBall().getVelocity().getX());
+        angularVelocity -= game.getBall().getVelocity().getX();
 
         // Score: Distance Bounced
         g2.setColor(new Color(255, 255, 255));
