@@ -44,7 +44,7 @@ public class Game {
         objectsOnScreen.add(ball2);
         timeStationary = 0;
         gameOver = false;
-        groundHeight = 0.5;
+        groundHeight = 0.8;
         gravitySize = -9.8;
         gravity = new GameVector(0, gravitySize);
     }
