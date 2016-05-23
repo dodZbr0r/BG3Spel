@@ -19,10 +19,16 @@ public class Cube extends PhysicsObject {
     }
 
     public boolean hasCollision(PhysicsObject object) {
+
         return false;
+
     }
 
     //GETTERS
+
+    public double getArea() {
+        return getWidth() * getWidth();
+    }
 
     public Color getAlternateColor() {
         return alternateColor;

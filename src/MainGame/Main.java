@@ -1,16 +1,12 @@
 package MainGame;
 
 import Graphics.GameComponent;
-
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
-
 import sun.audio.*;
-
 import java.io.*;
 
 /**
@@ -18,7 +14,8 @@ import java.io.*;
  */
 public class Main{
 
-    private static double lastUpdate;
+    private static double lastGraphicUpdate;
+    private static double lastGameUpdate;
 
     /**
      * Main method, creating a Game, a Jframe, and a GameComponent
@@ -37,7 +34,8 @@ public class Main{
         frame.setVisible(true);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
-        lastUpdate = System.currentTimeMillis();
+        lastGraphicUpdate = System.currentTimeMillis();
+        lastGameUpdate = System.currentTimeMillis();
 
         AbstractAction updateAction = new AbstractAction() {
             @Override
@@ -45,8 +43,9 @@ public class Main{
 
                 //Using currentTime and lastUpdate to calculate time for every update
                 double currentTime = System.currentTimeMillis();
-                game.update(currentTime - lastUpdate);
-                lastUpdate = currentTime;
+                //game.update(currentTime - lastUpdate);
+                System.out.println("\nGFX UPDATETIME: " + (currentTime - lastGraphicUpdate + "\n"));
+                lastGraphicUpdate = currentTime;
                 component.repaint();
             }
         };
@@ -55,8 +54,16 @@ public class Main{
         Timer timer = new Timer(17, updateAction);
         timer.setCoalesce(true);
         timer.start();
-
         play();
+
+        while(true) {
+            double currentTime = System.currentTimeMillis();
+            if((currentTime - lastGameUpdate) >= 1 && (currentTime - lastGameUpdate) % 5 == 0) {
+                game.update(currentTime - lastGameUpdate);
+                //System.out.println("Game Updatetime: " + (currentTime - lastGameUpdate));
+                lastGameUpdate = currentTime;
+            }
+        }
     }
 
     public static void play() {

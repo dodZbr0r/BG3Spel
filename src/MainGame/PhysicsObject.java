@@ -10,13 +10,15 @@ import java.awt.geom.Point2D;
  */
 public abstract class PhysicsObject {
 
-    private double x, y, mass, width, height;
+    private double x, y, preX, preY, mass, width, height;
     private Color primaryColor;
     private GameVector velocity;
 
     public PhysicsObject(double x, double y, double mass, Color primaryColor, GameVector velocity) {
         this.x = x;
         this.y = y;
+        preX = x;
+        preY = y;
         this.mass = mass;
         this.primaryColor = primaryColor;
         this.velocity = velocity;
@@ -47,6 +49,8 @@ public abstract class PhysicsObject {
     }
 
     public void setPos(double x, double y) {
+        preX = this.x;
+        preY = this.y;
         this.x = x;
         this.y = y;
     }
@@ -64,6 +68,8 @@ public abstract class PhysicsObject {
 
     //GETTERS
 
+    public abstract double getArea();
+
     public Point2D.Double getCenter() {
         return new Point2D.Double((x + width / 2), (y - height / 2));
     }
@@ -74,6 +80,14 @@ public abstract class PhysicsObject {
 
     public double getY() {
         return y;
+    }
+
+    public double getPreX() {
+        return preX;
+    }
+
+    public double getPreY() {
+        return preY;
     }
 
     public double getMass() {

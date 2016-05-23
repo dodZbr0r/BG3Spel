@@ -1,4 +1,6 @@
 package Physics;
+import MainGame.PhysicsObject;
+
 import java.lang.Math;
 
 /**
@@ -35,10 +37,9 @@ public class Force {
      * @param radius The radius of the ball
      * @return The air resistance vector
      */
-    public static GameVector getAirResistance(GameVector velocity, double radius){
+    public static GameVector getAirResistance(GameVector velocity, double area){
         double coefficient=0.47;
         double density=1.2;
-        double area=radius*radius*Math.PI;
         double forceX = calculateAirRes(coefficient, density, area, velocity.getX());
         double forceY = calculateAirRes(coefficient, density, area, velocity.getY());
         GameVector airRes = new GameVector(forceX, forceY);
@@ -80,4 +81,5 @@ public class Force {
             sign=0;
         return new GameVector (sign*k*normal, 0);
     }
+
 }

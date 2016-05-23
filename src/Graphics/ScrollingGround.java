@@ -22,10 +22,10 @@ public class ScrollingGround {
 
     ScrollingGround(BufferedImage image){
         groundWidth = GameComponent.getWIDTH();
-        groundHeight = 80;
+        groundHeight = 50;
         this.ground = image;
 
-        y1 = 640;
+        y1 = 670;
     }
 
     void draw(Graphics2D g, int velocityX){
