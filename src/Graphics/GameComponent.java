@@ -85,16 +85,18 @@ public class GameComponent extends JComponent{
         Graphics2D g2 = (Graphics2D) g;
 
         // Background
-        scrollingBackground.draw(g2, unitConversion(game.getBall().getVelocity().getX()));
+        //scrollingBackground.draw(g2, unitConversion(game.getBall().getVelocity().getX()/60));
+        scrollingBackground.draw(g2, 0);
 
         //Heaven Higher
-        g2.drawImage(heavenHigher, 0, -(2*HEIGHT), WIDTH, HEIGHT, this);
+        //g2.drawImage(heavenHigher, 0, -(2*HEIGHT), WIDTH, HEIGHT, this);
 
         //Heaven
-        g2.drawImage(heaven, 0, -HEIGHT, WIDTH, HEIGHT, this);
+        //g2.drawImage(heaven, 0, -HEIGHT, WIDTH, HEIGHT, this);
 
         //Ground
-        scrollingGround.draw(g2, unitConversion(game.getBall().getVelocity().getX()));
+        //scrollingGround.draw(g2, unitConversion(game.getBall().getVelocity().getX()/60));
+        scrollingGround.draw(g2, 0);
 
         // Ball pt 1
         g2.setColor(game.getBall().getPrimaryColor());
@@ -115,14 +117,14 @@ public class GameComponent extends JComponent{
         g2.fillOval(unitConversion(game.getBall2().getX()), yConversion(game.getBall2().getY()),
                 unitConversion(game.getBall2().getWidth()), unitConversion(game.getBall2().getWidth()));
 
-        if (drawForceSpring) {
-            g2.setColor(Color.yellow);
-            g2.drawLine(400, 500, 400+(int)(250*startAngle.getX()), 500+(int)(250*startAngle.getY()));
-            g2.drawLine(401, 500, 401+(int)(250*startAngle.getX()), 500+(int)(250*startAngle.getY()));
-            g2.setColor(Color.black);
-            g2.drawLine(400, 500, 400+(int)(convertedValue*250), 500-(int)(convertedValue*250));
-            g2.drawLine(401, 500, 401+(int)(convertedValue*250), 500-(int)(convertedValue*250));
-        }
+//        if (drawForceSpring) {
+//            g2.setColor(Color.yellow);
+//            g2.drawLine(400, 500, 400+(int)(250*startAngle.getX()), 500+(int)(250*startAngle.getY()));
+//            g2.drawLine(401, 500, 401+(int)(250*startAngle.getX()), 500+(int)(250*startAngle.getY()));
+//            g2.setColor(Color.black);
+//            g2.drawLine(400, 500, 400+(int)(convertedValue*250), 500-(int)(convertedValue*250));
+//            g2.drawLine(401, 500, 401+(int)(convertedValue*250), 500-(int)(convertedValue*250));
+//        }
 
         angularVelocity -= game.getBall().getVelocity().getX();
 

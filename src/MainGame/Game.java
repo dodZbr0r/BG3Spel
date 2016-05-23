@@ -25,6 +25,8 @@ public class Game {
     private GameVector friction;
     private double score;
     private double highscore;
+    private double timeStationary;
+    private boolean gameOver;
     private List<PhysicsObject> objectsOnScreen;
 
     //Converts from milliseconds to Seconds
@@ -35,16 +37,16 @@ public class Game {
      * creates a GameVector representing gravity
      */
     Game() {
-        ball1 = new Ball(9.0, 1.5, 3.0, 0.5, Color.RED, Color.ORANGE, new GameVector(-2.0, 11.5));
-        ball2 = new Ball(1.0, 1.5, 3.0, 0.5, Color.BLUE, Color.GREEN, new GameVector(4.0, 6.0));
+        ball1 = new Ball(0.0, 1.5, 3.0, 0.5, Color.RED, Color.ORANGE, new GameVector(5.0, 5.0));
+        ball2 = new Ball(8.0, 1.5, 3.0, 0.5, Color.BLUE, Color.GREEN, new GameVector(0.0, 0.0));
         objectsOnScreen = new ArrayList<PhysicsObject>();
         objectsOnScreen.add(ball1);
         objectsOnScreen.add(ball2);
+        timeStationary = 0;
+        gameOver = false;
         groundHeight = 0.5;
         gravitySize = -9.8;
         gravity = new GameVector(0, gravitySize);
-
-
     }
 
     /**
@@ -88,10 +90,12 @@ public class Game {
         }*/
 
         //Updates the score and highscore
-        setScore(score + ball1.getVelocity().getX());
+        setScore(score + ball1.getVelocity().getX() * deltaTime * milliToSeconds);
         if(score > highscore) {
             setHighscore(score);
         }
+
+        updateTimeStationary(deltaTime);
 
         //Printing some information about the ball
         /*System.out.printf("X-HASTIGHET:%10f", ball1.getVelocity().getX());
@@ -99,8 +103,6 @@ public class Game {
         System.out.printf("   XPOS:%10f", ball1.getX());
         System.out.printf("   YPOS:%10f", ball1.getY());
         System.out.println("   UPDATE TIME: " + updateTime);*/
-
-
     }
 
 
@@ -172,9 +174,7 @@ public class Game {
      * Gives the ball speed when pressing space
      */
     public void ballLaunch(double launchForce) {
-
-
-        ball1.setVelocity( new GameVector(1 * launchForce, 0.1 * launchForce));
+        ball1.setVelocity( new GameVector(2 * launchForce, 0.15 * launchForce));
 
     }
 
@@ -185,6 +185,24 @@ public class Game {
         ball1.setPos(2,0);
         ball1.setVelocity(new GameVector(0, 0));
         setScore(0);
+        setGameOver(false);
+    }
+
+    public void updateTimeStationary(double deltaTime) {
+        if(Math.abs(ball1.getVelocity().getX()) < 0.01 && Math.abs(ball1.getVelocity().getY()) < 0.01
+                && getScore() != 0) {
+            timeStationary += deltaTime;
+            if (timeStationary >= 1000) setGameOver(true);
+            if (timeStationary >= 5000) reset();
+        } else timeStationary = 0;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
     }
 
     public double getScore() {

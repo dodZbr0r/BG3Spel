@@ -54,7 +54,7 @@ public class Main{
         Timer timer = new Timer(17, updateAction);
         timer.setCoalesce(true);
         timer.start();
-        play();
+        //play();
 
         while(true) {
             double currentTime = System.currentTimeMillis();
