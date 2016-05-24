@@ -14,7 +14,7 @@ public abstract class PhysicsObject {
     private Color primaryColor;
     private GameVector velocity;
 
-    public PhysicsObject(double x, double y, double mass, Color primaryColor, GameVector velocity) {
+    PhysicsObject(double x, double y, double mass, Color primaryColor, GameVector velocity) {
         this.x = x;
         this.y = y;
         preX = x;
@@ -27,7 +27,12 @@ public abstract class PhysicsObject {
 
     //COLLISION
 
-    public boolean closeTo(PhysicsObject object) {
+    /**
+     * Checks if this object is close to another object
+     * @param object The other object
+     * @return true if they are close, else false.
+     */
+    boolean closeTo(PhysicsObject object) {
         double vecX = object.getCenter().getX() - this.getCenter().getX();
         double vecY = object.getCenter().getX() - this.getCenter().getX();
 
@@ -36,19 +41,24 @@ public abstract class PhysicsObject {
         return distance.getLength() <= width + object.getWidth();
     }
 
+    /**
+     * Calculates if an object has collided with this object
+     * @param object The other object
+     * @return true if the objects have collided, else false
+     */
     public abstract boolean hasCollision(PhysicsObject object);
 
     //SETTERS
 
-    public void setHeight(double height) {
+    void setHeight(double height) {
         this.height = height;
     }
 
-    public void setWidth(double width) {
+    void setWidth(double width) {
         this.width = width;
     }
 
-    public void setPos(double x, double y) {
+    void setPos(double x, double y) {
         preX = this.x;
         preY = this.y;
         this.x = x;
@@ -58,7 +68,7 @@ public abstract class PhysicsObject {
         this.primaryColor = primaryColor;
     }
 
-    public void setVelocity(GameVector velocity) {
+    void setVelocity(GameVector velocity) {
         this.velocity = velocity;
     }
 
@@ -82,11 +92,11 @@ public abstract class PhysicsObject {
         return y;
     }
 
-    public double getPreX() {
+    double getPreX() {
         return preX;
     }
 
-    public double getPreY() {
+    double getPreY() {
         return preY;
     }
 
@@ -98,7 +108,7 @@ public abstract class PhysicsObject {
         return width;
     }
 
-    public double getHeight() {
+    double getHeight() {
         return height;
     }
 

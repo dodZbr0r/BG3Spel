@@ -47,3 +47,13 @@ Koordinater ska skrivas i mm, d.v.s. 1000 = 1 m
 Radie på boll bestämt till 500.
 Standard för vinklar bestäms til grader
 
+----------------------------------------------------------------------------------------------------
+Möte n 2016-05-24
+
+Möjliga fixar/extra saker/DLC:
+
+- Få grafiken att veta hur ofta den uppdaterar så att bakgrunden och marken ändras ordentligt
+  (Overridea repaint och skicka med uppdateringstiden för grafik)
+  Alternativt ha med bakgrund och mark i Game, och skicka in hur mycket dem ska ändras till GameComponent
+
+-

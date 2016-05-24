@@ -28,7 +28,6 @@ public abstract class Ball extends PhysicsObject {
 
     }
 
-
     public boolean hasCollision(PhysicsObject object) {
         if(object instanceof Ball) {
             double vecX = object.getCenter().getX() - this.getCenter().getX();
@@ -53,5 +52,4 @@ public abstract class Ball extends PhysicsObject {
         return radius;
     }
 
-    public abstract Color getAlternateColor();
 }
