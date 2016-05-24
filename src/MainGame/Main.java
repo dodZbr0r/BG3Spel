@@ -36,27 +36,19 @@ public class Main{
         frame.setVisible(true);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
+
+        //Time for updating game and graphics
         lastGraphicUpdate = System.currentTimeMillis();
         lastGameUpdate = System.currentTimeMillis();
 
-        /*GameVector vec1 = new GameVector(2, 0);
-        GameVector vec2 = new GameVector(0, 4);
-        GameVector vec3 = new GameVector(-2, -0.0001);
-        GameVector vec4 = new GameVector(0, -1);
-
-        System.out.println("vec1: " + vec1.getAngle());
-        System.out.println("vec2: " + vec2.getAngle());
-        System.out.println("vec3: " + vec3.getAngle());
-        System.out.println("vec4: " + vec4.getAngle());*/
-
+        //Graphics updateAction created
         AbstractAction updateAction = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
                 //Using currentTime and lastUpdate to calculate time for every update
                 double currentTime = System.currentTimeMillis();
-                //game.update(currentTime - lastUpdate);
-                //System.out.println("\nGFX UPDATETIME: " + (currentTime - lastGraphicUpdate + "\n"));
+                System.out.println("\nGFX UPDATETIME: " + (currentTime - lastGraphicUpdate + "\n"));
                 lastGraphicUpdate = currentTime;
                 component.repaint();
             }
@@ -68,6 +60,7 @@ public class Main{
         timer.start();
         //play();
 
+        //Updating the game
         while(true) {
             double currentTime = System.currentTimeMillis();
             if((currentTime - lastGameUpdate) >= 1 && (currentTime - lastGameUpdate) % 5 == 0) {
@@ -78,7 +71,8 @@ public class Main{
         }
     }
 
-    public static void play() {
+    /*public static void play() {
+    && (currentTime - lastGameUpdate) % 5 == 0
         try {
             File file = new File("data/Soundtrack/" + "Calcutta" + ".wav");
             Clip clip = AudioSystem.getClip();
@@ -88,6 +82,6 @@ public class Main{
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
-    }
+    }*/
 
 }

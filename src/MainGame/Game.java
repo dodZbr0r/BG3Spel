@@ -77,17 +77,11 @@ public class Game {
         }
 
         //Stops the ball if the x-velocity of the ball is less than 0.01
-        /*if(Math.abs(ball1.getVelocity().getX()) < 0.01) {
+        if(Math.abs(ball1.getVelocity().getX()) < 0.01) {
             double velY = ball1.getVelocity().getY();
             ball1.setVelocity(new GameVector(0.0, velY));
 
         }
-
-        if(Math.abs(ball2.getVelocity().getX()) < 0.01) {
-            double velY = ball2.getVelocity().getY();
-            ball2.setVelocity(new GameVector(0.0, velY));
-
-        }*/
 
         //Updates the score and highscore
         setScore(score + ball1.getVelocity().getX() * deltaTime * milliToSeconds);
