@@ -58,16 +58,6 @@ public class GameComponent extends JComponent{
         } catch (IOException e) {
             System.out.println("Could not find Ground.png");
         }
-        try {
-            heaven = ImageIO.read(new File("data/Heaven.png"));
-        } catch (IOException e) {
-            System.out.println("Could not find Heaven.png");
-        }
-        try {
-            heavenHigher = ImageIO.read(new File("data/HeavenHigher.png"));
-        } catch (IOException e) {
-            System.out.println("Could not find HeavenHigher.png");
-        }
 
         scrollingBackground = new ScrollingBackground(background);
         scrollingGround = new ScrollingGround(ground);

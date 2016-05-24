@@ -27,6 +27,11 @@ public class BonusBall extends Ball {
         this.loadedForce = setLoadedForce();
     }
 
+    @Override
+    public Color getAlternateColor() {
+        return null;
+    }
+
     /**
      * Generates a force that will be used for launching the BonusBall.
      */
@@ -41,8 +46,5 @@ public class BonusBall extends Ball {
         return loadedForce;
     }
 
-    @Override
-    public Color getAlternateColor() {
-        return null;
-    }
+
 }

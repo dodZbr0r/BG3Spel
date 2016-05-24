@@ -24,10 +24,11 @@ public class PlayerBall extends Ball {
         super(x, y, mass, radius, primaryColor, velocity);
         this.alternateColor = alternateColor;
     }
-    @Override
+
     public Color getAlternateColor() {
         return alternateColor;
     }
+
     //@Override
     public void setAlternateColor(Color alternateColor) {
         this.alternateColor = alternateColor;

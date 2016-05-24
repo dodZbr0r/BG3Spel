@@ -43,6 +43,7 @@ public class Game {
         bonusBallColors = new ArrayList<Color>();
         bonusBallColors.addAll(Arrays.asList(Color.BLACK, Color.BLUE, Color.RED, Color.GREEN));
         ball2 = generateBonusBall();
+
         objectsOnScreen = new ArrayList<PhysicsObject>();
         objectsOnScreen.add(ball1);
         objectsOnScreen.add(ball2);
@@ -51,8 +52,6 @@ public class Game {
         groundHeight = 0.8;
         gravitySize = -9.8;
         gravity = new GameVector(0, gravitySize);
-        //bonusBallColors.add(Color.BLACK); bonusBallColors.add(Color.BLUE); bonusBallColors.add(Color.RED);
-        //bonusBallColors.add(Color.GREEN); bonusBallColors.add(Color.MAGENTA);
     }
 
     /**
