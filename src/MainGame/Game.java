@@ -18,7 +18,8 @@ import static Physics.Force.getAirResistance;
  */
 public class Game {
 
-    private Ball ball1, ball2;
+    private PlayerBall ball1;
+    private BonusBall ball2;
     private double groundHeight;
     private GameVector gravity;
     private double gravitySize;
@@ -39,11 +40,9 @@ public class Game {
      */
     Game() {
         ball1 = new PlayerBall(0.0, 1.8, 3.0, 0.5, Color.RED, Color.ORANGE, new GameVector(1.0, 4.0));
-        //ball2 = new BonusBall(6.0, 1.8, 7.0, 0.5, Color.BLUE, new GameVector(-1.5, 7.5));
         bonusBallColors = new ArrayList<Color>();
         bonusBallColors.addAll(Arrays.asList(Color.BLACK, Color.BLUE, Color.RED, Color.GREEN));
         ball2 = generateBonusBall();
-
         objectsOnScreen = new ArrayList<PhysicsObject>();
         objectsOnScreen.add(ball1);
         objectsOnScreen.add(ball2);
@@ -177,6 +176,16 @@ public class Game {
 
     }
 
+    /**
+     * Launches the bonus ball from the ground.
+     */
+    public void bonusBallLaunch(){
+        ball2.setVelocity(ball2.getLoadedForce());
+    }
+
+    /**
+     * Generates a new BonusBall with random mass and color.
+     */
     public BonusBall generateBonusBall(){
         Random random = new Random();
         double mass = Math.random() * 10;

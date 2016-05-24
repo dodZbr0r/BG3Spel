@@ -25,7 +25,7 @@ public class GameComponent extends JComponent{
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
     // Images
-    private BufferedImage background, ground, heaven, heavenHigher;
+    private BufferedImage background, ground;
     private boolean decideAngle = true; //boolean so you can only give speed to the ball once
     private boolean decideForce = false;
     private boolean finalClick = true;
