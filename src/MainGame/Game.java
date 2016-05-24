@@ -218,7 +218,7 @@ public class Game {
      */
     private void updateTimeStationary(double deltaTime) {
         //If the ball has a very small velocity in x- and y-direction
-        if(Math.abs(playerBall.getVelocity().getX()) < 0.01 && Math.abs(playerBall.getVelocity().getY()) < 0.01
+        if(Math.abs(ball1.getVelocity().getX()) < 0.01 && Math.abs(ball1.getVelocity().getY()) < 0.01
                 && getScore() != 0) {
             //Add the time since the last update to the time the ball has been stationary
             timeStationary += deltaTime;
