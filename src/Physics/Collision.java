@@ -10,12 +10,12 @@ public class Collision {
     public static void setVelocityPostCollision(PhysicsObject movingObject,
                                                 PhysicsObject restingObject) {
 
-        movingObject.setVelocity(GameVector.multiplyVector(60, movingObject.getVelocity()));
-        restingObject.setVelocity(GameVector.multiplyVector(60, restingObject.getVelocity()));
+        //movingObject.setVelocity(GameVector.multiplyVector(60, movingObject.getVelocity()));
+        //restingObject.setVelocity(GameVector.multiplyVector(60, restingObject.getVelocity()));
 
-        System.out.println("Boll 1 Hastighet: x = " + movingObject.getVelocity().getX() * 60
-                + "  y = " + movingObject.getVelocity().getY() * 60 + "   Boll 2 Hastighet: x = "
-                + restingObject.getVelocity().getX() * 60 +"  y = " + restingObject.getVelocity().getY() * 60);
+        System.out.println("Boll 1 Hastighet: X = " + movingObject.getVelocity().getX()
+                + "  Y = " + movingObject.getVelocity().getY() + "\nBoll 2 Hastighet: X = "
+                + restingObject.getVelocity().getX() +"  Y = " + restingObject.getVelocity().getY() + "\n");
 
         //relative velocity calculated
         GameVector movingRelativeVelocity = new GameVector(movingObject.getVelocity().getX()
@@ -23,8 +23,8 @@ public class Collision {
                 movingObject.getVelocity().getY()
                         - restingObject.getVelocity().getY());
 
-        System.out.println("Boll 1 relativ: x = " + movingRelativeVelocity.getX() * 60
-                + "  y = " + movingRelativeVelocity.getY() * 60);
+        System.out.println("Boll 1 relativ: X = " + movingRelativeVelocity.getX()
+                + "  Y = " + movingRelativeVelocity.getY() + "  Längd: " + movingRelativeVelocity.getLength() +  "\n");
 
         //Vector in the direction of the collision calculated
         GameVector collisionVector = new GameVector(restingObject.getCenter().getX()
@@ -32,8 +32,8 @@ public class Collision {
                 restingObject.getCenter().getY()
                         - movingObject.getCenter().getY());
 
-        System.out.println("Kollisionslinje: x = " + collisionVector.getX() +
-                "  y = " + collisionVector.getY());
+        System.out.println("Kollisionslinje: X = " + collisionVector.getX() +
+                "  Y = " + collisionVector.getY() + "\n");
 
         //Calculate conversion angle
         double conversionAngle = GameVector.angleBetweenVectors(new GameVector(1, 0), collisionVector);
@@ -44,15 +44,18 @@ public class Collision {
         if(collisionVector.getY() >= 0) {
             conversionAngle = -conversionAngle;
         }
+
+        System.out.println("Konverteringsvinkel efter check: " + conversionAngle + "\n");
+
         System.out.println("Boll 1 rel vinkel: " + movingRelativeVelocity.getAngle()
-                + "  minus konvertering: "  + (movingRelativeVelocity.getAngle() + conversionAngle)
-                + "  längden: " + movingRelativeVelocity.getLength() * 60);
+                + "\nMinus konvertering: "  + (movingRelativeVelocity.getAngle() + conversionAngle)
+                + "\nLängden: " + movingRelativeVelocity.getLength() + "\n");
 
         GameVector movingVelocityRelativeToCollision = new GameVector(movingRelativeVelocity.getLength(),
                 (movingRelativeVelocity.getAngle() + conversionAngle));
 
-        System.out.println("Boll 1 kollisionsrelativ: x = " + movingVelocityRelativeToCollision.getX() * 60
-                + "  y = " + movingVelocityRelativeToCollision.getY() * 60);
+        System.out.println("Boll 1 kollisionsrelativ: X = " + movingVelocityRelativeToCollision.getX()
+                + "  Y = " + movingVelocityRelativeToCollision.getY() + "\n");
 
         //Calculates the new velocities for X-direction still relative to the collision
         double newVelocityXMoving = getVelocityMovingCollision(movingObject.getMass(),
@@ -61,26 +64,31 @@ public class Collision {
         double newVelocityXResting = getVelocityRestingCollision(movingObject.getMass(),
                 restingObject.getMass(), movingVelocityRelativeToCollision.getX());
 
+        System.out.println("Boll 1 efter kollision: X = " + newVelocityXMoving
+                + "  Y = " + movingVelocityRelativeToCollision.getY() + "\nBoll 2 efter kollision: X = "
+                + newVelocityXResting +"  Y = " + "0.0" + "\n");
+
         //Vectors updated new velocities still relative to the collision
         movingVelocityRelativeToCollision.setPos(newVelocityXMoving, movingVelocityRelativeToCollision.getY());
         GameVector restingVelocityRelativeToCollision = new GameVector(newVelocityXResting, 0);
 
         GameVector finalMovingVelocity = new GameVector(movingVelocityRelativeToCollision.getLength(),
                 movingVelocityRelativeToCollision.getAngle() - conversionAngle, true);
+
         GameVector finalRestingVelocity = new GameVector(restingVelocityRelativeToCollision.getLength(),
                 restingVelocityRelativeToCollision.getAngle() - conversionAngle, true);
 
         //sets new velocity for moving object
-        movingObject.setVelocity((finalMovingVelocity.getX() / 60) + (restingObject.getVelocity().getX())/ 60,
-                (finalMovingVelocity.getY())/60 + (restingObject.getVelocity().getY())/60);
+        movingObject.setVelocity((finalMovingVelocity.getX()) + (restingObject.getVelocity().getX()),
+                (finalMovingVelocity.getY()) + (restingObject.getVelocity().getY()));
 
         //sets new velocity for resting object
-        restingObject.setVelocity((finalRestingVelocity.getX())/60 + (restingObject.getVelocity().getX())/60,
-                (finalRestingVelocity.getY())/60 + (restingObject.getVelocity().getY())/60);
+        restingObject.setVelocity((finalRestingVelocity.getX()) + (restingObject.getVelocity().getX()),
+                (finalRestingVelocity.getY()) + (restingObject.getVelocity().getY()));
 
-        System.out.println("Boll 1 Hastighet: x = " + movingObject.getVelocity().getX() * 60
-                + "  y = " + movingObject.getVelocity().getY() * 60 + "   Boll 2 Hastighet: x = "
-                + restingObject.getVelocity().getX() * 60 +"  y = " + restingObject.getVelocity().getY() * 60);
+        System.out.println("Boll 1 Hastighet: X = " + movingObject.getVelocity().getX()
+                + "  Y = " + movingObject.getVelocity().getY() + "\nBoll 2 Hastighet: X = "
+                + restingObject.getVelocity().getX() + "  Y = " + restingObject.getVelocity().getY());
     }
 
     public static double getVelocityMovingCollision(double movingMass, double restingMass,
