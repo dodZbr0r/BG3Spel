@@ -96,7 +96,11 @@ public class Game {
         System.out.println("   UPDATE TIME: " + updateTime);*/
     }
 
-
+    /**
+     * Applies gravity on every object on the screen as if
+     * it had been affected by gravity over the time deltaTime.
+     * @param deltaTime The time the object has been affected by gravity
+     */
     private void applyGravity(double deltaTime) {
         for (PhysicsObject object: objectsOnScreen) {
             applyAcceleration(gravity, object, deltaTime);
@@ -130,6 +134,10 @@ public class Game {
         }
     }
 
+    /**
+     * Checks if any of the obejcts on the screen has collided with the ground
+     * @param deltaTime The length of time the object has collided with the ground
+     */
     private void checkGroundCollision(double deltaTime) {
         for (PhysicsObject object: objectsOnScreen) {
             if(object.getY() - object.getHeight() <= groundHeight && object.getVelocity().getY() < 0) {
@@ -174,12 +182,23 @@ public class Game {
         setGameOver(false);
     }
 
-    public void updateTimeStationary(double deltaTime) {
+    /**
+     * Checks if the ball has been stationary for a certain amount of time.
+     * Enables Game Over and resets the game after the ball has been stationary
+     * for a specified amount of time
+     * @param deltaTime The time since the last update
+     */
+    private void updateTimeStationary(double deltaTime) {
+        //If the ball has a very small velocity in x- and y-direction
         if(Math.abs(playerBall.getVelocity().getX()) < 0.01 && Math.abs(playerBall.getVelocity().getY()) < 0.01
                 && getScore() != 0) {
+            //Add the time since the last update to the time the ball has been stationary
             timeStationary += deltaTime;
+            //If it has been stationary for 1 second, the game is over
             if (timeStationary >= 1000) setGameOver(true);
+            //If it has been stationary for 5 seconds, the game resets
             if (timeStationary >= 5000) reset();
+        //If the ball reaquires significant speed somehow, it resets the timer.
         } else timeStationary = 0;
     }
 
@@ -187,7 +206,7 @@ public class Game {
         return gameOver;
     }
 
-    public void setGameOver(boolean gameOver) {
+    private void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
     }
 
@@ -195,7 +214,7 @@ public class Game {
         return score;
     }
 
-    public void setScore(double score) {
+    private void setScore(double score) {
         this.score = score;
     }
 
@@ -203,7 +222,7 @@ public class Game {
         return highscore;
     }
 
-    public void setHighscore(double highscore) {
+    private void setHighscore(double highscore) {
         this.highscore = highscore;
     }
 }

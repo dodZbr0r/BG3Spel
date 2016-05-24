@@ -40,7 +40,7 @@ public class GameVector {
         return y;
     }
 
-    public double getAngle(){
+    double getAngle(){
         return Math.atan2(y, x);
     }
 
@@ -51,8 +51,8 @@ public class GameVector {
     }
 
     public void setPos(double xPos, double yPos) {
-        this.x = xPos;
-        this.y = yPos;
+        x = xPos;
+        y = yPos;
     }
 
 
@@ -89,15 +89,27 @@ public class GameVector {
         return new GameVector(x, y);
     }
 
-    public static double vectorDotProduct(GameVector vector1, GameVector vector2) {
+    /**
+     * Calculates the dot product between two vectors
+     * @param vector1 The first vector
+     * @param vector2 The second vector
+     * @return The value of the resulting vector
+     */
+    private static double vectorDotProduct(GameVector vector1, GameVector vector2) {
         return (vector1.getX() * vector2.getX()) + (vector1.getY() * vector2.getY());
     }
 
-    public static double angleBetweenVectors(GameVector vector1, GameVector vector2) {
+    /**
+     * Calculates the angle between two vectors in radians
+     * @param vector1 The first vector
+     * @param vector2 The second vector
+     * @return The angle between the vectors
+     */
+    static double angleBetweenVectors(GameVector vector1, GameVector vector2) {
         return Math.acos(vectorDotProduct(normalizeVector(vector1), normalizeVector(vector2)));
     }
 
-    public static GameVector normalizeVector(GameVector vector) {
+    private static GameVector normalizeVector(GameVector vector) {
         return new GameVector((vector.getX()/vector.getLength()),
                 (vector.getY()/vector.getLength()));
     }
