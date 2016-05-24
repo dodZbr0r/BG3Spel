@@ -40,7 +40,7 @@ public class GameVector {
         return y;
     }
 
-    double getAngle(){
+    public double getAngle(){
         return Math.atan2(y, x);
     }
 
