@@ -194,9 +194,9 @@ public class Game {
      * Checks if the ball has been stationary for a certain amount of time.
      * Enables Game Over and resets the game after the ball has been stationary
      * for a specified amount of time
-     * @param deltaTime
+     * @param deltaTime The time since the last update
      */
-    public void updateTimeStationary(double deltaTime) {
+    private void updateTimeStationary(double deltaTime) {
         //If the ball has a very small velocity in x- and y-direction
         if(Math.abs(ball1.getVelocity().getX()) < 0.01 && Math.abs(ball1.getVelocity().getY()) < 0.01
                 && getScore() != 0) {
@@ -214,7 +214,7 @@ public class Game {
         return gameOver;
     }
 
-    public void setGameOver(boolean gameOver) {
+    private void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
     }
 
@@ -222,7 +222,7 @@ public class Game {
         return score;
     }
 
-    public void setScore(double score) {
+    private void setScore(double score) {
         this.score = score;
     }
 
@@ -230,7 +230,7 @@ public class Game {
         return highscore;
     }
 
-    public void setHighscore(double highscore) {
+    private void setHighscore(double highscore) {
         this.highscore = highscore;
     }
 }

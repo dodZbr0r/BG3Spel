@@ -24,7 +24,7 @@ public class Ball extends PhysicsObject {
      * @param velocity        The velocity of the ball(mm/s)
      */
 
-    public Ball(double x, double y, double mass, double radius, Color primaryColor, Color alternateColor, GameVector velocity) {
+    Ball(double x, double y, double mass, double radius, Color primaryColor, Color alternateColor, GameVector velocity) {
         super(x, y, mass, primaryColor, velocity);
         this.radius = radius;
         this.alternateColor = alternateColor;
@@ -63,7 +63,7 @@ public class Ball extends PhysicsObject {
         return alternateColor;
     }
 
-    public double getRadius() {
+    private double getRadius() {
         return radius;
     }
 

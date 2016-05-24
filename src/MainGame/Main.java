@@ -17,7 +17,6 @@ import java.io.*;
 public class Main{
 
     private static double lastGraphicUpdate;
-    private static double lastGameUpdate;
 
     /**
      * Main method, creating a Game, a Jframe, and a GameComponent
@@ -26,6 +25,7 @@ public class Main{
      * @param args currently unused
      */
     public static void main(String[] args) {
+        double lastGameUpdate;
         final Game game = new Game();
         JFrame frame = new JFrame("CALICUTTA");
         final GameComponent component = new GameComponent(game);

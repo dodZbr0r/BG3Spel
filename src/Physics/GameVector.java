@@ -27,7 +27,7 @@ public class GameVector {
         this.y = y;
     }
 
-    public GameVector(double length, double angle, boolean polarCoordinates){
+    GameVector(double length, double angle, boolean polarCoordinates){
         this.x = length * Math.cos(angle);
         this.y = length * Math.sin(angle);
     }
@@ -40,7 +40,7 @@ public class GameVector {
         return y;
     }
 
-    public double getAngle(){
+    double getAngle(){
         return Math.atan2(y, x);
     }
 
@@ -89,7 +89,7 @@ public class GameVector {
      * @param vector2 The second vector
      * @return The value of the resulting vector
      */
-    public static double vectorDotProduct(GameVector vector1, GameVector vector2) {
+    private static double vectorDotProduct(GameVector vector1, GameVector vector2) {
         return (vector1.getX() * vector2.getX()) + (vector1.getY() * vector2.getY());
     }
 
@@ -99,11 +99,11 @@ public class GameVector {
      * @param vector2 The second vector
      * @return The angle between the vectors
      */
-    public static double angleBetweenVectors(GameVector vector1, GameVector vector2) {
+    static double angleBetweenVectors(GameVector vector1, GameVector vector2) {
         return Math.acos(vectorDotProduct(normalizeVector(vector1), normalizeVector(vector2)));
     }
 
-    public static GameVector normalizeVector(GameVector vector) {
+    private static GameVector normalizeVector(GameVector vector) {
         return new GameVector((vector.getX()/vector.getLength()),
                 (vector.getY()/vector.getLength()));
     }

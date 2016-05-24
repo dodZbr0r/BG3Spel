@@ -42,21 +42,19 @@ public class Force {
         double density=1.2;
         double forceX = calculateAirRes(coefficient, density, area, velocity.getX());
         double forceY = calculateAirRes(coefficient, density, area, velocity.getY());
-        GameVector airRes = new GameVector(forceX, forceY);
-
-        return airRes;
+        return new GameVector(forceX, forceY);
     }
 
     /**
      * Calculates the air resistance on a ball
-     * @param coefficient
+     * @param coefficient The resistance coefficient of the air
      * @param density The density of the air
      * @param area The cross section area of the ball
      * @param velocity The velocity of the ball
      * @return The size and direction of the air resistance force
      */
 
-    public static double calculateAirRes(double coefficient, double density, double area, double velocity){
+    private static double calculateAirRes(double coefficient, double density, double area, double velocity){
         int sign=1;
         double res;
         if (velocity >= 0)
