@@ -27,6 +27,11 @@ public abstract class PhysicsObject {
 
     //COLLISION
 
+    /**
+     * Checks if this object is close to another object
+     * @param object The other object
+     * @return true if they are close, else false.
+     */
     public boolean closeTo(PhysicsObject object) {
         double vecX = object.getCenter().getX() - this.getCenter().getX();
         double vecY = object.getCenter().getX() - this.getCenter().getX();
@@ -36,6 +41,11 @@ public abstract class PhysicsObject {
         return distance.getLength() <= width + object.getWidth();
     }
 
+    /**
+     * Calculates if an object has collided with this object
+     * @param object The other object
+     * @return true if the objects have collided, else false
+     */
     public abstract boolean hasCollision(PhysicsObject object);
 
     //SETTERS

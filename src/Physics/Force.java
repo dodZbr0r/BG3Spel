@@ -34,7 +34,7 @@ public class Force {
     /**
      * Creates a vector for the total air resistance on a ball based on its density, area and velocity.
      * @param velocity The velocity vector of the ball's movement
-     * @param radius The radius of the ball
+     * @param area The cross-section area of the object on which to calculate air resistance
      * @return The air resistance vector
      */
     public static GameVector getAirResistance(GameVector velocity, double area){

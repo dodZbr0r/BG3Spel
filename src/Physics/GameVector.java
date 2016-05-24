@@ -83,10 +83,22 @@ public class GameVector {
         return new GameVector(x, y);
     }
 
+    /**
+     * Calculates the dot product between two vectors
+     * @param vector1 The first vector
+     * @param vector2 The second vector
+     * @return The value of the resulting vector
+     */
     public static double vectorDotProduct(GameVector vector1, GameVector vector2) {
         return (vector1.getX() * vector2.getX()) + (vector1.getY() * vector2.getY());
     }
 
+    /**
+     * Calculates the angle between two vectors in radians
+     * @param vector1 The first vector
+     * @param vector2 The second vector
+     * @return The angle between the vectors
+     */
     public static double angleBetweenVectors(GameVector vector1, GameVector vector2) {
         return Math.acos(vectorDotProduct(normalizeVector(vector1), normalizeVector(vector2)));
     }
