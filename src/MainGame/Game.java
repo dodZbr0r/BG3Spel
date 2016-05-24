@@ -37,8 +37,8 @@ public class Game {
      * creates a GameVector representing gravity
      */
     Game() {
-        ball1 = new Ball(2.0, 1.5, 3.0, 0.5, Color.RED, Color.ORANGE, new GameVector(2.0, 9.5));
-        ball2 = new Ball(8.0, 1.5, 3.0, 0.5, Color.BLUE, Color.GREEN, new GameVector(-3.0, 4.0));
+        ball1 = new Ball(0.0, 1.8, 3.0, 0.5, Color.RED, Color.ORANGE, new GameVector(4.0, 4.0));
+        ball2 = new Ball(6.0, 1.8, 7.0, 0.5, Color.BLUE, Color.GREEN, new GameVector(-1.5, 8.0));
         objectsOnScreen = new ArrayList<PhysicsObject>();
         objectsOnScreen.add(ball1);
         objectsOnScreen.add(ball2);

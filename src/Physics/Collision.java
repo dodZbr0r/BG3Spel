@@ -52,7 +52,7 @@ public class Collision {
                 + "\nLängden: " + movingRelativeVelocity.getLength() + "\n");
 
         GameVector movingVelocityRelativeToCollision = new GameVector(movingRelativeVelocity.getLength(),
-                (movingRelativeVelocity.getAngle() + conversionAngle));
+                (movingRelativeVelocity.getAngle() + conversionAngle), true);
 
         System.out.println("Boll 1 kollisionsrelativ: X = " + movingVelocityRelativeToCollision.getX()
                 + "  Y = " + movingVelocityRelativeToCollision.getY() + "\n");
