@@ -175,7 +175,7 @@ public class Game {
     }
 
     /**
-     * Gives the ball speed when pressing space
+     * Gives the ball speed when pressing Space
      */
     public void ballLaunch(GameVector initialVelocity) {
         playerBall.setVelocity(initialVelocity);

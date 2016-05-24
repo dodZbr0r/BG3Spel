@@ -23,20 +23,44 @@ public class GameComponent extends JComponent{
     // Window bounds
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
+
     // Images
     private BufferedImage background, ground;
-    private boolean decideAngle = true; //boolean so you can only give speed to the ball once
+
+    // Boolean to decide if the angle is to be determined.
+    // Initially set to true because angle is determined first.
+    private boolean decideAngle = true;
+
+    // Boolean to decide if the force is to be determined.
     private boolean decideForce = false;
+
+    // Boolean to not allow users to click after the ball has been launched.
     private boolean finalClick = true;
-    private double keyPressedMillis;
+
+    // Saves the time at which the Space was pressed.
     private double keyPressed;
+
+    // The time the Space was pressed. Computed by taking the current time minus keyPressed.
+    private double keyPressedMillis;
+
+    // This value is simply keyPressedMillis/1000, therefore the amount of seconds, not milliseconds,
+    // Space has been pressed, to simplify equations for us.
     private double convertedValue;
+
+    // Boolean to draw the initial "spring" or not.
     private boolean drawForceSpring = false;
+
+    // This is the "angle" that is determined using Space.
+    // 16 is the x-value and 0 is the y-value, basically giving it the length 16.
+    // This length will be the speed (m/s) it will be launched with.
     private Physics.GameVector startAngle = new Physics.GameVector(16, 0, true);
 
+    // Used during determination of angle to know if we're goind to add to the angle or remove.
     boolean goingUp = true;
 
+    // Used to help draw the ball.
     private double angularVelocity;
+
     // Fonts
     private Font font;
 
@@ -95,7 +119,7 @@ public class GameComponent extends JComponent{
         g2.fillArc(unitConversion(game.getPlayerBall().getX()), yConversion(game.getPlayerBall().getY()),
                 unitConversion(game.getPlayerBall().getWidth()), unitConversion(game.getPlayerBall().getWidth()), (int)angularVelocity + 270, 90);
 
-
+        // Draws the "spring", if set to.
         if (drawForceSpring) {
             g2.setColor(Color.black);
             g2.drawLine(400, 500, 400+(int)(20*startAngle.getX()), 500+(int)(20*startAngle.getY()));
@@ -145,48 +169,79 @@ public class GameComponent extends JComponent{
             }
 
     /**
-     * Input method to perform action on KeyStroke
+     * Input method to perform actions.
      */
     private void setInput() {
+
+        // Starts a listener for when Space is released and creates an event for it.
         getInputMap().put(KeyStroke.getKeyStroke("released SPACE"), "SPACEreleased");
+
+        // The event created by the listener. The code in here is performed every time Space is released.
         getActionMap().put("SPACEreleased", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
+                // This part is basically set up in stages since multiple things are decided by releasing Spacebar.
+
+                // Since decideAngle is set to true this is executed.
                 if (decideAngle) {
+
+                    // Sets to draw the "spring".
                     drawForceSpring = true;
 
-                    keyPressed = System.currentTimeMillis();
-
+                    // Starts the timer that decides the eventual final angle.
                     angleTimer.start();
 
+                    // Changes it so that force is decided next time Space is released.
                     decideAngle = false;
                     decideForce = true;
                 } else if (decideForce) {
+
+                    // Stops the angle timer.
                     angleTimer.stop();
 
+                    // Sets the time for when Space was released.
                     keyPressed = System.currentTimeMillis();
 
+                    // Starts the timer that decides the eventual final force.
                     forceTimer.start();
 
+                    // Sets it so you can't decide force anymore.
                     decideForce = false;
-                } else if (!decideAngle & !decideForce & finalClick) {
+                } else if (finalClick) {
+
+                    // Stops the force timer.
                     forceTimer.stop();
+
+                    // Is used to make sure you can't click after both have been decided.
                     finalClick = false;
 
+                    // Launches the ball with the decided angle and force.
+                    // Angle is simply the angle the ball will be launched with.
+                    // convertedValue is the multiplication of the length of the vector.
+                    // It oscillates between 0 and 1, giving it the maximum speed of 16 m/s.
                     game.ballLaunch(GameVector.multiplyVector(convertedValue, startAngle));
+
+                    // Stops drawing the "spring".
                     drawForceSpring = false;
                 }
             }
         });
 
+
+        // Starts a listener when R is released and creates an event for it.
         getInputMap().put(KeyStroke.getKeyStroke("released R"), "R");
+
+        // The event created by the listener. The code in here is performed when R is released.
         getActionMap().put("R", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
+
+                // Resets score, highscore, and all related values to their initial values.
                 game.reset();
                 resetGame();
             }
         });
     }
 
+    // Resets all related values to their initial values
     public void resetGame() {
         keyPressedMillis = 0;
         keyPressed = 0;
@@ -198,29 +253,48 @@ public class GameComponent extends JComponent{
         game.reset();
     }
 
+    // The timer started the first time Space is released and is used to decide the angle.
+    // Executes every 17ms.
     Timer angleTimer = new Timer(17, new ActionListener() {
         public void actionPerformed(ActionEvent e) {
+
+            // Checks if the angle is supposed to turn up or down.
             if (goingUp) {
-                if (startAngle.getAngle() <= -  1.55) {
+
+                // Is used when the angle is going up.
+                startAngle.setAngle(startAngle.getAngle() - 0.05);
+
+                // Checks if it is equal or below -pi/2 and if it is, makes it go down.
+                // "-" and "<=" is because of the y-value being upside down, graphics-wise.
+                if (startAngle.getAngle() <= - Math.PI/2) {
                     goingUp = false;
                 }
-                startAngle.setAngle(startAngle.getAngle() - 0.05);
             } else {
+
+                // Is used when the angle is going down.
+                startAngle.setAngle(startAngle.getAngle() + 0.05);
+
+                // Checks if it is equal or above 0 and if it is, makes it go up again.
                 if (startAngle.getAngle() >= 0)
                 {
                     goingUp = true;
                 }
-                startAngle.setAngle(startAngle.getAngle() + 0.05);
             }
         }
     });
 
+    // The timer started the second time Space is released and is used to decide the force.
+    // Executes every 17ms.
     Timer forceTimer = new Timer(17, new ActionListener() {
         public void actionPerformed(ActionEvent e) {
 
+            // Every time this part is executed the keyPressedMillis will be the amount of ms since space was released the second time.
             keyPressedMillis = System.currentTimeMillis() - keyPressed;
+
+            // Converts it to seconds.
             convertedValue = keyPressedMillis / 1000;
 
+            // i haev no ide wtf hapnd her LOL
             if (convertedValue >= 1) {
                 if (convertedValue >= 2) {
                     convertedValue = convertedValue % 2;
@@ -234,10 +308,12 @@ public class GameComponent extends JComponent{
         }
     });
 
+    // Returs the WIDTH.
     public static int getWIDTH() {
         return WIDTH;
     }
 
+    // Returns the HEIGHT.
     public static int getHEIGHT() {
         return HEIGHT;
     }
