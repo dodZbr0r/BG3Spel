@@ -77,9 +77,10 @@ public class Game {
         checkCollision(deltaTime);
 
         //Stops the ball if the x-velocity of the ball is less than 0.01
-        if(Math.abs(playerBall.getVelocity().getX()) < 0.01) {
-            double velY = playerBall.getVelocity().getY();
-            playerBall.setVelocity(new GameVector(0.0, velY));
+        if(Math.abs(playerBall.getVelocity().getX()) < 0.5 &&
+                Math.abs(playerBall.getVelocity().getY()) < 0.5) {
+            //double velY = playerBall.getVelocity().getY();
+            playerBall.setVelocity(new GameVector(0.0, 0.0));
 
         }
 
@@ -93,11 +94,12 @@ public class Game {
 
         //Printing some information about the ball
         System.out.printf("X-HASTIGHET:%10f", playerBall.getVelocity().getX());
-        System.out.println();
-        //System.out.printf("   Y-HASTIGHET:%10f", playerBall.getVelocity().getY());
+
+        System.out.printf("   Y-HASTIGHET:%10f", playerBall.getVelocity().getY());
         //System.out.printf("   XPOS:%10f", playerBall.getX());
         //System.out.printf("   YPOS:%10f", playerBall.getY());
-        //System.out.println("   UPDATE TIME: " + updateTime);*/
+        //System.out.println("   UPDATE TIME: " + updateTime);
+        System.out.println();
     }
 
     /**
