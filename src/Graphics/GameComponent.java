@@ -294,7 +294,8 @@ public class GameComponent extends JComponent{
             // Converts it to seconds.
             convertedValue = keyPressedMillis / 1000;
 
-            // i haev no ide wtf hapnd her LOL
+            // Basically makes it oscillate between 0 and 1.
+            // Contact Adrian Jakobsson at adrja681@student.liu.se for further questions.
             if (convertedValue >= 1) {
                 if (convertedValue >= 2) {
                     convertedValue = convertedValue % 2;
@@ -308,7 +309,7 @@ public class GameComponent extends JComponent{
         }
     });
 
-    // Returs the WIDTH.
+    // Returns the WIDTH.
     public static int getWIDTH() {
         return WIDTH;
     }
