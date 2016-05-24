@@ -2,7 +2,6 @@ package Graphics;
 
 import MainGame.Game;
 import Physics.GameVector;
-import javafx.application.Application;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -25,15 +24,17 @@ public class GameComponent extends JComponent{
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
     // Images
-    private BufferedImage background, ground, heaven, heavenHigher;
+    private BufferedImage background, ground;
     private boolean decideAngle = true; //boolean so you can only give speed to the ball once
     private boolean decideForce = false;
     private boolean finalClick = true;
     private double keyPressedMillis;
     private double keyPressed;
     private double convertedValue;
-    private boolean drawForceSpring = true;
-    private Physics.GameVector startAngle = new Physics.GameVector(1, 0);
+    private boolean drawForceSpring = false;
+    private Physics.GameVector startAngle = new Physics.GameVector(16, 0, true);
+
+    boolean goingUp = true;
 
     private double angularVelocity;
     // Fonts
@@ -58,16 +59,6 @@ public class GameComponent extends JComponent{
         } catch (IOException e) {
             System.out.println("Could not find Ground.png");
         }
-        try {
-            heaven = ImageIO.read(new File("data/Heaven.png"));
-        } catch (IOException e) {
-            System.out.println("Could not find Heaven.png");
-        }
-        try {
-            heavenHigher = ImageIO.read(new File("data/HeavenHigher.png"));
-        } catch (IOException e) {
-            System.out.println("Could not find HeavenHigher.png");
-        }
 
         scrollingBackground = new ScrollingBackground(background);
         scrollingGround = new ScrollingGround(ground);
@@ -85,48 +76,37 @@ public class GameComponent extends JComponent{
         Graphics2D g2 = (Graphics2D) g;
 
         // Background
-        //scrollingBackground.draw(g2, unitConversion(game.getBall().getVelocity().getX()/60));
+        //scrollingBackground.draw(g2, unitConversion(game.getPlayerBall().getVelocity().getX()/60));
         scrollingBackground.draw(g2, 0);
-
-        //Heaven Higher
-        //g2.drawImage(heavenHigher, 0, -(2*HEIGHT), WIDTH, HEIGHT, this);
-
-        //Heaven
-        //g2.drawImage(heaven, 0, -HEIGHT, WIDTH, HEIGHT, this);
-
         //Ground
-        //scrollingGround.draw(g2, unitConversion(game.getBall().getVelocity().getX()/60));
+        //scrollingGround.draw(g2, unitConversion(game.getPlayerBall().getVelocity().getX()/60));
         scrollingGround.draw(g2, 0);
 
         // Ball pt 1
-        g2.setColor(game.getBall().getPrimaryColor());
-        g2.fillArc(unitConversion(game.getBall().getX()), yConversion(game.getBall().getY()),
-                    unitConversion(game.getBall().getWidth()), unitConversion(game.getBall().getWidth()), (int)angularVelocity, 90);
-        g2.fillArc(unitConversion(game.getBall().getX()), yConversion(game.getBall().getY()),
-                unitConversion(game.getBall().getWidth()), unitConversion(game.getBall().getWidth()), (int)angularVelocity + 180, 90);
+        g2.setColor(game.getPlayerBall().getPrimaryColor());
+        g2.fillArc(unitConversion(game.getPlayerBall().getX()), yConversion(game.getPlayerBall().getY()),
+                    unitConversion(game.getPlayerBall().getWidth()), unitConversion(game.getPlayerBall().getWidth()), (int)angularVelocity, 90);
+        g2.fillArc(unitConversion(game.getPlayerBall().getX()), yConversion(game.getPlayerBall().getY()),
+                unitConversion(game.getPlayerBall().getWidth()), unitConversion(game.getPlayerBall().getWidth()), (int)angularVelocity + 180, 90);
 
         //Ball pt 2
-        g2.setColor(game.getBall().getAlternateColor());
-        g2.fillArc(unitConversion(game.getBall().getX()), yConversion(game.getBall().getY()),
-                unitConversion(game.getBall().getWidth()), unitConversion(game.getBall().getWidth()), (int)angularVelocity + 90, 90);
-        g2.fillArc(unitConversion(game.getBall().getX()), yConversion(game.getBall().getY()),
-                unitConversion(game.getBall().getWidth()), unitConversion(game.getBall().getWidth()), (int)angularVelocity + 270, 90);
+        g2.setColor(game.getPlayerBall().getAlternateColor());
+        g2.fillArc(unitConversion(game.getPlayerBall().getX()), yConversion(game.getPlayerBall().getY()),
+                unitConversion(game.getPlayerBall().getWidth()), unitConversion(game.getPlayerBall().getWidth()), (int)angularVelocity + 90, 90);
+        g2.fillArc(unitConversion(game.getPlayerBall().getX()), yConversion(game.getPlayerBall().getY()),
+                unitConversion(game.getPlayerBall().getWidth()), unitConversion(game.getPlayerBall().getWidth()), (int)angularVelocity + 270, 90);
 
-        //Ball 2
-        g2.setColor(game.getBall2().getPrimaryColor());
-        g2.fillOval(unitConversion(game.getBall2().getX()), yConversion(game.getBall2().getY()),
-                unitConversion(game.getBall2().getWidth()), unitConversion(game.getBall2().getWidth()));
 
-//        if (drawForceSpring) {
-//            g2.setColor(Color.yellow);
-//            g2.drawLine(400, 500, 400+(int)(250*startAngle.getX()), 500+(int)(250*startAngle.getY()));
-//            g2.drawLine(401, 500, 401+(int)(250*startAngle.getX()), 500+(int)(250*startAngle.getY()));
-//            g2.setColor(Color.black);
-//            g2.drawLine(400, 500, 400+(int)(convertedValue*250), 500-(int)(convertedValue*250));
-//            g2.drawLine(401, 500, 401+(int)(convertedValue*250), 500-(int)(convertedValue*250));
-//        }
+        if (drawForceSpring) {
+            g2.setColor(Color.black);
+            g2.drawLine(400, 500, 400+(int)(20*startAngle.getX()), 500+(int)(20*startAngle.getY()));
+            g2.drawLine(401, 500, 401+(int)(20*startAngle.getX()), 500+(int)(20*startAngle.getY()));
+            g2.setColor(Color.red);
+            g2.drawLine(400, 500, 400+(int)(20*startAngle.getX()*convertedValue), 500+(int)(20*startAngle.getY()*convertedValue));
+            g2.drawLine(401, 500, 401+(int)(20*startAngle.getX()*convertedValue), 500+(int)(20*startAngle.getY()*convertedValue ));
+        }
 
-        angularVelocity -= game.getBall().getVelocity().getX();
+        angularVelocity -= game.getPlayerBall().getVelocity().getX();
 
         // Score: Distance Bounced
         g2.setColor(new Color(255, 255, 255));
@@ -144,6 +124,7 @@ public class GameComponent extends JComponent{
             g2.drawString("GAME OVER!", 320, 360);
         }
     }
+
 
 
     /**
@@ -172,6 +153,8 @@ public class GameComponent extends JComponent{
         getActionMap().put("SPACEreleased", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
                 if (decideAngle) {
+                    drawForceSpring = true;
+
                     keyPressed = System.currentTimeMillis();
 
                     angleTimer.start();
@@ -190,7 +173,7 @@ public class GameComponent extends JComponent{
                     forceTimer.stop();
                     finalClick = false;
 
-                    game.ballLaunch(convertedValue);
+                    game.ballLaunch(GameVector.multiplyVector(convertedValue, startAngle));
                     drawForceSpring = false;
                 }
             }
@@ -200,6 +183,7 @@ public class GameComponent extends JComponent{
         getActionMap().put("R", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
                 game.reset();
+                resetGame();
             }
         });
     }
@@ -217,10 +201,18 @@ public class GameComponent extends JComponent{
 
     Timer angleTimer = new Timer(17, new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-            if (startAngle.getX() >= 0 && startAngle.getY() >= -1) {
-                startAngle.setPos(startAngle.getX() - 0.01, startAngle.getY() - 0.01);
+            if (goingUp) {
+                if (startAngle.getAngle() <= -  1.55) {
+                    goingUp = false;
+                }
+                startAngle.setAngle(startAngle.getAngle() - 0.05);
+            } else {
+                if (startAngle.getAngle() >= 0)
+                {
+                    goingUp = true;
+                }
+                startAngle.setAngle(startAngle.getAngle() + 0.05);
             }
-            System.out.println(startAngle.getX() + " " + startAngle.getY());
         }
     });
 

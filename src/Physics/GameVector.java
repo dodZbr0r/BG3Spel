@@ -28,8 +28,8 @@ public class GameVector {
     }
 
     public GameVector(double length, double angle, boolean polarCoordinates){
-        this.x = length * Math.cos(angle);
-        this.y = length * Math.sin(angle);
+        x = length * Math.cos(angle);
+        y = length * Math.sin(angle);
     }
 
     public double getX() {
@@ -42,6 +42,12 @@ public class GameVector {
 
     public double getAngle(){
         return Math.atan2(y, x);
+    }
+
+    public void setAngle(double newAngle) {
+        double length = getLength();
+        x = length * Math.cos(newAngle);
+        y = length * Math.sin(newAngle);
     }
 
     public void setPos(double xPos, double yPos) {

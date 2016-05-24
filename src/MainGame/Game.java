@@ -6,7 +6,6 @@ import Physics.GameVector;
 
 
 import java.awt.*;
-import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
@@ -18,7 +17,7 @@ import static Physics.Force.getAirResistance;
  */
 public class Game {
 
-    private Ball ball1, ball2;
+    private Ball playerBall;
     private double groundHeight;
     private GameVector gravity;
     private double gravitySize;
@@ -37,11 +36,9 @@ public class Game {
      * creates a GameVector representing gravity
      */
     Game() {
-        ball1 = new Ball(0.0, 1.8, 3.0, 0.5, Color.RED, Color.ORANGE, new GameVector(4.0, 4.0));
-        ball2 = new Ball(6.0, 1.8, 7.0, 0.5, Color.BLUE, Color.GREEN, new GameVector(-1.5, 8.0));
+        playerBall = new Ball(2.0, 1.4, 3.0, 0.3, Color.RED, Color.ORANGE, new GameVector(0.0, 0));
         objectsOnScreen = new ArrayList<PhysicsObject>();
-        objectsOnScreen.add(ball1);
-        objectsOnScreen.add(ball2);
+        objectsOnScreen.add(playerBall);
         timeStationary = 0;
         gameOver = false;
         groundHeight = 0.8;
@@ -68,23 +65,23 @@ public class Game {
         checkGroundCollision(deltaTime);
 
         //Check collision
-        if(ball1.closeTo(ball2)){
-            if(ball1.hasCollision(ball2)){
-                ball1.setPos(ball1.getPreX(), ball1.getPreY());
+        /*if(playerBall.closeTo(ball2)){
+            if(playerBall.hasCollision(ball2)){
+                playerBall.setPos(playerBall.getPreX(), playerBall.getPreY());
                 ball2.setPos(ball2.getPreX(), ball2.getPreY());
-                Collision.setVelocityPostCollision(ball1, ball2);
+                Collision.setVelocityPostCollision(playerBall, ball2);
             }
-        }
+        }*/
 
         //Stops the ball if the x-velocity of the ball is less than 0.01
-        if(Math.abs(ball1.getVelocity().getX()) < 0.01) {
-            double velY = ball1.getVelocity().getY();
-            ball1.setVelocity(new GameVector(0.0, velY));
+        if(Math.abs(playerBall.getVelocity().getX()) < 0.01) {
+            double velY = playerBall.getVelocity().getY();
+            playerBall.setVelocity(new GameVector(0.0, velY));
 
         }
 
         //Updates the score and highscore
-        setScore(score + ball1.getVelocity().getX() * deltaTime * milliToSeconds);
+        setScore(score + playerBall.getVelocity().getX() * deltaTime * milliToSeconds);
         if(score > highscore) {
             setHighscore(score);
         }
@@ -92,10 +89,10 @@ public class Game {
         updateTimeStationary(deltaTime);
 
         //Printing some information about the ball
-        /*System.out.printf("X-HASTIGHET:%10f", ball1.getVelocity().getX());
-        System.out.printf("   Y-HASTIGHET:%10f", ball1.getVelocity().getY());
-        System.out.printf("   XPOS:%10f", ball1.getX());
-        System.out.printf("   YPOS:%10f", ball1.getY());
+        /*System.out.printf("X-HASTIGHET:%10f", playerBall.getVelocity().getX());
+        System.out.printf("   Y-HASTIGHET:%10f", playerBall.getVelocity().getY());
+        System.out.printf("   XPOS:%10f", playerBall.getX());
+        System.out.printf("   YPOS:%10f", playerBall.getY());
         System.out.println("   UPDATE TIME: " + updateTime);*/
     }
 
@@ -152,12 +149,8 @@ public class Game {
         applyAcceleration(acceleration, object, deltaTime);
     }
 
-    public Ball getBall() {
-        return ball1;
-    }
-
-    public Ball getBall2() {
-        return ball2;
+    public Ball getPlayerBall() {
+        return playerBall;
     }
 
     public double getGroundHeight() {
@@ -167,23 +160,22 @@ public class Game {
     /**
      * Gives the ball speed when pressing space
      */
-    public void ballLaunch(double launchForce) {
-        ball1.setVelocity( new GameVector(2 * launchForce, 0.15 * launchForce));
-
+    public void ballLaunch(GameVector initialVelocity) {
+        playerBall.setVelocity(initialVelocity);
     }
 
     /**
      * Resets the game
      */
     public void reset() {
-        ball1.setPos(2,0);
-        ball1.setVelocity(new GameVector(0, 0));
+        playerBall.setPos(2,0);
+        playerBall.setVelocity(new GameVector(0, 0));
         setScore(0);
         setGameOver(false);
     }
 
     public void updateTimeStationary(double deltaTime) {
-        if(Math.abs(ball1.getVelocity().getX()) < 0.01 && Math.abs(ball1.getVelocity().getY()) < 0.01
+        if(Math.abs(playerBall.getVelocity().getX()) < 0.01 && Math.abs(playerBall.getVelocity().getY()) < 0.01
                 && getScore() != 0) {
             timeStationary += deltaTime;
             if (timeStationary >= 1000) setGameOver(true);

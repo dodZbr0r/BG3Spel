@@ -48,7 +48,7 @@ public class Main{
 
                 //Using currentTime and lastUpdate to calculate time for every update
                 double currentTime = System.currentTimeMillis();
-                System.out.println("\nGFX UPDATETIME: " + (currentTime - lastGraphicUpdate + "\n"));
+                //System.out.println("\nGFX UPDATETIME: " + (currentTime - lastGraphicUpdate + "\n"));
                 lastGraphicUpdate = currentTime;
                 component.repaint();
             }
