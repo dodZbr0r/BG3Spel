@@ -29,7 +29,6 @@ public class PlayerBall extends Ball {
         return alternateColor;
     }
 
-    //@Override
     public void setAlternateColor(Color alternateColor) {
         this.alternateColor = alternateColor;
     }

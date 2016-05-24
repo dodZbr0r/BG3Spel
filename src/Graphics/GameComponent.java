@@ -76,11 +76,10 @@ public class GameComponent extends JComponent{
         Graphics2D g2 = (Graphics2D) g;
 
         // Background
-        //scrollingBackground.draw(g2, unitConversion(game.getPlayerBall().getVelocity().getX()/60));
-        scrollingBackground.draw(g2, 0);
+        scrollingBackground.draw(g2, unitConversion(game.getPlayerBall().getVelocity().getX()/60));
+
         //Ground
-        //scrollingGround.draw(g2, unitConversion(game.getPlayerBall().getVelocity().getX()/60));
-        scrollingGround.draw(g2, 0);
+        scrollingGround.draw(g2, unitConversion(game.getPlayerBall().getVelocity().getX()/60));
 
         // Ball pt 1
         g2.setColor(game.getPlayerBall().getPrimaryColor());

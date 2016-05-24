@@ -27,7 +27,6 @@ public class BonusBall extends Ball {
         this.loadedForce = setLoadedForce();
     }
 
-    @Override
     public Color getAlternateColor() {
         return null;
     }
