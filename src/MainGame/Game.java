@@ -28,6 +28,7 @@ public class Game {
     private double timeStationary;
     private boolean gameOver;
     private List<PhysicsObject> objectsOnScreen;
+    private List<Color> bonusBallColors;
 
     //Converts from milliseconds to Seconds
     private final double milliToSeconds = 0.001;
@@ -37,8 +38,11 @@ public class Game {
      * creates a GameVector representing gravity
      */
     Game() {
-        ball1 = new Ball(0.0, 1.8, 3.0, 0.5, Color.RED, Color.ORANGE, new GameVector(4.0, 4.0));
-        ball2 = new Ball(6.0, 1.8, 7.0, 0.5, Color.BLUE, Color.GREEN, new GameVector(-1.5, 8.0));
+        ball1 = new PlayerBall(0.0, 1.8, 3.0, 0.5, Color.RED, Color.ORANGE, new GameVector(1.0, 4.0));
+        //ball2 = new BonusBall(6.0, 1.8, 7.0, 0.5, Color.BLUE, new GameVector(-1.5, 7.5));
+        bonusBallColors = new ArrayList<Color>();
+        bonusBallColors.addAll(Arrays.asList(Color.BLACK, Color.BLUE, Color.RED, Color.GREEN));
+        ball2 = generateBonusBall();
         objectsOnScreen = new ArrayList<PhysicsObject>();
         objectsOnScreen.add(ball1);
         objectsOnScreen.add(ball2);
@@ -47,6 +51,8 @@ public class Game {
         groundHeight = 0.8;
         gravitySize = -9.8;
         gravity = new GameVector(0, gravitySize);
+        //bonusBallColors.add(Color.BLACK); bonusBallColors.add(Color.BLUE); bonusBallColors.add(Color.RED);
+        //bonusBallColors.add(Color.GREEN); bonusBallColors.add(Color.MAGENTA);
     }
 
     /**
@@ -170,6 +176,13 @@ public class Game {
     public void ballLaunch(double launchForce) {
         ball1.setVelocity( new GameVector(2 * launchForce, 0.15 * launchForce));
 
+    }
+
+    public BonusBall generateBonusBall(){
+        Random random = new Random();
+        double mass = Math.random() * 10;
+        Color primaryColor = bonusBallColors.get(random.nextInt(bonusBallColors.size()));
+        return new BonusBall(10, 0.5, mass, 0.5, primaryColor, new GameVector(0, 0));
     }
 
     /**

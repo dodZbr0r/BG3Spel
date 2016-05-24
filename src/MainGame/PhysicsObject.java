@@ -109,4 +109,6 @@ public abstract class PhysicsObject {
     public GameVector getVelocity() {
         return velocity;
     }
+
+    public abstract Color getAlternateColor();
 }
