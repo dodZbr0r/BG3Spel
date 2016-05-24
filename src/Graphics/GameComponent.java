@@ -1,5 +1,6 @@
 package Graphics;
 
+import MainGame.BonusBall;
 import MainGame.Game;
 import Physics.GameVector;
 
@@ -20,6 +21,7 @@ public class GameComponent extends JComponent{
     private Game game;
     private ScrollingBackground scrollingBackground;
     private ScrollingGround scrollingGround;
+
     // Window bounds
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
@@ -119,6 +121,13 @@ public class GameComponent extends JComponent{
         g2.fillArc(unitConversion(game.getPlayerBall().getX()), yConversion(game.getPlayerBall().getY()),
                 unitConversion(game.getPlayerBall().getWidth()), unitConversion(game.getPlayerBall().getWidth()), (int)angularVelocity + 270, 90);
 
+        //BonusBalls
+        for(BonusBall ball: game.getBonusBalls()) {
+            g2.setColor(ball.getPrimaryColor());
+            g2.fillOval(unitConversion(ball.getX()), yConversion(ball.getY()),
+                    unitConversion(ball.getWidth()), unitConversion(ball.getWidth()));
+        }
+
         // Draws the "spring", if set to.
         if (drawForceSpring) {
             g2.setColor(Color.black);
@@ -147,8 +156,6 @@ public class GameComponent extends JComponent{
             g2.drawString("GAME OVER!", 320, 360);
         }
     }
-
-
 
     /**
      * Converts millimeters into pixels
