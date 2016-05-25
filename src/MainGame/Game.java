@@ -262,7 +262,7 @@ public class Game {
     private void randomlyAddBonusBalls(){
         int minTravelledLength = random.nextInt(MAXLENGTH-MINLENGTH) + MINLENGTH;
         if(travelledSince >= minTravelledLength && !loadedBallExists()){
-            if(random.nextBoolean()){
+            if(random.nextInt(5) != 5){
                 generateBonusBall();
             }
             travelledSince = 0;
@@ -276,7 +276,7 @@ public class Game {
     private void generateBonusBall(){
         BonusBallType type = BonusBallType.getRandomBallType();
         int mass = random.nextInt(MAXMASS - MINMASS) + MINMASS;
-        BonusBall ball = new BonusBall(12.8, 1.8, mass, 0.4, type.getColor(), new GameVector(0, 0),
+        BonusBall ball = new BonusBall(12.8, 1.6, mass, 0.4, type.getColor(), new GameVector(0, 0),
                 new GameVector(0, type.getLoadedVelocity()));
         objectsOnScreen.add(ball);
         bonusBalls.add(ball);
