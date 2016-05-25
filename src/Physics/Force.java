@@ -56,10 +56,9 @@ public class Force {
 
     private static double calculateAirRes(double coefficient, double density, double area, double velocity){
         int sign=1;
-        double res;
         if (velocity >= 0)
                 sign=-1;
-        return res = sign*0.5*coefficient*density*area*velocity*velocity;
+        return sign*0.5*coefficient*density*area*velocity*velocity;
     }
 
     /**

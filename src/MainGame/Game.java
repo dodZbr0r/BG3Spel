@@ -17,7 +17,7 @@ import static Physics.Force.getAirResistance;
  */
 public class Game {
 
-    private PlayerBall playerBall;
+    private final PlayerBall playerBall;
     private GameVector gravity;
     private GameVector friction;
     private double groundHeight, backgroundPos, groundPos, score, highscore, timeStationary;
@@ -70,7 +70,7 @@ public class Game {
         checkGroundCollision(deltaTime);
 
         //Check collision
-        checkCollision(deltaTime);
+        checkCollision();
 
         //Stops the ball if the x-velocity of the ball is less than 0.01
         if(Math.abs(playerBall.getVelocity().getX()) < 0.5 &&
@@ -138,7 +138,7 @@ public class Game {
     }
 
     /**
-     * Checks if any of the obejcts on the screen has collided with the ground
+     * Checks if any of the objects on the screen has collided with the ground
      * @param deltaTime The length of time the object has collided with the ground
      */
     private void checkGroundCollision(double deltaTime) {
@@ -152,7 +152,7 @@ public class Game {
         }
     }
 
-    private void checkCollision(double deltaTime) {
+    private void checkCollision() {
         for(BonusBall bonusBall: bonusBalls) {
             if (playerBall.closeTo(bonusBall)) {
                 if (playerBall.hasCollision(bonusBall)) {
@@ -201,7 +201,7 @@ public class Game {
     /**
      * Generates a new BonusBall with random mass and color.
      */
-    public BonusBall generateBonusBall(){
+    private BonusBall generateBonusBall(){
         double mass = Math.random() * 10;
         return new BonusBall(10, 0.5, mass, 0.5, new GameVector(0, 0));
     }
