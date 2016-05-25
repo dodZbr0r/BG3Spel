@@ -31,7 +31,7 @@ public class BonusBall extends Ball {
     }
 
     public void launch() {
-        setVelocity(loadedVelocity);
+        setVelocity(GameVector.addVectors(loadedVelocity, getVelocity()));
         isLoaded = false;
         setPrimaryColor(Color.LIGHT_GRAY);
     }
