@@ -222,12 +222,6 @@ public class Game {
         playerBall.setVelocity(initialVelocity);
     }
 
-    /**
-     * Launches the bonus ball from the ground.
-     */
-    public void bonusBallLaunch(BonusBall ball){
-        ball.setVelocity(ball.getLoadedForce());
-    }
 
     /**
      * Generates a new BonusBall with random mass and color.

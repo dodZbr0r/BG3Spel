@@ -64,7 +64,6 @@ public class Collision {
         //sets new velocity for resting object
         restingObject.setVelocity((finalRestingVelocity.getX()) + (restingObject.getVelocity().getX()),
                 (finalRestingVelocity.getY()) + (restingObject.getVelocity().getY()));
-
     }
 
     private static double getVelocityMovingCollision(double movingMass, double restingMass,
