@@ -245,8 +245,10 @@ public class Game {
     private void randomlyAddBonusBalls(){
         int minTravelledLength = random.nextInt(MAXLENGTH-MINLENGTH) + MINLENGTH;
         if(travelledSince >= minTravelledLength && !loadedBallExists()){
-            generateBonusBall();
-            travelledSince=0;
+            if(random.nextBoolean()){
+                generateBonusBall();
+            }
+            travelledSince = 0;
         }
 
     }
