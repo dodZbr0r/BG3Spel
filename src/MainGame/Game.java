@@ -26,11 +26,11 @@ public class Game {
     private List<PhysicsObject> objectsOnScreen;
     private List<BonusBall> bonusBalls;
     private final static Random random = new Random();
-    private static final int MINMASS = 1;
-    private static final int MAXMASS = 10;
+    private static final int MINMASS = 3;
+    private static final int MAXMASS = 8;
     private double travelledSince;
-    private final int MINLENGTH=13;
-    private final int MAXLENGTH=30;
+    private final int MINLENGTH=14;
+    private final int MAXLENGTH=25;
 
 
     //Converts from milliseconds to Seconds
@@ -41,7 +41,7 @@ public class Game {
      * creates a GameVector representing gravity
      */
     Game() {
-        playerBall = new PlayerBall(2.0, 1.4, 10.0, 0.3, Color.RED, Color.ORANGE, new GameVector(0.0, 0.0));
+        playerBall = new PlayerBall(2.0, 1.4, 7.0, 0.3, Color.RED, Color.ORANGE, new GameVector(0.0, 0.0));
 
         //creates a list with objects on screen
         objectsOnScreen = new ArrayList<PhysicsObject>();
@@ -98,6 +98,7 @@ public class Game {
             playerBall.setVelocity(new GameVector(0.0, velY));
 
         }
+
         //Updates the score and highscore
         setScore(score + playerBall.getVelocity().getX() * deltaTime * milliToSeconds);
         if(score > highscore) {
@@ -165,21 +166,33 @@ public class Game {
                     object.getY() + (object.getVelocity().getY() * deltaTime * milliToSeconds));
         }
     }
-
     /**
      * Makes the ground and background move as the ball moves
      * @param deltaTime The time between each update
      */
     private void updateGroundAndBackgroundPos(double deltaTime) {
-        if(groundPos <= -12.8){
-            groundPos = 0;
+        if(playerBall.getVelocity().getX() >= 0) {
+            if (groundPos <= -12.8) {
+                groundPos = 0;
+            } else {
+                groundPos -= playerBall.getVelocity().getX() * deltaTime * milliToSeconds;
+            }
+            if (backgroundPos <= -12.8) {
+                backgroundPos = 0;
+            } else {
+                backgroundPos -= ((playerBall.getVelocity().getX()) / 3) * deltaTime * milliToSeconds;
+            }
         } else {
-            groundPos -= playerBall.getVelocity().getX() * deltaTime * milliToSeconds;
-        }
-        if(backgroundPos <= -12.8){
-            backgroundPos = 0;
-        } else {
-            backgroundPos -= ((playerBall.getVelocity().getX())/3) * deltaTime * milliToSeconds;
+            if(groundPos >= 0){
+                groundPos = -12.8;
+            } else {
+                groundPos -= playerBall.getVelocity().getX() * deltaTime * milliToSeconds;
+            }
+            if(backgroundPos >= 0){
+                backgroundPos = -12.8;
+            } else {
+                backgroundPos -= ((playerBall.getVelocity().getX())/3) * deltaTime * milliToSeconds;
+            }
         }
 
     }
@@ -271,7 +284,7 @@ public class Game {
     private void randomlyAddBonusBalls(){
         int minTravelledLength = random.nextInt(MAXLENGTH-MINLENGTH) + MINLENGTH;
         if(travelledSince >= minTravelledLength && !loadedBallExists()){
-            if(random.nextBoolean()){
+            if(random.nextInt(5) != 5){
                 generateBonusBall();
             }
             travelledSince = 0;
@@ -285,7 +298,7 @@ public class Game {
     private void generateBonusBall(){
         BonusBallType type = BonusBallType.getRandomBallType();
         int mass = random.nextInt(MAXMASS - MINMASS) + MINMASS;
-        BonusBall ball = new BonusBall(12.8, 1.8, mass, 0.5, type.getColor(), new GameVector(0, 0),
+        BonusBall ball = new BonusBall(12.8, 1.6, mass, 0.4, type.getColor(), new GameVector(0, 0),
                 new GameVector(0, type.getLoadedVelocity()));
         objectsOnScreen.add(ball);
         bonusBalls.add(ball);
@@ -325,6 +338,11 @@ public class Game {
         playerBall.setVelocity(new GameVector(0, 0));
         setScore(0);
         setGameOver(false);
+        objectsOnScreen.removeAll(bonusBalls);
+        bonusBalls.clear();
+        setGroundPos(0);
+        setBackgroundPos(0);
+        travelledSince = 0;
     }
 
     /**
@@ -352,8 +370,17 @@ public class Game {
         } else timeStationary = 0;
     }
 
+    public void setBackgroundPos(double backgroundPos) {
+        this.backgroundPos = backgroundPos;
+    }
 
-    public double getBackgroundPos() { return backgroundPos;}
+    public void setGroundPos(double groundPos) {
+        this.groundPos = groundPos;
+    }
+
+    public double getBackgroundPos() {
+        return backgroundPos;
+    }
 
     public double getGroundPos() {
         return groundPos;
