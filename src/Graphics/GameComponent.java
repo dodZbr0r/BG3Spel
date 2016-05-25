@@ -86,8 +86,8 @@ public class GameComponent extends JComponent{
             System.out.println("Could not find Ground.png");
         }
 
-        scrollingBackground = new ScrollingBackground(background);
-        scrollingGround = new ScrollingGround(ground);
+        scrollingBackground = new ScrollingBackground(background, game);
+        scrollingGround = new ScrollingGround(ground, game);
 
         // Set the font of the Score string.
         font = new Font("Arial", Font.BOLD, 22);
@@ -103,10 +103,10 @@ public class GameComponent extends JComponent{
         g2.setFont(font);
 
         // Background
-        scrollingBackground.draw(g2, unitConversion(game.getPlayerBall().getVelocity().getX()/60));
+        scrollingBackground.draw(g2);
 
         //Ground
-        scrollingGround.draw(g2, unitConversion(game.getPlayerBall().getVelocity().getX()/60));
+        scrollingGround.draw(g2);
 
         // Ball pt 1
         g2.setColor(game.getPlayerBall().getPrimaryColor());
@@ -168,7 +168,7 @@ public class GameComponent extends JComponent{
      * @param meters Measurements used in game calculations
      * @return An integer representing pixels
      */
-    private int unitConversion(double meters) {
+    public static int unitConversion(double meters) {
         return (int) (meters * 100);
     }
 
@@ -177,7 +177,7 @@ public class GameComponent extends JComponent{
      * @param meters Measurements used in game calculations
      * @return An integer representing pixels
      */
-    private int yConversion(double meters) {
+    public static int yConversion(double meters) {
         return HEIGHT - unitConversion(meters);
             }
 

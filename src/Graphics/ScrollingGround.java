@@ -1,5 +1,7 @@
 package Graphics;
 
+import MainGame.Game;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,32 +15,21 @@ import java.io.IOException;
  */
 class ScrollingGround {
 
-
-    private double groundWidth;
-    private double groundHeight;
+    private Game game;
     private BufferedImage ground;
-    private double x1;
-    private double y1;
+    private int x, y;
 
-    ScrollingGround(BufferedImage image){
-        groundWidth = GameComponent.getWIDTH();
-        groundHeight = 80;
-        this.ground = image;
-
-        y1 = 640;
+    ScrollingGround(BufferedImage image, Game game){
+        this.game = game;
+        ground = image;
+        x = GameComponent.unitConversion(game.getGroundPos());
+        y = GameComponent.yConversion(game.getGroundHeight());
     }
 
-    void draw(Graphics2D g, int velocityX){
-        updatePosition(velocityX);
-        g.drawImage(ground,(int) x1,(int) y1, (int) (groundWidth * 2), (int) groundHeight, null);
+    void draw(Graphics2D g){
+        System.out.println("X = " + x + "   Y = " + y);
+        x = GameComponent.unitConversion(game.getGroundPos());
+        g.drawImage(ground, x, y, GameComponent.WIDTH * 2, GameComponent.HEIGHT - y, null);
     }
 
-    private void updatePosition(int velocityX) {
-
-        if(x1 <= -groundWidth){
-            x1 = 0;
-        } else {
-            x1 -= velocityX;
-        }
-    }
 }

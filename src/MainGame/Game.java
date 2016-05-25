@@ -38,16 +38,27 @@ public class Game {
      */
     Game() {
         playerBall = new PlayerBall(2.0, 1.4, 10.0, 0.3, Color.RED, Color.ORANGE, new GameVector(0.0, 0.0));
-        BonusBall bonusBall = generateBonusBall();
+        //BonusBall bonusBall = generateBonusBall();
+
+        //creates a list with objects on screen
         objectsOnScreen = new ArrayList<PhysicsObject>();
         objectsOnScreen.add(playerBall);
-        objectsOnScreen.add(bonusBall);
+        //objectsOnScreen.add(bonusBall);
+
+        //List with bonusballs
+
         bonusBalls = new ArrayList<BonusBall>();
-        bonusBalls.add(bonusBall);
+        //bonusBalls.add(bonusBall);
+
         timeStationary = 0;
         gameOver = false;
+
         groundHeight = 0.8;
+        groundPos = 0.0;
+        backgroundPos = 0.0;
+
         gravity = new GameVector(0, -9.8);
+
     }
 
     /**
@@ -68,6 +79,9 @@ public class Game {
 
         //Sets new positions of bonusBalls
         setNewBonusPosition(deltaTime);
+
+        //Sets new ground and background position
+        setGroundAndBackgroundPos(deltaTime);
 
         //Checks collision with the ground
         checkGroundCollision(deltaTime);
@@ -92,13 +106,13 @@ public class Game {
         updateTimeStationary(deltaTime);
 
         //Printing some information about the ball
-        System.out.printf("X-HASTIGHET:%10f", playerBall.getVelocity().getX());
+        //System.out.printf("X-HASTIGHET:%10f", playerBall.getVelocity().getX());
 
-        System.out.printf("   Y-HASTIGHET:%10f", playerBall.getVelocity().getY());
+        //System.out.printf("   Y-HASTIGHET:%10f", playerBall.getVelocity().getY());
         //System.out.printf("   XPOS:%10f", playerBall.getX());
         //System.out.printf("   YPOS:%10f", playerBall.getY());
         //System.out.println("   UPDATE TIME: " + updateTime);
-        System.out.println();
+        //System.out.println();
     }
 
     /**
@@ -138,6 +152,20 @@ public class Game {
                     - playerBall.getVelocity().getX() * deltaTime * milliToSeconds,
                     object.getY() + (object.getVelocity().getY() * deltaTime * milliToSeconds));
         }
+    }
+
+    private void setGroundAndBackgroundPos(double deltaTime) {
+        if(groundPos <= -12.8){
+            groundPos = 0;
+        } else {
+            groundPos -= playerBall.getVelocity().getX() * deltaTime * milliToSeconds;
+        }
+        if(backgroundPos <= -12.8){
+            backgroundPos = 0;
+        } else {
+            backgroundPos -= ((playerBall.getVelocity().getX())/3) * deltaTime * milliToSeconds;
+        }
+
     }
 
     /**
@@ -242,6 +270,14 @@ public class Game {
 
         //If the ball reacquires significant speed somehow, it resets the timer.
         } else timeStationary = 0;
+    }
+
+    public double getBackgroundPos() {
+        return backgroundPos;
+    }
+
+    public double getGroundPos() {
+        return groundPos;
     }
 
     public boolean isGameOver() {
