@@ -262,8 +262,11 @@ public class GameComponent extends JComponent{
         decideAngle = true;
         decideForce = false;
         finalClick = true;
-        drawForceSpring = true;
+        drawForceSpring = false;
         game.reset();
+
+        angleTimer.stop();
+        forceTimer.stop();
     }
 
     // The timer started the first time Space is released and is used to decide the angle.
