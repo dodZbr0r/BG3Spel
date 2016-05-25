@@ -76,12 +76,12 @@ public class GameComponent extends JComponent{
         setInput();
 
         try{
-            background = ImageIO.read(new File("data/Background.png"));
+            background = ImageIO.read(new File("data" + File.separator + "Background.png"));
         } catch(IOException e){
             System.out.println("Could not find Background.png");
         }
         try {
-            ground = ImageIO.read(new File("data/Ground.png"));
+            ground = ImageIO.read(new File("data" + File.separator + "Ground.png"));
         } catch (IOException e) {
             System.out.println("Could not find Ground.png");
         }
