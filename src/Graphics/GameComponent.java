@@ -23,8 +23,8 @@ public class GameComponent extends JComponent{
     private ScrollingGround scrollingGround;
 
     // Window bounds
-    private static final int HEIGHT = 720;
-    private static final int WIDTH = 1280;
+    public static final int HEIGHT = 720;
+    public static final int WIDTH = 1280;
 
     // Images
     private BufferedImage background, ground;
