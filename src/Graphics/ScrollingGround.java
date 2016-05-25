@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Created by Erik-S on 2016-05-12.
  */
-public class ScrollingGround {
+class ScrollingGround {
 
 
     private double groundWidth;

@@ -14,7 +14,7 @@ import java.io.*;
 /**
  * Created by Erik on 2016-05-10.
  */
-public class Main{
+class Main{
 
     private static double lastGraphicUpdate;
 

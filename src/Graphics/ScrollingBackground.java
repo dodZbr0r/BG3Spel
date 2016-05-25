@@ -9,9 +9,9 @@ import java.awt.image.WritableRaster;
  * Created by DanielHolmberg on 2016-05-12.
  */
 class ScrollingBackground {
-    private double screenWidth;
-    private double screenHeight;
-    private BufferedImage background;
+    private final double screenWidth;
+    private final double screenHeight;
+    private final BufferedImage background;
     private double x1;
     private double y1;
 
