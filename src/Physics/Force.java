@@ -71,7 +71,7 @@ public class Force {
      */
     public static GameVector getFriction (double mass, double gravitySize, double xVelocity){
         int sign=1;
-        double k=0.001;
+        double k=0.5;
         double normal = -mass*gravitySize;
         if (xVelocity > 0)
             sign=-1;

@@ -18,13 +18,9 @@ import static Physics.Force.getAirResistance;
 public class Game {
 
     private PlayerBall playerBall;
-    private double groundHeight;
     private GameVector gravity;
-    private double gravitySize;
     private GameVector friction;
-    private double score;
-    private double highscore;
-    private double timeStationary;
+    private double groundHeight, backgroundPos, groundPos, score, highscore, timeStationary;
     private boolean gameOver;
     private List<PhysicsObject> objectsOnScreen;
     private List<BonusBall> bonusBalls;
@@ -37,7 +33,7 @@ public class Game {
      * creates a GameVector representing gravity
      */
     Game() {
-        playerBall = new PlayerBall(2.0, 1.4, 3.0, 0.3, Color.RED, Color.ORANGE, new GameVector(0.0, 0.0));
+        playerBall = new PlayerBall(2.0, 1.4, 10.0, 0.3, Color.RED, Color.ORANGE, new GameVector(0.0, 0.0));
         BonusBall bonusBall = generateBonusBall();
         objectsOnScreen = new ArrayList<PhysicsObject>();
         objectsOnScreen.add(playerBall);
@@ -47,8 +43,7 @@ public class Game {
         timeStationary = 0;
         gameOver = false;
         groundHeight = 0.8;
-        gravitySize = -9.8;
-        gravity = new GameVector(0, gravitySize);
+        gravity = new GameVector(0, -9.8);
     }
 
     /**
@@ -79,8 +74,8 @@ public class Game {
         //Stops the ball if the x-velocity of the ball is less than 0.01
         if(Math.abs(playerBall.getVelocity().getX()) < 0.5 &&
                 Math.abs(playerBall.getVelocity().getY()) < 0.5) {
-            //double velY = playerBall.getVelocity().getY();
-            playerBall.setVelocity(new GameVector(0.0, 0.0));
+            double velY = playerBall.getVelocity().getY();
+            playerBall.setVelocity(new GameVector(0.0, velY));
 
         }
 
@@ -150,7 +145,7 @@ public class Game {
             if(object.getY() - object.getHeight() <= groundHeight && object.getVelocity().getY() < 0) {
                 object.getVelocity().setPos(object.getVelocity().getX(), -(object.getVelocity().getY()));
                 object.setPos(object.getX(), groundHeight + object.getHeight());
-                friction = Force.getFriction(object.getMass(), gravitySize, object.getVelocity().getX());
+                friction = Force.getFriction(object.getMass(), gravity.getY(), object.getVelocity().getX());
                 applyFriction(object, deltaTime);
             }
         }
@@ -229,7 +224,7 @@ public class Game {
     private void updateTimeStationary(double deltaTime) {
 
         //If the ball has a very small velocity in x- and y-direction
-        if(Math.abs(playerBall.getVelocity().getX()) < 0.01 && Math.abs(playerBall.getVelocity().getY()) < 0.01
+        if(Math.abs(playerBall.getVelocity().getX()) < 0.5 && Math.abs(playerBall.getVelocity().getY()) < 0.5
                 && getScore() != 0) {
 
             //Add the time since the last update to the time the ball has been stationary
