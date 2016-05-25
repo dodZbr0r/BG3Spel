@@ -83,7 +83,7 @@ public class Game {
         setNewBonusPosition(deltaTime);
 
         //Sets new ground and background position
-        setGroundAndBackgroundPos(deltaTime);
+        updateGroundAndBackgroundPos(deltaTime);
 
         //Checks collision with the ground
         checkGroundCollision(deltaTime);
@@ -135,6 +135,8 @@ public class Game {
     /**
      * Performs calculations for the ball to be affected by an acceleration vector
      * @param acceleration The acceleration vector that will affect the object
+     * @param object The ball to be affected
+     * @param deltaTime The time between each update
      */
     private void applyAcceleration(GameVector acceleration, PhysicsObject object, double deltaTime) {
         object.setVelocity(GameVector.addVectors(object.getVelocity(),
@@ -143,6 +145,7 @@ public class Game {
 
     /**
      * Adds acceleration caused by air resistance to the total acceleration
+     * @param deltaTime The time between each update
      */
     private void applyAirResistance(double deltaTime){
         for (PhysicsObject object: objectsOnScreen) {
@@ -152,6 +155,10 @@ public class Game {
         }
     }
 
+    /**
+     * Adjusts the position of a bonus ball as the player ball moves
+     * @param deltaTime The time between each update
+     */
     private void setNewBonusPosition(double deltaTime) {
         for (PhysicsObject object: bonusBalls) {
             object.setPos(object.getX() + (object.getVelocity().getX() * deltaTime * milliToSeconds)
@@ -159,8 +166,11 @@ public class Game {
                     object.getY() + (object.getVelocity().getY() * deltaTime * milliToSeconds));
         }
     }
-
-    private void setGroundAndBackgroundPos(double deltaTime) {
+    /**
+     * Makes the ground and background move as the ball moves
+     * @param deltaTime The time between each update
+     */
+    private void updateGroundAndBackgroundPos(double deltaTime) {
         if(playerBall.getVelocity().getX() >= 0) {
             if (groundPos <= -12.8) {
                 groundPos = 0;
@@ -202,6 +212,9 @@ public class Game {
         }
     }
 
+    /**
+     * Checks if any of the objects on screen have collided with each other
+     */
     private void checkCollision() {
         for(int i = 0; i < objectsOnScreen.size() - 1; i++) {
             PhysicsObject ball1 = objectsOnScreen.get(i);
@@ -219,7 +232,8 @@ public class Game {
     }
 
     /**
-     * Adds acceleration caused vy friction to the total acceleration
+     * Adds acceleration caused by friction to the total acceleration
+     * @param deltaTime the time between each update
      */
     private void applyFriction(PhysicsObject object, double deltaTime){
         GameVector acceleration = Force.calculateAcceleration(object.getMass(), friction);
@@ -245,6 +259,10 @@ public class Game {
         playerBall.setVelocity(initialVelocity);
     }
 
+    /**
+     * Checks all bonus balls in the game to see if they're on the visible screen,
+     * otherwise unloads them or removes them
+     */
     private void checkBallsOnScreen(){
         List<BonusBall> ballsToRemove = new ArrayList<BonusBall>();
         for (BonusBall ball: bonusBalls){
@@ -259,6 +277,10 @@ public class Game {
         bonusBalls.removeAll(ballsToRemove);
     }
 
+    /**
+     * Randomly adds bonus balls if there are no loaded balls and if there
+     * hasn't been any in a certain distance
+     */
     private void randomlyAddBonusBalls(){
         int minTravelledLength = random.nextInt(MAXLENGTH-MINLENGTH) + MINLENGTH;
         if(travelledSince >= minTravelledLength && !loadedBallExists()){
@@ -282,7 +304,10 @@ public class Game {
         bonusBalls.add(ball);
     }
 
-
+    /**
+     * Checks to see if there are loaded balls
+     * @return true if there are, otherwise false
+     */
     public boolean loadedBallExists(){
         for(BonusBall ball: bonusBalls) {
             if(ball.isLoaded()) {
@@ -292,6 +317,10 @@ public class Game {
         return false;
     }
 
+    /**
+     * Returns a loaded bonus ball if there is one
+     * @return a bonus ball
+     */
     public BonusBall getLoadedBonusBall(){
         for(BonusBall ball: bonusBalls) {
             if(ball.isLoaded()) {

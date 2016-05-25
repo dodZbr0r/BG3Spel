@@ -27,7 +27,7 @@ class Main{
     public static void main(String[] args) {
         double lastGameUpdate;
         final Game game = new Game();
-        JFrame frame = new JFrame("CALICUTTA");
+        JFrame frame = new JFrame("BOUNCING BALLS");
         final GameComponent component = new GameComponent(game);
         frame.setLayout(new BorderLayout());
         frame.add(component, BorderLayout.CENTER);
