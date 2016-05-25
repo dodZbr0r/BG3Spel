@@ -26,11 +26,11 @@ public class Game {
     private List<PhysicsObject> objectsOnScreen;
     private List<BonusBall> bonusBalls;
     private final static Random random = new Random();
-    private static final int MINMASS = 3;
+    private static final int MINMASS = 4;
     private static final int MAXMASS = 8;
     private double travelledSince;
-    private final int MINLENGTH=14;
-    private final int MAXLENGTH=25;
+    private final int MINLENGTH=18;
+    private final int MAXLENGTH=30;
 
 
     //Converts from milliseconds to Seconds
