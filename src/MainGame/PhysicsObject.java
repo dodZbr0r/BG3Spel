@@ -34,7 +34,7 @@ public abstract class PhysicsObject {
      */
     boolean closeTo(PhysicsObject object) {
         double vecX = object.getCenter().getX() - this.getCenter().getX();
-        double vecY = object.getCenter().getX() - this.getCenter().getX();
+        double vecY = object.getCenter().getY() - this.getCenter().getY();
 
         GameVector distance = new GameVector(vecX, vecY);
 
