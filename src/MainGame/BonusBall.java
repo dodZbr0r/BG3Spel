@@ -30,6 +30,10 @@ public class BonusBall extends Ball {
 
     }
 
+    public void launch() {
+        setVelocity(loadedForce);
+    }
+
     /**
      * Generates a force that will be used for launching the BonusBall.
      */
