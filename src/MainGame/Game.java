@@ -222,6 +222,9 @@ public class Game {
         playerBall.setVelocity(initialVelocity);
     }
 
+    private void addBonusBalls(){
+
+    }
 
     /**
      * Generates a new BonusBall with random mass and color.
@@ -240,6 +243,15 @@ public class Game {
             }
         }
         return false;
+    }
+
+    public BonusBall getLoadedBonusBall(){
+        for(BonusBall ball: bonusBalls) {
+            if(ball.isLoaded()) {
+                return ball;
+            }
+        }
+        return null;
     }
 
     /**
