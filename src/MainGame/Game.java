@@ -25,6 +25,9 @@ public class Game {
     private boolean isRestarted=false;
     private List<PhysicsObject> objectsOnScreen;
     private List<BonusBall> bonusBalls;
+    private final static Random random = new Random();
+    private static final int MINMASS = 1;
+    private static final int MAXMASS = 10;
 
     //Converts from milliseconds to Seconds
     private final double milliToSeconds = 0.001;
@@ -202,7 +205,7 @@ public class Game {
      * Generates a new BonusBall with random mass and color.
      */
     private BonusBall generateBonusBall(){
-        double mass = Math.random() * 10;
+        int mass = random.nextInt(MAXMASS - MINMASS) + MINMASS;
         return new BonusBall(10, 0.5, mass, 0.5, new GameVector(0, 0));
     }
 

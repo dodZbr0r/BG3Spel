@@ -12,6 +12,8 @@ import java.util.List;
 public class BonusBall extends Ball {
     private final static Random random = new Random();
     private final static List<Color> bonusBallColors = Arrays.asList(Color.BLACK, Color.BLUE, Color.RED, Color.GREEN);
+    private final static int MINFORCE = 1;
+    private final static int MAXFORCE = 10;
     private GameVector loadedForce;
     /**
      * Constructs a BonusBall object with a position, mass, radius, color and velocity
@@ -32,9 +34,7 @@ public class BonusBall extends Ball {
      * Generates a force that will be used for launching the BonusBall.
      */
     private GameVector setLoadedForce(){
-        int minForce = 1;
-        int maxForce = 15;
-        return new GameVector(0, random.nextInt(maxForce - minForce) + minForce);
+        return new GameVector(0, random.nextInt(MAXFORCE - MINFORCE) + MINFORCE);
     }
 
     GameVector getLoadedForce() {
