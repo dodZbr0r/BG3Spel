@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * Created by David on 2016-05-25.
  */
-public enum BonusBallType {
+enum BonusBallType {
 
     SLOW (Color.GREEN, 2.5),
     MEDIUM(Color.BLUE, 5),
@@ -16,7 +16,7 @@ public enum BonusBallType {
     private final Color color;
     private final double loadedVelocity;
 
-    private BonusBallType(Color color, double yVelocity) {
+    BonusBallType(Color color, double yVelocity) {
         this.color = color;
         this.loadedVelocity = yVelocity;
     }

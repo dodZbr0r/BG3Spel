@@ -229,7 +229,8 @@ public class Game {
     private BonusBall generateBonusBall(){
         BonusBallType type = BonusBallType.getRandomBallType();
         int mass = random.nextInt(MAXMASS - MINMASS) + MINMASS;
-        return new BonusBall(10, 0.5, mass, 0.5, new GameVector(0, 0), new GameVector(0, type.getLoadedVelocity());
+        return new BonusBall(10, 0.5, mass, 0.5, type.getColor(), new GameVector(0, 0),
+                new GameVector(0, type.getLoadedVelocity()));
     }
 
     public boolean loadedBallExists(){
