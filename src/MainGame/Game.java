@@ -267,6 +267,7 @@ public class Game {
                 new GameVector(0, type.getLoadedVelocity()));
         objectsOnScreen.add(ball);
         bonusBalls.add(ball);
+        //System.out.println(ball.getX());
     }
 
 
