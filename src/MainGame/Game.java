@@ -190,12 +190,16 @@ public class Game {
     }
 
     private void checkCollision() {
-        for(BonusBall bonusBall: bonusBalls) {
-            if (playerBall.closeTo(bonusBall)) {
-                if (playerBall.hasCollision(bonusBall)) {
-                    playerBall.setPos(playerBall.getPreX(), playerBall.getPreY());
-                    bonusBall.setPos(bonusBall.getPreX(), bonusBall.getPreY());
-                    Collision.setVelocityPostCollision(playerBall, bonusBall);
+        for(int i = 0; i < objectsOnScreen.size() - 1; i++) {
+            PhysicsObject ball1 = objectsOnScreen.get(i);
+            for(int j = i + 1; j < objectsOnScreen.size(); j++) {
+                PhysicsObject ball2 = objectsOnScreen.get(j);
+                if (ball1.closeTo(ball2)) {
+                    if (ball1.hasCollision(ball2)) {
+                        ball1.setPos(ball1.getPreX(), ball1.getPreY());
+                        ball2.setPos(ball2.getPreX(), ball2.getPreY());
+                        Collision.setVelocityPostCollision(ball1, ball2);
+                    }
                 }
             }
         }
