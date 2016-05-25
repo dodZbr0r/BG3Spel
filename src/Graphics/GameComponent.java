@@ -100,6 +100,7 @@ public class GameComponent extends JComponent{
 
     protected void paintComponent(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
+        g2.setFont(font);
 
         // Background
         scrollingBackground.draw(g2, unitConversion(game.getPlayerBall().getVelocity().getX()/60));
@@ -126,6 +127,9 @@ public class GameComponent extends JComponent{
             g2.setColor(ball.getPrimaryColor());
             g2.fillOval(unitConversion(ball.getX()), yConversion(ball.getY()),
                     unitConversion(ball.getWidth()), unitConversion(ball.getWidth()));
+            g2.setColor(Color.WHITE);
+            g2.drawString(String.valueOf(Math.round(ball.getMass())),
+                    unitConversion(ball.getCenter().getX()) - font.getSize()/3, yConversion(ball.getCenter().getY()) + font.getSize()/3);
         }
 
         // Draws the "spring", if set to.
@@ -147,8 +151,8 @@ public class GameComponent extends JComponent{
 
         // Highscore
         g2.setColor(new Color(255, 255, 255));
-        g2.setFont(font);
         g2.drawString("Highscore: " + Math.round(game.getHighscore()), 20, 50);
+
 
         if(game.isGameOver()) {
             g2.setColor(Color.BLACK);
