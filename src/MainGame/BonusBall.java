@@ -30,6 +30,11 @@ public class BonusBall extends Ball {
 
     }
 
+    /**
+     * Launches to bonus ball with the a predetermined velocity
+     * Changes the color of the bonus ball to gray, to indicate
+     * that it cannot be launched anymore
+     */
     public void launch() {
         setVelocity(GameVector.addVectors(loadedVelocity, getVelocity()));
         isLoaded = false;
@@ -43,6 +48,10 @@ public class BonusBall extends Ball {
     public boolean isLoaded() {
         return isLoaded;
     }
+
+    /**
+     * Unloads the ball, making it not have any loaded velocity
+     */
     public void unload(){
         isLoaded=false;
         setPrimaryColor(Color.LIGHT_GRAY);

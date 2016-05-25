@@ -5,6 +5,7 @@ import java.util.Random;
 
 /**
  * Created by David on 2016-05-25.
+ * Represents the types of bonus balls available for random generation
  */
 enum BonusBallType {
 
@@ -21,6 +22,10 @@ enum BonusBallType {
         this.loadedVelocity = yVelocity;
     }
 
+    /**
+     * Generates a random bonus ball type
+     * @return A randomly picked bonus ball type
+     */
     public static BonusBallType getRandomBallType() {
         Random rng = new Random();
         int randomNumber = rng.nextInt(4);
