@@ -10,11 +10,10 @@ import java.util.List;
  * Created by Erik-S on 2016-05-24.
  */
 public class BonusBall extends Ball {
-    private final static Random random = new Random();
-    private final static List<Color> bonusBallColors = Arrays.asList(Color.BLACK, Color.BLUE, Color.RED, Color.GREEN);
     private final static int MINFORCE = 1;
     private final static int MAXFORCE = 10;
-    private GameVector loadedForce;
+    private GameVector loadedVelocity;
+    private boolean isLoaded;
     /**
      * Constructs a BonusBall object with a position, mass, radius, color and velocity
      *
@@ -24,25 +23,24 @@ public class BonusBall extends Ball {
      * @param radius         The balls radius(mm)
      * @param velocity       The velocity of the ball(mm/s)
      */
-    BonusBall(double x, double y, double mass, double radius, GameVector velocity) {
-        super(x, y, mass, radius, bonusBallColors.get(random.nextInt(bonusBallColors.size())), velocity);
-        this.loadedForce = setLoadedForce();
+    BonusBall(double x, double y, double mass, double radius, Color color, GameVector velocity, GameVector loadedVelocity) {
+        super(x, y, mass, radius, color, velocity);
+        this.loadedVelocity = loadedVelocity;
+        isLoaded = true;
 
     }
 
     public void launch() {
-        setVelocity(loadedForce);
+        setVelocity(loadedVelocity);
+        isLoaded = false;
     }
 
-    /**
-     * Generates a force that will be used for launching the BonusBall.
-     */
-    private GameVector setLoadedForce(){
-        return new GameVector(0, random.nextInt(MAXFORCE - MINFORCE) + MINFORCE);
+    GameVector getLoadedVelocity() {
+        return loadedVelocity;
     }
 
-    GameVector getLoadedForce() {
-        return loadedForce;
+    public boolean isLoaded() {
+        return isLoaded;
     }
 
 

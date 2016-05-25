@@ -227,8 +227,18 @@ public class Game {
      * Generates a new BonusBall with random mass and color.
      */
     private BonusBall generateBonusBall(){
+        BonusBallType type = BonusBallType.getRandomBallType();
         int mass = random.nextInt(MAXMASS - MINMASS) + MINMASS;
-        return new BonusBall(10, 0.5, mass, 0.5, new GameVector(0, 0));
+        return new BonusBall(10, 0.5, mass, 0.5, new GameVector(0, 0), new GameVector(0, type.getLoadedVelocity());
+    }
+
+    public boolean loadedBallExists(){
+        for(BonusBall ball: bonusBalls) {
+            if(ball.isLoaded()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
