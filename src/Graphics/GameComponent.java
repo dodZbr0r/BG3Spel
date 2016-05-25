@@ -128,8 +128,8 @@ public class GameComponent extends JComponent{
             g2.fillOval(unitConversion(ball.getX()), yConversion(ball.getY()),
                     unitConversion(ball.getWidth()), unitConversion(ball.getWidth()));
             g2.setColor(Color.WHITE);
-            g2.drawString(String.valueOf(Math.round(ball.getMass())),
-                    unitConversion(ball.getCenter().getX()) - font.getSize()/3, yConversion(ball.getCenter().getY()) + font.getSize()/3);
+            g2.drawString(String.valueOf(Math.round(ball.getMass()) + " kg"),
+                    unitConversion(ball.getCenter().getX()) - font.getSize(), yConversion(ball.getCenter().getY()) + font.getSize()/3);
         }
 
         // Draws the "spring", if set to.
