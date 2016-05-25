@@ -42,6 +42,9 @@ public class BonusBall extends Ball {
     public boolean isLoaded() {
         return isLoaded;
     }
+    public void unload(){
+        isLoaded=false;
+    }
 
 
 }

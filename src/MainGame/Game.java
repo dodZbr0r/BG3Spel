@@ -28,6 +28,10 @@ public class Game {
     private final static Random random = new Random();
     private static final int MINMASS = 1;
     private static final int MAXMASS = 10;
+    private double travelledSince;
+    private final int MINLENGTH=13;
+    private final int MAXLENGTH=30;
+
 
     //Converts from milliseconds to Seconds
     private final double milliToSeconds = 0.001;
@@ -38,17 +42,15 @@ public class Game {
      */
     Game() {
         playerBall = new PlayerBall(2.0, 1.4, 10.0, 0.3, Color.RED, Color.ORANGE, new GameVector(0.0, 0.0));
-        //BonusBall bonusBall = generateBonusBall();
 
         //creates a list with objects on screen
         objectsOnScreen = new ArrayList<PhysicsObject>();
         objectsOnScreen.add(playerBall);
-        //objectsOnScreen.add(bonusBall);
+
 
         //List with bonusballs
 
         bonusBalls = new ArrayList<BonusBall>();
-        //bonusBalls.add(bonusBall);
 
         timeStationary = 0;
         gameOver = false;
@@ -102,8 +104,12 @@ public class Game {
         if(score > highscore) {
             setHighscore(score);
         }
+        setTravelledSince(travelledSince + playerBall.getVelocity().getX() * deltaTime * milliToSeconds);
+        checkBallsOnScreen();
+        randomlyAddBonusBalls();
 
         updateTimeStationary(deltaTime);
+
 
         //Printing some information about the ball
         //System.out.printf("X-HASTIGHET:%10f", playerBall.getVelocity().getX());
@@ -222,18 +228,39 @@ public class Game {
         playerBall.setVelocity(initialVelocity);
     }
 
-    private void addBonusBalls(){
+    private void checkBallsOnScreen(){
+        List<BonusBall> ballsToRemove = new ArrayList<BonusBall>();
+        for (BonusBall ball: bonusBalls){
+            if(ball.getX()<=-ball.getWidth() || ball.getX()>=14){
+                ball.unload();
+                if(ball.getX()<=-26) {
+                    ballsToRemove.add(ball);
+                }
+            }
+        }
+        objectsOnScreen.removeAll(ballsToRemove);
+        bonusBalls.removeAll(ballsToRemove);
+    }
+
+    private void randomlyAddBonusBalls(){
+        int minTravelledLength = random.nextInt(MAXLENGTH-MINLENGTH) + MINLENGTH;
+        if(travelledSince >= minTravelledLength && !loadedBallExists()){
+            generateBonusBall();
+            travelledSince=0;
+        }
 
     }
 
     /**
      * Generates a new BonusBall with random mass and color.
      */
-    private BonusBall generateBonusBall(){
+    private void generateBonusBall(){
         BonusBallType type = BonusBallType.getRandomBallType();
         int mass = random.nextInt(MAXMASS - MINMASS) + MINMASS;
-        return new BonusBall(10, 0.5, mass, 0.5, type.getColor(), new GameVector(0, 0),
+        BonusBall ball = new BonusBall(12.8, 1.8, mass, 0.5, type.getColor(), new GameVector(0, 0),
                 new GameVector(0, type.getLoadedVelocity()));
+        objectsOnScreen.add(ball);
+        bonusBalls.add(ball);
     }
 
     public boolean loadedBallExists(){
@@ -289,6 +316,7 @@ public class Game {
         } else timeStationary = 0;
     }
 
+
     public double getBackgroundPos() {
         return backgroundPos;
     }
@@ -323,5 +351,9 @@ public class Game {
 
     private void setHighscore(double highscore) {
         this.highscore = highscore;
+    }
+
+    private void setTravelledSince (double travelledSince){
+        this.travelledSince=travelledSince;
     }
 }
