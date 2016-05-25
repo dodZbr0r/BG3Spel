@@ -8,10 +8,10 @@ import java.util.Random;
  */
 enum BonusBallType {
 
-    SLOW (Color.GREEN, 2.5),
-    MEDIUM(Color.BLUE, 5),
-    FAST(Color.RED, 7.5),
-    VERY_FAST(Color.BLACK, 10);
+    SLOW (Color.GREEN, 5),
+    MEDIUM(Color.BLUE, 7.5),
+    FAST(Color.RED, 10),
+    VERY_FAST(Color.BLACK, 12.5);
 
     private final Color color;
     private final double loadedVelocity;

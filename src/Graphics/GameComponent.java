@@ -37,7 +37,7 @@ public class GameComponent extends JComponent{
     private boolean decideForce = false;
 
     // Boolean to not allow users to click after the ball has been launched.
-    private boolean finalClick = true;
+    private boolean forceAndAngleDecided = true;
 
     // Saves the time at which the Space was pressed.
     private double keyPressed;
@@ -53,9 +53,9 @@ public class GameComponent extends JComponent{
     private boolean drawForceSpring = false;
 
     // This is the "angle" that is determined using Space.
-    // 16 is the x-value and 0 is the y-value, basically giving it the length 16.
+    // 18 is the x-value and 0 is the y-value, basically giving it the length 18.
     // This length will be the speed (m/s) it will be launched with.
-    private Physics.GameVector startAngle = new Physics.GameVector(16, 0, true);
+    private Physics.GameVector startAngle = new Physics.GameVector(18, 0, true);
 
     // Used during determination of angle to know if we're going to add to the angle or remove.
     private boolean goingUp = true;
@@ -160,6 +160,9 @@ public class GameComponent extends JComponent{
             g2.setColor(Color.BLACK);
             g2.setFont(new Font("Arial", Font.BOLD, 100));
             g2.drawString("GAME OVER!", 320, 360);
+            if (game.isRestarted()) {
+                angularVelocity = 0;
+            }
         }
     }
 
@@ -219,13 +222,13 @@ public class GameComponent extends JComponent{
 
                     // Sets it so you can't decide force anymore.
                     decideForce = false;
-                } else if (finalClick) {
+                } else if (forceAndAngleDecided) {
 
                     // Stops the force timer.
                     forceTimer.stop();
 
                     // Is used to make sure you can't click after both have been decided.
-                    finalClick = false;
+                    forceAndAngleDecided = false;
 
                     // Launches the ball with the decided angle and force.
                     // Angle is simply the angle the ball will be launched with.
@@ -235,6 +238,8 @@ public class GameComponent extends JComponent{
 
                     // Stops drawing the "spring".
                     drawForceSpring = false;
+                } else if (game.loadedBallExists()) {
+                    game.getLoadedBonusBall().launch();
                 }
             }
         });
@@ -248,7 +253,6 @@ public class GameComponent extends JComponent{
             public void actionPerformed(ActionEvent e) {
 
                 // Resets score, highscore, and all related values to their initial values.
-                game.reset();
                 resetGame();
             }
         });
@@ -261,10 +265,10 @@ public class GameComponent extends JComponent{
         convertedValue = 0;
         decideAngle = true;
         decideForce = false;
-        finalClick = true;
+        forceAndAngleDecided = true;
         drawForceSpring = false;
         game.reset();
-
+        angularVelocity = 0;
         angleTimer.stop();
         forceTimer.stop();
     }
@@ -282,7 +286,7 @@ public class GameComponent extends JComponent{
 
                 // Checks if it is equal or below -pi/2 and if it is, makes it go down.
                 // "-" and "<=" is because of the y-value being upside down, graphics-wise.
-                if (startAngle.getAngle() <= - Math.PI/2) {
+                if (startAngle.getAngle() <= - Math.PI/2 + 0.05) {
                     goingUp = false;
                 }
             } else {
@@ -291,7 +295,7 @@ public class GameComponent extends JComponent{
                 startAngle.setAngle(startAngle.getAngle() + 0.05);
 
                 // Checks if it is equal or above 0 and if it is, makes it go up again.
-                if (startAngle.getAngle() >= 0)
+                if (startAngle.getAngle() >= - 0.05 )
                 {
                     goingUp = true;
                 }
@@ -333,5 +337,9 @@ public class GameComponent extends JComponent{
     // Returns the HEIGHT.
     static int getHEIGHT() {
         return HEIGHT;
+    }
+
+    public void setAngularVelocity(double angularVelocity) {
+        this.angularVelocity = angularVelocity;
     }
 }

@@ -68,11 +68,13 @@ public class Collision {
 
     private static double getVelocityMovingCollision(double movingMass, double restingMass,
                                                           double movingInitialVelocity) {
+
         return ((movingMass - restingMass) / (movingMass + restingMass)) * movingInitialVelocity;
     }
 
     private static double getVelocityRestingCollision(double movingMass, double restingMass,
                                                     double movingInitialVelocity) {
+
         return ((2 * movingMass) / (movingMass + restingMass)) * movingInitialVelocity;
     }
 }

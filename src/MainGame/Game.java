@@ -263,6 +263,7 @@ public class Game {
         bonusBalls.add(ball);
     }
 
+
     public boolean loadedBallExists(){
         for(BonusBall ball: bonusBalls) {
             if(ball.isLoaded()) {
