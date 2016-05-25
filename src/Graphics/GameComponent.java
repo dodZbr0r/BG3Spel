@@ -127,7 +127,9 @@ public class GameComponent extends JComponent{
             g2.fillOval(unitConversion(ball.getX()), yConversion(ball.getY()),
                     unitConversion(ball.getWidth()), unitConversion(ball.getWidth()));
         }
-
+        if(game.isRestarted())
+            resetGame();
+            game.setRestarted(false);
         // Draws the "spring", if set to.
         if (drawForceSpring) {
             g2.setColor(Color.black);
