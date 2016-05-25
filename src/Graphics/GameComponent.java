@@ -55,7 +55,7 @@ public class GameComponent extends JComponent{
     // This is the "angle" that is determined using Space.
     // 18 is the x-value and 0 is the y-value, basically giving it the length 18.
     // This length will be the speed (m/s) it will be launched with.
-    private Physics.GameVector startAngle = new Physics.GameVector(18, 0, true);
+    private Physics.GameVector startAngle = new Physics.GameVector(30, 0, true);
 
     // Used during determination of angle to know if we're going to add to the angle or remove.
     private boolean goingUp = true;
@@ -137,11 +137,11 @@ public class GameComponent extends JComponent{
         // Draws the "spring", if set to.
         if (drawForceSpring) {
             g2.setColor(Color.black);
-            g2.drawLine(400, 500, 400+(int)(20*startAngle.getX()), 500+(int)(20*startAngle.getY()));
-            g2.drawLine(401, 500, 401+(int)(20*startAngle.getX()), 500+(int)(20*startAngle.getY()));
+            g2.drawLine(400, 500, 400+(int)(10*startAngle.getX()), 500+(int)(10*startAngle.getY()));
+            g2.drawLine(401, 500, 401+(int)(10*startAngle.getX()), 500+(int)(10*startAngle.getY()));
             g2.setColor(Color.red);
-            g2.drawLine(400, 500, 400+(int)(20*startAngle.getX()*convertedValue), 500+(int)(20*startAngle.getY()*convertedValue));
-            g2.drawLine(401, 500, 401+(int)(20*startAngle.getX()*convertedValue), 500+(int)(20*startAngle.getY()*convertedValue ));
+            g2.drawLine(400, 500, 400+(int)(10*startAngle.getX()*convertedValue), 500+(int)(10*startAngle.getY()*convertedValue));
+            g2.drawLine(401, 500, 401+(int)(10*startAngle.getX()*convertedValue), 500+(int)(10*startAngle.getY()*convertedValue ));
         }
 
         angularVelocity -= game.getPlayerBall().getVelocity().getX();

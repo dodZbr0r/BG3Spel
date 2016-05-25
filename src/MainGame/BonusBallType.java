@@ -9,9 +9,9 @@ import java.util.Random;
  */
 enum BonusBallType {
 
-    SLOW (Color.GREEN, 5),
-    MEDIUM(Color.BLUE, 7.5),
-    FAST(Color.RED, 10),
+    SLOW (Color.GREEN, 8),
+    MEDIUM(Color.BLUE, 9.5),
+    FAST(Color.RED, 11),
     VERY_FAST(Color.BLACK, 12.5);
 
     private final Color color;
