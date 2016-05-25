@@ -131,7 +131,9 @@ public class GameComponent extends JComponent{
             g2.drawString(String.valueOf(Math.round(ball.getMass()) + " kg"),
                     unitConversion(ball.getCenter().getX()) - font.getSize(), yConversion(ball.getCenter().getY()) + font.getSize()/3);
         }
-
+        if(game.isRestarted())
+            resetGame();
+            game.setRestarted(false);
         // Draws the "spring", if set to.
         if (drawForceSpring) {
             g2.setColor(Color.black);

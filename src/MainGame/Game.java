@@ -22,6 +22,7 @@ public class Game {
     private GameVector friction;
     private double groundHeight, backgroundPos, groundPos, score, highscore, timeStationary;
     private boolean gameOver;
+    private boolean isRestarted=false;
     private List<PhysicsObject> objectsOnScreen;
     private List<BonusBall> bonusBalls;
 
@@ -234,7 +235,7 @@ public class Game {
             if (timeStationary >= 1000) setGameOver(true);
 
             //If it has been stationary for 5 seconds, the game resets
-            if (timeStationary >= 5000) reset();
+            if (timeStationary >= 5000)  isRestarted=true;
 
         //If the ball reacquires significant speed somehow, it resets the timer.
         } else timeStationary = 0;
@@ -247,6 +248,10 @@ public class Game {
     private void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
     }
+
+    public boolean isRestarted(){return isRestarted; }
+
+    public void setRestarted(boolean isRestarted){this.isRestarted=isRestarted; }
 
     public double getScore() {
         return score;
