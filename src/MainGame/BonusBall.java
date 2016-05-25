@@ -33,6 +33,7 @@ public class BonusBall extends Ball {
     public void launch() {
         setVelocity(loadedVelocity);
         isLoaded = false;
+        setPrimaryColor(Color.LIGHT_GRAY);
     }
 
     GameVector getLoadedVelocity() {
@@ -44,6 +45,7 @@ public class BonusBall extends Ball {
     }
     public void unload(){
         isLoaded=false;
+        setPrimaryColor(Color.LIGHT_GRAY);
     }
 
 
