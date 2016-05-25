@@ -26,11 +26,11 @@ public class Game {
     private List<PhysicsObject> objectsOnScreen;
     private List<BonusBall> bonusBalls;
     private final static Random random = new Random();
-    private static final int MINMASS = 3;
-    private static final int MAXMASS = 8;
+    private static final int MINMASS = 1;
+    private static final int MAXMASS = 10;
     private double travelledSince;
-    private final int MINLENGTH=14;
-    private final int MAXLENGTH=25;
+    private final int MINLENGTH=13;
+    private final int MAXLENGTH=30;
 
 
     //Converts from milliseconds to Seconds
@@ -41,7 +41,7 @@ public class Game {
      * creates a GameVector representing gravity
      */
     Game() {
-        playerBall = new PlayerBall(2.0, 1.4, 7.0, 0.3, Color.RED, Color.ORANGE, new GameVector(0.0, 0.0));
+        playerBall = new PlayerBall(2.0, 1.4, 10.0, 0.3, Color.RED, Color.ORANGE, new GameVector(0.0, 0.0));
 
         //creates a list with objects on screen
         objectsOnScreen = new ArrayList<PhysicsObject>();
@@ -83,7 +83,7 @@ public class Game {
         setNewBonusPosition(deltaTime);
 
         //Sets new ground and background position
-        setGroundAndBackgroundPos(deltaTime);
+        updateGroundAndBackgroundPos(deltaTime);
 
         //Checks collision with the ground
         checkGroundCollision(deltaTime);
@@ -98,7 +98,6 @@ public class Game {
             playerBall.setVelocity(new GameVector(0.0, velY));
 
         }
-
         //Updates the score and highscore
         setScore(score + playerBall.getVelocity().getX() * deltaTime * milliToSeconds);
         if(score > highscore) {
@@ -135,6 +134,8 @@ public class Game {
     /**
      * Performs calculations for the ball to be affected by an acceleration vector
      * @param acceleration The acceleration vector that will affect the object
+     * @param object The ball to be affected
+     * @param deltaTime The time between each update
      */
     private void applyAcceleration(GameVector acceleration, PhysicsObject object, double deltaTime) {
         object.setVelocity(GameVector.addVectors(object.getVelocity(),
@@ -143,6 +144,7 @@ public class Game {
 
     /**
      * Adds acceleration caused by air resistance to the total acceleration
+     * @param deltaTime The time between each update
      */
     private void applyAirResistance(double deltaTime){
         for (PhysicsObject object: objectsOnScreen) {
@@ -152,6 +154,10 @@ public class Game {
         }
     }
 
+    /**
+     * Adjusts the position of a bonus ball as the player ball moves
+     * @param deltaTime The time between each update
+     */
     private void setNewBonusPosition(double deltaTime) {
         for (PhysicsObject object: bonusBalls) {
             object.setPos(object.getX() + (object.getVelocity().getX() * deltaTime * milliToSeconds)
@@ -160,29 +166,20 @@ public class Game {
         }
     }
 
-    private void setGroundAndBackgroundPos(double deltaTime) {
-        if(playerBall.getVelocity().getX() >= 0) {
-            if (groundPos <= -12.8) {
-                groundPos = 0;
-            } else {
-                groundPos -= playerBall.getVelocity().getX() * deltaTime * milliToSeconds;
-            }
-            if (backgroundPos <= -12.8) {
-                backgroundPos = 0;
-            } else {
-                backgroundPos -= ((playerBall.getVelocity().getX()) / 3) * deltaTime * milliToSeconds;
-            }
+    /**
+     * Makes the ground and background move as the ball moves
+     * @param deltaTime The time between each update
+     */
+    private void updateGroundAndBackgroundPos(double deltaTime) {
+        if(groundPos <= -12.8){
+            groundPos = 0;
         } else {
-            if(groundPos >= 0){
-                groundPos = -12.8;
-            } else {
-                groundPos -= playerBall.getVelocity().getX() * deltaTime * milliToSeconds;
-            }
-            if(backgroundPos >= 0){
-                backgroundPos = -12.8;
-            } else {
-                backgroundPos -= ((playerBall.getVelocity().getX())/3) * deltaTime * milliToSeconds;
-            }
+            groundPos -= playerBall.getVelocity().getX() * deltaTime * milliToSeconds;
+        }
+        if(backgroundPos <= -12.8){
+            backgroundPos = 0;
+        } else {
+            backgroundPos -= ((playerBall.getVelocity().getX())/3) * deltaTime * milliToSeconds;
         }
 
     }
@@ -202,6 +199,9 @@ public class Game {
         }
     }
 
+    /**
+     * Checks if any of the objects on screen have collided with each other
+     */
     private void checkCollision() {
         for(int i = 0; i < objectsOnScreen.size() - 1; i++) {
             PhysicsObject ball1 = objectsOnScreen.get(i);
@@ -219,7 +219,8 @@ public class Game {
     }
 
     /**
-     * Adds acceleration caused vy friction to the total acceleration
+     * Adds acceleration caused by friction to the total acceleration
+     * @param deltaTime the time between each update
      */
     private void applyFriction(PhysicsObject object, double deltaTime){
         GameVector acceleration = Force.calculateAcceleration(object.getMass(), friction);
@@ -245,6 +246,10 @@ public class Game {
         playerBall.setVelocity(initialVelocity);
     }
 
+    /**
+     * Checks all bonus balls in the game to see if they're on the visible screen,
+     * otherwise unloads them or removes them
+     */
     private void checkBallsOnScreen(){
         List<BonusBall> ballsToRemove = new ArrayList<BonusBall>();
         for (BonusBall ball: bonusBalls){
@@ -259,6 +264,10 @@ public class Game {
         bonusBalls.removeAll(ballsToRemove);
     }
 
+    /**
+     * Randomly adds bonus balls if there are no loaded balls and if there
+     * hasn't been any in a certain distance
+     */
     private void randomlyAddBonusBalls(){
         int minTravelledLength = random.nextInt(MAXLENGTH-MINLENGTH) + MINLENGTH;
         if(travelledSince >= minTravelledLength && !loadedBallExists()){
@@ -276,13 +285,16 @@ public class Game {
     private void generateBonusBall(){
         BonusBallType type = BonusBallType.getRandomBallType();
         int mass = random.nextInt(MAXMASS - MINMASS) + MINMASS;
-        BonusBall ball = new BonusBall(12.8, 1.8, mass, 0.4, type.getColor(), new GameVector(0, 0),
+        BonusBall ball = new BonusBall(12.8, 1.8, mass, 0.5, type.getColor(), new GameVector(0, 0),
                 new GameVector(0, type.getLoadedVelocity()));
         objectsOnScreen.add(ball);
         bonusBalls.add(ball);
     }
 
-
+    /**
+     * Checks to see if there are loaded balls
+     * @return true if there are, otherwise false
+     */
     public boolean loadedBallExists(){
         for(BonusBall ball: bonusBalls) {
             if(ball.isLoaded()) {
@@ -292,6 +304,10 @@ public class Game {
         return false;
     }
 
+    /**
+     * Returns a loaded bonus ball if there is one
+     * @return a bonus ball
+     */
     public BonusBall getLoadedBonusBall(){
         for(BonusBall ball: bonusBalls) {
             if(ball.isLoaded()) {
@@ -309,11 +325,6 @@ public class Game {
         playerBall.setVelocity(new GameVector(0, 0));
         setScore(0);
         setGameOver(false);
-        objectsOnScreen.removeAll(bonusBalls);
-        bonusBalls.clear();
-        setGroundPos(0);
-        setBackgroundPos(0);
-        travelledSince = 0;
     }
 
     /**
@@ -341,17 +352,8 @@ public class Game {
         } else timeStationary = 0;
     }
 
-    public void setBackgroundPos(double backgroundPos) {
-        this.backgroundPos = backgroundPos;
-    }
 
-    public void setGroundPos(double groundPos) {
-        this.groundPos = groundPos;
-    }
-
-    public double getBackgroundPos() {
-        return backgroundPos;
-    }
+    public double getBackgroundPos() { return backgroundPos;}
 
     public double getGroundPos() {
         return groundPos;
