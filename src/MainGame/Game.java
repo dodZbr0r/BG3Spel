@@ -296,6 +296,11 @@ public class Game {
         playerBall.setVelocity(new GameVector(0, 0));
         setScore(0);
         setGameOver(false);
+        objectsOnScreen.removeAll(bonusBalls);
+        bonusBalls.clear();
+        setGroundPos(0);
+        setBackgroundPos(0);
+        travelledSince = 0;
     }
 
     /**
@@ -323,6 +328,13 @@ public class Game {
         } else timeStationary = 0;
     }
 
+    public void setBackgroundPos(double backgroundPos) {
+        this.backgroundPos = backgroundPos;
+    }
+
+    public void setGroundPos(double groundPos) {
+        this.groundPos = groundPos;
+    }
 
     public double getBackgroundPos() {
         return backgroundPos;
