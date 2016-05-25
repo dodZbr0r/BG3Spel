@@ -143,7 +143,7 @@ public class Game {
     private void checkGroundCollision(double deltaTime) {
         for (PhysicsObject object: objectsOnScreen) {
             if(object.getY() - object.getHeight() <= groundHeight && object.getVelocity().getY() < 0) {
-                object.getVelocity().setPos(object.getVelocity().getX(), -(object.getVelocity().getY()));
+                object.getVelocity().setPos(object.getVelocity().getX(), -(object.getVelocity().getY()*0.9));
                 object.setPos(object.getX(), groundHeight + object.getHeight());
                 friction = Force.getFriction(object.getMass(), gravity.getY(), object.getVelocity().getX());
                 applyFriction(object, deltaTime);
