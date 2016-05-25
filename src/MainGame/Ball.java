@@ -8,11 +8,11 @@ import java.awt.*;
  * Created by DanielHolmberg on 2016-05-10.
  */
 public abstract class Ball extends PhysicsObject {
-    private double radius;
+    private final double radius;
 
     /**
      * Constructs a Ball object with a position, mass, radius, color and velocity
-     *  @param x               Horisontal position of the ball(mm)
+     *  @param x              Horizontal position of the ball(mm)
      * @param y               Vertical position of the ball(mm)
      * @param mass            The balls mass(kg)
      * @param radius          The balls radius(mm)
@@ -20,7 +20,7 @@ public abstract class Ball extends PhysicsObject {
      * @param velocity        The velocity of the ball(mm/s)
      */
 
-    public Ball(double x, double y, double mass, double radius, Color primaryColor, GameVector velocity) {
+    Ball(double x, double y, double mass, double radius, Color primaryColor, GameVector velocity) {
         super(x, y, mass, primaryColor, velocity);
         this.radius = radius;
         setWidth(radius * 2);
@@ -48,7 +48,7 @@ public abstract class Ball extends PhysicsObject {
         return radius * radius * Math.PI;
     }
 
-    public double getRadius() {
+    private double getRadius() {
         return radius;
     }
 

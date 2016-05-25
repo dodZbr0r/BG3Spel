@@ -23,8 +23,8 @@ public class GameComponent extends JComponent{
     private ScrollingGround scrollingGround;
 
     // Window bounds
-    public static final int HEIGHT = 720;
-    public static final int WIDTH = 1280;
+    private static final int HEIGHT = 720;
+    private static final int WIDTH = 1280;
 
     // Images
     private BufferedImage background, ground;
@@ -57,8 +57,8 @@ public class GameComponent extends JComponent{
     // This length will be the speed (m/s) it will be launched with.
     private Physics.GameVector startAngle = new Physics.GameVector(16, 0, true);
 
-    // Used during determination of angle to know if we're goind to add to the angle or remove.
-    boolean goingUp = true;
+    // Used during determination of angle to know if we're going to add to the angle or remove.
+    private boolean goingUp = true;
 
     // Used to help draw the ball.
     private double angularVelocity;
@@ -67,7 +67,7 @@ public class GameComponent extends JComponent{
     private Font font;
 
     /**
-     * Connstructs a GameComponent with a game object and a few images
+     * Constructs a GameComponent with a game object and a few images
      * This class handles most of the graphics
      * @param game Contains all the information about the state of the game
      */
@@ -253,7 +253,7 @@ public class GameComponent extends JComponent{
     }
 
     // Resets all related values to their initial values
-    public void resetGame() {
+    private void resetGame() {
         keyPressedMillis = 0;
         keyPressed = 0;
         convertedValue = 0;
@@ -266,7 +266,7 @@ public class GameComponent extends JComponent{
 
     // The timer started the first time Space is released and is used to decide the angle.
     // Executes every 17ms.
-    Timer angleTimer = new Timer(17, new ActionListener() {
+    private Timer angleTimer = new Timer(17, new ActionListener() {
         public void actionPerformed(ActionEvent e) {
 
             // Checks if the angle is supposed to turn up or down.
@@ -296,7 +296,7 @@ public class GameComponent extends JComponent{
 
     // The timer started the second time Space is released and is used to decide the force.
     // Executes every 17ms.
-    Timer forceTimer = new Timer(17, new ActionListener() {
+    private Timer forceTimer = new Timer(17, new ActionListener() {
         public void actionPerformed(ActionEvent e) {
 
             // Every time this part is executed the keyPressedMillis will be the amount of ms since space was released the second time.
@@ -321,12 +321,12 @@ public class GameComponent extends JComponent{
     });
 
     // Returns the WIDTH.
-    public static int getWIDTH() {
+    static int getWIDTH() {
         return WIDTH;
     }
 
     // Returns the HEIGHT.
-    public static int getHEIGHT() {
+    static int getHEIGHT() {
         return HEIGHT;
     }
 }
