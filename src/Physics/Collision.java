@@ -7,6 +7,14 @@ import MainGame.PhysicsObject;
  */
 public class Collision {
 
+    /**
+     * takes two objects,calculates the angle of their collision and turns one relative to the other.
+     * At this point one is moving and one is resting. Finds the moving objects velocity-component in the
+     * direction of the collision and calculates a one-dimensional elastic collision. After this the new
+     * velocities are added to the objects hence the name.
+     * @param movingObject object which is moving when relative to the resting object
+     * @param restingObject the relative object.
+     */
     public static void setVelocityPostCollision(PhysicsObject movingObject,
                                                 PhysicsObject restingObject) {
 
@@ -66,12 +74,26 @@ public class Collision {
                 (finalRestingVelocity.getY()) + (restingObject.getVelocity().getY()));
     }
 
+    /**
+     * Calculates a the final velocity for the moving object in an elastic collision
+     * @param movingMass mass of the moving object
+     * @param restingMass mass of the resting object
+     * @param movingInitialVelocity initial velocity of the moving object
+     * @return final velocity
+     */
     private static double getVelocityMovingCollision(double movingMass, double restingMass,
                                                           double movingInitialVelocity) {
 
         return ((movingMass - restingMass) / (movingMass + restingMass)) * movingInitialVelocity;
     }
 
+    /**
+     * Calculates a the final velocity for the resting object in an elastic collision
+     * @param movingMass mass of the moving object
+     * @param restingMass mass of the resting object
+     * @param movingInitialVelocity initial velocity of the moving object
+     * @return final velocity
+     */
     private static double getVelocityRestingCollision(double movingMass, double restingMass,
                                                     double movingInitialVelocity) {
 

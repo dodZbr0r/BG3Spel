@@ -410,7 +410,7 @@ public class Game {
         return highscore;
     }
 
-    private void setHighscore(double highscore) {
+    public void setHighscore(double highscore) {
         this.highscore = highscore;
     }
 

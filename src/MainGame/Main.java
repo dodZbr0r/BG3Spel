@@ -24,7 +24,7 @@ class Main{
      * Using an AbstractAction and a timer to update state of the program
      * @param args currently unused
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         double lastGameUpdate;
         final Game game = new Game();
         JFrame frame = new JFrame("BOUNCING BALLS");
@@ -60,16 +60,19 @@ class Main{
         timer.start();
         //play();
 
-        //Updating the game
+        //Updating the game frame.isActive()
         while(true) {
             double currentTime = System.currentTimeMillis();
             if((currentTime - lastGameUpdate) >= 1 && (currentTime - lastGameUpdate) % 5 == 0) {
                 game.update(currentTime - lastGameUpdate);
-                //System.out.println("Game Updatetime: " + (currentTime - lastGameUpdate));
+                System.out.println("Game Updatetime: " + (currentTime - lastGameUpdate));
                 lastGameUpdate = currentTime;
             }
         }
     }
+
+
+
 
     /*public static void play() {
     && (currentTime - lastGameUpdate) % 5 == 0
