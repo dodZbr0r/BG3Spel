@@ -9,16 +9,6 @@ import java.lang.Math;
 public class Force {
 
     /**
-     * Calculates a force vector given an objects mass and acceleration
-     * @param mass The objects mass
-     * @param acceleration The objects acceleration vector
-     * @return The force vector acting on the object
-     */
-    public static GameVector newtonsSecondLaw (double mass, GameVector acceleration) {
-        return GameVector.multiplyVector(mass, acceleration);
-    }
-
-    /**
      * Calculates the acceleration of an object given the force affecting the object
      * and the mass of the object.
      * @param mass The mass of the object

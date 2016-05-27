@@ -109,14 +109,15 @@ public class GameVector {
         return Math.acos(vectorDotProduct(normalizeVector(vector1), normalizeVector(vector2)));
     }
 
+    /**
+     * Sets the length of a vector to 1. Used to make checking angles between
+     * vectors easier
+     * @param vector THe vector to be normalized
+     * @return A new vector with length 1 pointing in the same direction as the old angle
+     */
     private static GameVector normalizeVector(GameVector vector) {
         return new GameVector((vector.getX()/vector.getLength()),
                 (vector.getY()/vector.getLength()));
-    }
-
-    public static void printVector(GameVector vector) {
-        //System.out.println("X Value: " + vector.getX());
-        //System.out.println("Y Value: " + vector.getY());
     }
 
 }
