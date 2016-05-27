@@ -27,7 +27,7 @@ class Main{
     public static void main(String[] args) throws IOException {
         double lastGameUpdate;
         final Game game = new Game();
-        JFrame frame = new JFrame("BOUNCING BALLS");
+        JFrame frame = new JFrame("PÄRS ÄVENTYR");
         final GameComponent component = new GameComponent(game);
         frame.setLayout(new BorderLayout());
         frame.add(component, BorderLayout.CENTER);

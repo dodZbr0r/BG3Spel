@@ -45,10 +45,7 @@ public class Force {
      */
 
     private static double calculateAirRes(double coefficient, double density, double area, double velocity){
-        int sign=1;
-        if (velocity >= 0)
-                sign=-1;
-        return sign*0.5*coefficient*density*area*velocity*velocity;
+        return -0.5*coefficient*density*area*Math.abs(velocity)*velocity;
     }
 
     /**
